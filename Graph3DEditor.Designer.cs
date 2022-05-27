@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
@@ -173,6 +174,7 @@
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.canvas3D1);
+            this.Controls.Add(this.button1);
             this.Name = "Graph3DEditor";
             this.Size = new System.Drawing.Size(845, 517);
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).EndInit();
@@ -183,6 +185,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Button button1;
         private Canvas3D canvas3D1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
