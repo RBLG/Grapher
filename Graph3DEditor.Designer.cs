@@ -28,20 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Graph3DEditor));
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.brushSize = new System.Windows.Forms.TrackBar();
-            this.canvas3D1 = new Grapher.Canvas3D();
             this.BrushThing2 = new System.Windows.Forms.TrackBar();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.canvas3D1 = new Grapher.Canvas3D();
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BrushThing2)).BeginInit();
             this.SuspendLayout();
@@ -65,7 +63,7 @@
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(3, 3);
+            this.comboBox3.Location = new System.Drawing.Point(3, 6);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(75, 21);
             this.comboBox3.TabIndex = 4;
@@ -87,14 +85,6 @@
             this.brushSize.TabIndex = 6;
             this.brushSize.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
-            // canvas3D1
-            // 
-            this.canvas3D1.Location = new System.Drawing.Point(84, 6);
-            this.canvas3D1.Name = "canvas3D1";
-            this.canvas3D1.Size = new System.Drawing.Size(758, 511);
-            this.canvas3D1.TabIndex = 1;
-            this.canvas3D1.Text = "canvas3D1";
-            // 
             // BrushThing2
             // 
             this.BrushThing2.Location = new System.Drawing.Point(6, 168);
@@ -105,65 +95,63 @@
             // 
             // checkBox1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 219);
+            this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("checkBox1.BackgroundImage")));
+            this.checkBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.checkBox1.Enabled = false;
+            this.checkBox1.Location = new System.Drawing.Point(3, 219);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.Size = new System.Drawing.Size(22, 22);
             this.checkBox1.TabIndex = 8;
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // checkBox2
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(27, 219);
+            this.checkBox2.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("checkBox2.BackgroundImage")));
+            this.checkBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.checkBox2.Enabled = false;
+            this.checkBox2.Location = new System.Drawing.Point(29, 219);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(15, 14);
+            this.checkBox2.Size = new System.Drawing.Size(22, 22);
             this.checkBox2.TabIndex = 9;
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // checkBox3
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(48, 219);
+            this.checkBox3.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("checkBox3.BackgroundImage")));
+            this.checkBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.checkBox3.Enabled = false;
+            this.checkBox3.Location = new System.Drawing.Point(55, 219);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(15, 14);
+            this.checkBox3.Size = new System.Drawing.Size(22, 22);
             this.checkBox3.TabIndex = 10;
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // button1
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(6, 239);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(15, 14);
-            this.checkBox4.TabIndex = 11;
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(6, 491);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(51, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "start";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // checkBox5
+            // canvas3D1
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(27, 239);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(15, 14);
-            this.checkBox5.TabIndex = 12;
-            this.checkBox5.UseVisualStyleBackColor = true;
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(48, 239);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(15, 14);
-            this.checkBox6.TabIndex = 13;
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.canvas3D1.Location = new System.Drawing.Point(84, 6);
+            this.canvas3D1.Name = "canvas3D1";
+            this.canvas3D1.Size = new System.Drawing.Size(758, 511);
+            this.canvas3D1.TabIndex = 1;
+            this.canvas3D1.Text = "canvas3D1";
             // 
             // Graph3DEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.checkBox6);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
@@ -174,9 +162,10 @@
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.canvas3D1);
-            this.Controls.Add(this.button1);
             this.Name = "Graph3DEditor";
             this.Size = new System.Drawing.Size(845, 517);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Graph3DEditor_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Graph3DEditor_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BrushThing2)).EndInit();
             this.ResumeLayout(false);
@@ -185,8 +174,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
         private Canvas3D canvas3D1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
@@ -197,8 +184,6 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.Button button1;
     }
 }

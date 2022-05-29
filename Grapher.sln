@@ -5,8 +5,6 @@ VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grapher", "Grapher.csproj", "{106E11C6-CF6F-455A-BF30-800249719E11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NAudio", "NAudio\NAudio\NAudio.csproj", "{AE537E35-C200-4C95-A8BB-50F892D7239D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{106E11C6-CF6F-455A-BF30-800249719E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{106E11C6-CF6F-455A-BF30-800249719E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{106E11C6-CF6F-455A-BF30-800249719E11}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE537E35-C200-4C95-A8BB-50F892D7239D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE537E35-C200-4C95-A8BB-50F892D7239D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE537E35-C200-4C95-A8BB-50F892D7239D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE537E35-C200-4C95-A8BB-50F892D7239D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

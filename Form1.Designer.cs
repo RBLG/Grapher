@@ -44,6 +44,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(907, 580);
             this.Controls.Add(this.graph3DEditor1);
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);

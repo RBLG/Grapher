@@ -106,11 +106,23 @@
     <Compile Include="Graph3DEditor.Designer.cs">
       <DependentUpon>Graph3DEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui3DDot.cs" />
+    <Compile Include="Table3DDot.cs" />
+    <Compile Include="Modes\IProcesser.cs" />
+    <Compile Include="Modes\MultiplyProcesser.cs" />
     <Compile Include="Point2D.cs" />
     <Compile Include="Point3D.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="OutputWaveProvider32.cs" />
+    <Compile Include="Scale\IScale.cs" />
+    <Compile Include="Scale\LinearFrequencyScale.cs" />
+    <Compile Include="SoundEngine.cs" />
+    <Compile Include="Table.cs" />
+    <Compile Include="Units\IFrequencyUnit.cs" />
+    <Compile Include="Units\Harmonics.cs" />
+    <Compile Include="Units\LinearFrequency.cs" />
+    <Compile Include="Units\MidiNote.cs" />
+    <Compile Include="Waves.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

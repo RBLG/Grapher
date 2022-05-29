@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Grapher
 {
-    public class Gui3DDot
+    public class Table3DDot
     {
         private readonly Func<Point3D> ori;
         private readonly Func<Point3D> xaxis;
@@ -24,7 +24,7 @@ namespace Grapher
         public double ScreenY { get; private set; }
         public double ScreenZ { get; private set; }
 
-        public Gui3DDot(Func<Point3D> nori, Func<Point3D> nxaxis, Func<Point3D> nyaxis, Func<Point3D> nzaxis, double nx, double ny, double nz)
+        public Table3DDot(Func<Point3D> nori, Func<Point3D> nxaxis, Func<Point3D> nyaxis, Func<Point3D> nzaxis, double nx, double ny, double nz)
         {
             ori = nori;
             xaxis = nxaxis;
@@ -38,9 +38,10 @@ namespace Grapher
             Z = nz;
         }
 
-        public void ReverseY(int y)
+        public void ReverseY(double y)
         {
-            this.Y = -(y - ori().Y) * 1;
+            //temporary
+            this.Y = -(y ) * 1;
         }
 
         internal double DistanceTo(Point pt)
