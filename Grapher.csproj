@@ -106,6 +106,9 @@
     <Compile Include="Graph3DEditor.Designer.cs">
       <DependentUpon>Graph3DEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ISpectrumInput.cs" />
+    <Compile Include="Modules\MockInput.cs" />
+    <Compile Include="Scale\DynamicMillisTimeScale.cs" />
     <Compile Include="Table3DDot.cs" />
     <Compile Include="Modes\IProcesser.cs" />
     <Compile Include="Modes\MultiplyProcesser.cs" />
@@ -116,7 +119,7 @@
     <Compile Include="OutputWaveProvider32.cs" />
     <Compile Include="Scale\IScale.cs" />
     <Compile Include="Scale\LinearFrequencyScale.cs" />
-    <Compile Include="SoundEngine.cs" />
+    <Compile Include="ProtoModule.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="Units\IFrequencyUnit.cs" />
     <Compile Include="Units\Harmonics.cs" />

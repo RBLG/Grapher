@@ -33,11 +33,14 @@ namespace Grapher
         protected float size = 100;
 
         protected readonly float oripadding = 10;
-        protected readonly float spacing = 15;
+        protected readonly float spacing = 20;
         protected readonly float dotsize = 3;
 
-        protected readonly int tablesize = 5;
-        protected readonly int tablelength = 10;
+        protected readonly int tablesize = 10;
+        protected readonly int tablelength = 20;
+        protected readonly double defvalue = 1;
+
+        protected readonly int samplerate = 16000;
 
         public Canvas3D()
         {
@@ -48,16 +51,16 @@ namespace Grapher
             this.MouseMove += MyOnMouseMove;
             this.MouseUp += MyOnMouseUp;
             this.KeyPress += Graph3DEditor_KeyPress;
-            foreach (int itx in Enumerable.Range(0, tablelength + 1))
+            foreach (int itx in Enumerable.Range(0, tablelength))
             {
                 var row = new List<Table3DDot>();
                 points.Add(row);
-                foreach (int itz in Enumerable.Range(0, tablesize + 1))
+                foreach (int itz in Enumerable.Range(0, tablesize))
                 {
-                    row.Add(new Table3DDot(() => Origin, () => xaxis, () => yaxis, () => zaxis, itx * spacing + oripadding, 1, itz * spacing + oripadding));
+                    row.Add(new Table3DDot(() => Origin, () => xaxis, () => yaxis, () => zaxis, itx * spacing + oripadding, defvalue, itz * spacing + oripadding));
                 }
             }
-            sengine = new SoundEngine(points);
+            sengine = new ProtoModule(points);
         }
 
         private Table3DDot moving = null;
@@ -121,9 +124,9 @@ namespace Grapher
             e.Graphics.DrawLine(blue, orix, oriy, orix + (float)zaxis.X * size, oriy + (float)zaxis.Y * size);
             e.Graphics.DrawLine(green, orix, oriy, orix + (float)yaxis.X * size, oriy + (float)yaxis.Y * size);
             e.Graphics.DrawLine(red, orix, oriy, orix + (float)xaxis.X * size, oriy + (float)xaxis.Y * size);
-            foreach (int itx in Enumerable.Range(0, points.Count - 1))
+            foreach (int itx in Enumerable.Range(0, points.Count))
             {
-                foreach (int itz in Enumerable.Range(0, points[itx].Count - 1))
+                foreach (int itz in Enumerable.Range(0, points[itx].Count))
                 {
                     Table3DDot point = points[itx][itz];
                     if (itx != 0)
@@ -138,9 +141,9 @@ namespace Grapher
                     }
                 }
             }
-            foreach (int itx in Enumerable.Range(0, points.Count - 1))
+            foreach (int itx in Enumerable.Range(0, points.Count))
             {
-                foreach (int itz in Enumerable.Range(0, points[itx].Count - 1))
+                foreach (int itz in Enumerable.Range(0, points[itx].Count))
                 {
                     Table3DDot point = points[itx][itz];
                     e.Graphics.FillRectangle(wave1, (float)point.ScreenX - 1, (float)point.ScreenY - 1, dotsize, dotsize);
@@ -159,7 +162,7 @@ namespace Grapher
             StartStopSineWave();
         }
 
-        private SoundEngine sengine;
+        private ProtoModule sengine;
 
         private void StartStopSineWave()
         {
@@ -167,7 +170,7 @@ namespace Grapher
             {
                 Console.WriteLine("start");
                 var output = new OutputWaveProvider32(sengine);
-                output.SetWaveFormat(1000, 1); // 16kHz mono
+                output.SetWaveFormat(samplerate, 1); // 16kHz mono
                 waveOut = new WaveOut();
                 waveOut.Init(output);
                 waveOut.Play();

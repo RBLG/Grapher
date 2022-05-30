@@ -11,16 +11,16 @@ namespace Grapher.Scale
     public class LinearFrequencyScale : IScale
     {
         public static readonly int min = 20;
-        public static readonly int max = 2000;
+        public static readonly int max = 3_000;
 
         public double GetMax()
         {
-            return 2_000;
+            return max;
         }
 
         public double GetMin()
         {
-            return 20;
+            return min;
         }
 
         public double GetScaled(double notscaled)
@@ -30,7 +30,7 @@ namespace Grapher.Scale
 
         public double To01(double notscaled)
         {
-            return (notscaled - 20) / (2_000 - 20);
+            return (notscaled - min) / (max - min);
         }
     }
 }
