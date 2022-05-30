@@ -14,28 +14,30 @@ namespace Grapher
     public class ProtoModule : ISpectrumInput
     {
         private Table table;
-        private IProcesser proc;
-        private IScale fscale;
-        private IScale tscale;
-        private ISpectrumInput input;
+        public IProcesser Proc { get; set; }
+        public IScale Fscale { get; set; }
+        public IScale Tscale { get; set; }
+        public ISpectrumInput Input { get; set; }
 
-        public ProtoModule(List<List<Table3DDot>> ndots)
+        public ProtoModule(Table ntable)
         {
-            table = new Table(ndots);
-            proc = new MultiplyProcesser();
-            fscale = new LinearFrequencyScale();
-            tscale = new DynamicMillisTimeScale();
-            input = new MockInput();
+            table = ntable;
+            Proc = new MultiplyProcesser();
+            Fscale = new ExponantialFrequencyScale();
+            Tscale = new DynamicToWholeTimeScale();
+            Input = new MockInput();
         }
 
         public Spectrum GetSpectrum(double time)
         {
-            Spectrum buffer = input.GetSpectrum(time);
+            Spectrum buffer = Input.GetSpectrum(time);
             foreach (Wave w in buffer.Waves)
             {
-                double freq = fscale.To01(w.Frequency);
-                double time2 = tscale.To01(time);
-                proc.Process(w, table.GetOn1Value(freq, time2));
+                double freq = Fscale.To01(w.Frequency);
+                double time2 = Tscale.To01(time);
+                //till i add output scales
+                double val = table.GetOn1Value(freq, time2) * 0.01;//min=0 max=100;
+                Proc.Process(w, val);
             }
             return buffer;
         }

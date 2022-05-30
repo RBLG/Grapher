@@ -38,15 +38,20 @@ namespace Grapher
             Z = nz;
         }
 
-        public void ReverseY(double y)
+        public void ReverseAddY(double y)
         {
             //temporary
-            this.Y = -(y ) * 1;
+            this.Y -= y * 1;
         }
 
         internal double DistanceTo(Point pt)
         {
             return Math.Sqrt(Math.Pow(pt.X - ScreenX, 2) + Math.Pow(pt.Y - ScreenY, 2));
+        }
+
+        public double GetBrushDistanceTo(Table3DDot pt)
+        {
+            return Math.Sqrt(Math.Pow(pt.X - X, 2) + Math.Pow(pt.Z - Z, 2));
         }
     }
 }

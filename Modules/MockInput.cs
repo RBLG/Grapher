@@ -14,12 +14,14 @@ namespace Grapher.Modules
 
         public MockInput()
         {
-            double mfreq = 440;
-            double mamp = 0.1;
+            double mfreq = 100;
+            double mamp = 0.3;
             main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq, mamp));
-            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 3, mamp / 3));
-            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 5, mamp / 9));
-            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 7, mamp / 27));
+            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 3, mamp / Math.Pow(3, 1)));
+            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 5, mamp / Math.Pow(3, 2)));
+            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 7, mamp / Math.Pow(3, 3)));
+            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 9, mamp / Math.Pow(3, 4)));
+            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 11, mamp / Math.Pow(3, 5)));
 
             foreach (Wave w in main.Waves)
             {

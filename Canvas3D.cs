@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using Grapher.Scale;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -23,24 +24,24 @@ namespace Grapher
         protected Pen net2 = new Pen(Color.Blue);
         protected Pen wave2 = new Pen(Color.Purple);
 
+        //temporary till all fit in module
         protected List<List<Table3DDot>> points = new List<List<Table3DDot>>();
 
         protected int slider = 0;
-        protected Point3D xaxis = new Point3D(0.7, 0.2, 0);
-        protected Point3D yaxis = new Point3D(0, -1, 0);
-        protected Point3D zaxis = new Point3D(0.5, -0.3, 0);
-        protected Point3D Origin = new Point3D(50, 300, 0);
+        public readonly Point3D xaxis = new Point3D(0.7, 0.2, 0);
+        public readonly Point3D yaxis = new Point3D(0, -1, 0);
+        public readonly Point3D zaxis = new Point3D(0.5, -0.3, 0);
+        public readonly Point3D Origin = new Point3D(50, 300, 0);
         protected float size = 100;
 
-        protected readonly float oripadding = 10;
-        protected readonly float spacing = 20;
-        protected readonly float dotsize = 3;
+        public readonly float oripadding = 10;
+        public readonly float spacing = 20;
+        public readonly float dotsize = 3;
 
-        protected readonly int tablesize = 10;
-        protected readonly int tablelength = 20;
-        protected readonly double defvalue = 1;
+        protected readonly int samplerate = 32000;
 
-        protected readonly int samplerate = 16000;
+        //temporary till all fit in module
+        public Table Table { get; private set; }
 
         public Canvas3D()
         {
@@ -51,28 +52,51 @@ namespace Grapher
             this.MouseMove += MyOnMouseMove;
             this.MouseUp += MyOnMouseUp;
             this.KeyPress += Graph3DEditor_KeyPress;
-            foreach (int itx in Enumerable.Range(0, tablelength))
-            {
-                var row = new List<Table3DDot>();
-                points.Add(row);
-                foreach (int itz in Enumerable.Range(0, tablesize))
-                {
-                    row.Add(new Table3DDot(() => Origin, () => xaxis, () => yaxis, () => zaxis, itx * spacing + oripadding, defvalue, itz * spacing + oripadding));
-                }
-            }
-            sengine = new ProtoModule(points);
+            Table = new Table(this);
+            points = Table.dots;
+            module = new ProtoModule(Table);
         }
 
-        private Table3DDot moving = null;
+        internal void SetDura(int ndura)
+        {
+            var sc = module.Tscale;
+            if (sc is DynamicToWholeTimeScale scale)
+            { //will be handled properly later with scale switching and menus
+                scale.Max = ndura;
+            }
+        }
+
+        private class MovingDot
+        {
+
+            public Table3DDot dot;
+            public double strength;
+            public MovingDot(Table3DDot ndot, double nstrength)
+            {
+                dot = ndot;
+                strength = nstrength;
+            }
+
+        }
+
+        private List<MovingDot> moving = null;
         //trick to get better cursor tracking till cam mov
-        private double offset = 0;
+        private double lastmousey = 0;
+
+        public double BrushSize { get; set; } = 0;
 
         private void MyOnMouseMove(object sender, MouseEventArgs e)
         {
+
             if (moving != null)
             {
-                //temporary till camera movement
-                moving.ReverseY(e.Y + offset);
+                double offset = e.Y - lastmousey;
+                foreach (MovingDot dot in moving)
+                {
+                    //temporary till camera movement
+                    dot.dot.ReverseAddY(offset * dot.strength);
+                }
+                lastmousey = e.Y;
                 this.Invalidate();
             }
         }
@@ -89,7 +113,7 @@ namespace Grapher
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (true)//si sur l'axe X, slide
+                if (true)//if on the visual of the X axis, slide
                 {
                     //return;
                 }
@@ -103,8 +127,27 @@ namespace Grapher
                         if (dist < pres)
                         {
                             pres = dist;
-                            moving = point;
-                            offset = point.Y - e.Location.Y;
+                            moving = new List<MovingDot>();
+                            moving.Add(new MovingDot(point, 1));
+                            //adding points in range of the brush
+                            //Console.WriteLine("main pt added");
+                            if (BrushSize > 0)
+                            {
+                                foreach (List<Table3DDot> row2 in points)
+                                {
+                                    foreach (Table3DDot point2 in row2)
+                                    {
+                                        double dist2 = point.GetBrushDistanceTo(point2) / spacing;
+                                        //Console.WriteLine(dist2);
+                                        if (dist2 < BrushSize && !point.Equals(point2))
+                                        {
+                                            //Console.WriteLine("autre pt added");
+                                            moving.Add(new MovingDot(point2, 1 - dist2 / BrushSize));
+                                        }
+                                    }
+                                }
+                            }
+                            lastmousey = e.Location.Y;
                         }
                     }
                 }
@@ -162,14 +205,14 @@ namespace Grapher
             StartStopSineWave();
         }
 
-        private ProtoModule sengine;
+        private ProtoModule module;
 
         private void StartStopSineWave()
         {
             if (waveOut == null)
             {
                 Console.WriteLine("start");
-                var output = new OutputWaveProvider32(sengine);
+                var output = new OutputWaveProvider32(module);
                 output.SetWaveFormat(samplerate, 1); // 16kHz mono
                 waveOut = new WaveOut();
                 waveOut.Init(output);

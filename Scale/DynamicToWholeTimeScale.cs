@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Grapher.Scale
 {
     //default time is in millisecond
-    public class DynamicMillisTimeScale : IScale
+    public class DynamicToWholeTimeScale : IScale
     {
         public static readonly double min = 0;
         public double Max { get; set; } //represent the duration of the table (in millis)
 
-        public DynamicMillisTimeScale()
+        public DynamicToWholeTimeScale()
         {
             Max = 1000;
         }

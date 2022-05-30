@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grapher
 {
-    internal interface ISpectrumInput
+    public interface ISpectrumInput
     {
         Spectrum GetSpectrum(double time);
 

@@ -1,12 +1,7 @@
-﻿using Grapher.Units;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Grapher.Scale
+﻿namespace Grapher.Scale
 {
+    //handle conversion from default scales (linear frequency, milliseconds,etc) to table scale
+    //idk im lost on how it work but it does
     public interface IScale
     {
         double GetScaled(double notscaled);

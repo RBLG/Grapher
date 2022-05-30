@@ -36,15 +36,39 @@ namespace Grapher
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (button1.Text!="running")
+            if (button1.Text != "running")
             {
                 button1.Text = "running";
             }
             else
             {
-                button1.Text="start";
+                button1.Text = "start";
             }
             this.canvas3D1.Graph3DEditor_KeyPress(sender, null);
+        }
+
+        private void numWidth_ValueChanged(object sender, EventArgs e)
+        {
+            canvas3D1.Table.Width = (int)Math.Max(1, numWidth.Value);
+            numWidth.Value = canvas3D1.Table.Width;
+            canvas3D1.Invalidate();
+        }
+
+        private void numLength_ValueChanged(object sender, EventArgs e)
+        {
+            canvas3D1.Table.Length = (int)Math.Max(1, numLength.Value);
+            numLength.Value = canvas3D1.Table.Length;
+            canvas3D1.Invalidate();
+        }
+
+        private void numDuration_ValueChanged(object sender, EventArgs e)
+        {
+            canvas3D1.SetDura((int)Math.Max(1, numDuration.Value));
+        }
+
+        private void brushSizeX_Scroll(object sender, EventArgs e)
+        {
+            canvas3D1.BrushSize = brushSize.Value / 1000d;
         }
     }
 }

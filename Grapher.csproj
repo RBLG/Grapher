@@ -108,7 +108,11 @@
     </Compile>
     <Compile Include="Modules\ISpectrumInput.cs" />
     <Compile Include="Modules\MockInput.cs" />
-    <Compile Include="Scale\DynamicMillisTimeScale.cs" />
+    <Compile Include="Scale\DynamicToWholeTimeScale.cs" />
+    <Compile Include="Scale\ExponantialFrequencyScale.cs" />
+    <Compile Include="Scale\HarmonicScales.cs" />
+    <Compile Include="Scale\IMidiNoteScale.cs" />
+    <Compile Include="Scale\MeiFrequencyScale.cs" />
     <Compile Include="Table3DDot.cs" />
     <Compile Include="Modes\IProcesser.cs" />
     <Compile Include="Modes\MultiplyProcesser.cs" />
@@ -121,10 +125,6 @@
     <Compile Include="Scale\LinearFrequencyScale.cs" />
     <Compile Include="ProtoModule.cs" />
     <Compile Include="Table.cs" />
-    <Compile Include="Units\IFrequencyUnit.cs" />
-    <Compile Include="Units\Harmonics.cs" />
-    <Compile Include="Units\LinearFrequency.cs" />
-    <Compile Include="Units\MidiNote.cs" />
     <Compile Include="Waves.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
