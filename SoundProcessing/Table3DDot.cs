@@ -17,12 +17,12 @@ namespace Grapher
         private double x;
         private double y;
         private double z;
-        public double X { get => x; private set { x = value; ScreenX = ori().X + x * xaxis().X + y * yaxis().X + z * zaxis().X; } }
-        public double Y { get => y; private set { y = Math.Max(0, Math.Min(100, value)); ScreenY = ori().Y + x * xaxis().Y + y * yaxis().Y + z * zaxis().Y; } }
-        public double Z { get => z; private set { z = value; ScreenZ = ori().Z + x * xaxis().Z + y * yaxis().Z + z * zaxis().Z; } }
-        public double ScreenX { get; private set; }
-        public double ScreenY { get; private set; }
-        public double ScreenZ { get; private set; }
+        public double X { get => x; set { x = value; RecalculateScreenXY(); } }
+        public double Y { get => y; private set { y = Math.Max(0, Math.Min(100, value)); RecalculateScreenXY(); } }
+        public double Z { get => z; set { z = value; RecalculateScreenXY(); } }
+        public float ScreenX { get; private set; }
+        public float ScreenY { get; private set; }
+        public float ScreenZ { get; private set; }
 
         public Table3DDot(Func<Point3D> nori, Func<Point3D> nxaxis, Func<Point3D> nyaxis, Func<Point3D> nzaxis, double nx, double ny, double nz)
         {
@@ -38,6 +38,13 @@ namespace Grapher
             Z = nz;
         }
 
+        private void RecalculateScreenXY()
+        {
+            ScreenX = (float)(ori().X + x * xaxis().X + y * yaxis().X + z * zaxis().X);
+            ScreenY = (float)(ori().Y + x * xaxis().Y + y * yaxis().Y + z * zaxis().Y);
+            ScreenZ = (float)(ori().Z + x * xaxis().Z + y * yaxis().Z + z * zaxis().Z);
+        }
+
         public void ReverseAddY(double y)
         {
             //temporary
@@ -51,7 +58,7 @@ namespace Grapher
 
         public double GetBrushDistanceTo(Table3DDot pt)
         {
-            return Math.Sqrt(Math.Pow(pt.X - X, 2) + Math.Pow(pt.Z - Z, 2));
+            return Math.Sqrt(Math.Pow(pt.X - X, 2) + Math.Pow(pt.Y - Y, 2) + Math.Pow(pt.Z - Z, 2));
         }
     }
 }

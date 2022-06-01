@@ -1,4 +1,6 @@
-﻿using Grapher.Scale;
+﻿using Grapher.GuiElement;
+using Grapher.Modules;
+using Grapher.Scale;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace Grapher
 
         protected SolidBrush bg = new SolidBrush(Color.DarkBlue);
         protected Pen red = new Pen(Color.Red);
-        protected Pen blue = new Pen(Color.Blue);
+        protected Pen blue = new Pen(Color.LightBlue);
         protected Pen green = new Pen(Color.Green);
         protected SolidBrush wave1 = new SolidBrush(Color.Yellow);
         protected Pen wave1border = new Pen(Color.DarkGoldenrod);
@@ -25,36 +27,48 @@ namespace Grapher
         protected Pen wave2 = new Pen(Color.Purple);
 
         //temporary till all fit in module
-        protected List<List<Table3DDot>> points = new List<List<Table3DDot>>();
+        //protected List<List<Table3DDot>> points = new List<List<Table3DDot>>();
 
         protected int slider = 0;
-        public readonly Point3D xaxis = new Point3D(0.7, 0.2, 0);
-        public readonly Point3D yaxis = new Point3D(0, -1, 0);
-        public readonly Point3D zaxis = new Point3D(0.5, -0.3, 0);
-        public readonly Point3D Origin = new Point3D(50, 300, 0);
-        protected float size = 100;
+        //public readonly Point3D xaxis = new Point3D(0.7, 0.2, 0);
+        //public readonly Point3D yaxis = new Point3D(0, -1, 0);
+        //public readonly Point3D zaxis = new Point3D(0.5, -0.3, 0);
+        //public readonly Point3D Origin = new Point3D(10, 300, 0);
+        public static readonly float size = 100;
+        public static readonly float oversize = 20;
 
-        public readonly float oripadding = 10;
-        public readonly float spacing = 20;
-        public readonly float dotsize = 3;
+        public static readonly float oripadding = 10;
+        //public readonly float spacing = 20;
+        public static readonly float dotsize = 3;
 
-        protected readonly int samplerate = 32000;
+        public static readonly float tablevisualwidth = 300;
+        //public readonly float tablevisuallength = 600;
+        public static readonly float lengthspacing = 20;
+
+        //to move
+        public static readonly int samplerate = 32000;
 
         //temporary till all fit in module
-        public Table Table { get; private set; }
+        //public Table Table { get; private set; }
 
-        public Canvas3D()
+        //might need to remove
+        public IModule Input { get => module.Input; set => module.Input = value; }
+
+        public ProtoModule module;
+
+        public Canvas3D(ProtoModule nmodule)
         {
+            module = nmodule;
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             this.MouseDown += MyOnMouseDown;
             this.MouseMove += MyOnMouseMove;
             this.MouseUp += MyOnMouseUp;
-            this.KeyPress += Graph3DEditor_KeyPress;
-            Table = new Table(this);
-            points = Table.dots;
-            module = new ProtoModule(Table);
+            //Table = new Table(this);
+            //Table = module.table;
+            //points = Table.dots;
+            //module = new ProtoModule(Table);
         }
 
         internal void SetDura(int ndura)
@@ -118,8 +132,9 @@ namespace Grapher
                     //return;
                 }
 
+                //select the dots to move
                 double pres = 10;
-                foreach (List<Table3DDot> row in points)
+                foreach (List<Table3DDot> row in module.table.dots)
                 {
                     foreach (Table3DDot point in row)
                     {
@@ -133,11 +148,11 @@ namespace Grapher
                             //Console.WriteLine("main pt added");
                             if (BrushSize > 0)
                             {
-                                foreach (List<Table3DDot> row2 in points)
+                                foreach (List<Table3DDot> row2 in module.table.dots)
                                 {
                                     foreach (Table3DDot point2 in row2)
                                     {
-                                        double dist2 = point.GetBrushDistanceTo(point2) / spacing;
+                                        double dist2 = point.GetBrushDistanceTo(point2) / 20;
                                         //Console.WriteLine(dist2);
                                         if (dist2 < BrushSize && !point.Equals(point2))
                                         {
@@ -158,74 +173,57 @@ namespace Grapher
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+            //to remove so that background can be better
             e.Graphics.FillRectangle(bg, e.ClipRectangle);
-            float orix = (float)Origin.X;
-            float oriy = (float)Origin.Y;
+
+            //result of moving then in table
+            var Origin = module.table.Origin;
+            var xaxis = module.table.xaxis;
+            var yaxis = module.table.yaxis;
+            var zaxis = module.table.zaxis;
+
+            float ox = (float)Origin.X;
+            float oy = (float)Origin.Y;
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            //drawing axis
+            float length = tablevisualwidth + oversize;
+            e.Graphics.DrawLine(blue, ox, oy, ox + (float)zaxis.X * length, oy + (float)zaxis.Y * length);
+            length = size + oversize;
+            e.Graphics.DrawLine(green, ox, oy, ox + (float)yaxis.X * length, oy + (float)yaxis.Y * length);
+            length = lengthspacing * 30 + oversize;
+            e.Graphics.DrawLine(red, ox, oy, ox + (float)xaxis.X * length, oy + (float)xaxis.Y * length);
 
-            e.Graphics.DrawLine(blue, orix, oriy, orix + (float)zaxis.X * size, oriy + (float)zaxis.Y * size);
-            e.Graphics.DrawLine(green, orix, oriy, orix + (float)yaxis.X * size, oriy + (float)yaxis.Y * size);
-            e.Graphics.DrawLine(red, orix, oriy, orix + (float)xaxis.X * size, oriy + (float)xaxis.Y * size);
-            foreach (int itx in Enumerable.Range(0, points.Count))
+            var points = module.table.dots;
+            for (int itx = 0; itx < points.Count; itx++)
             {
-                foreach (int itz in Enumerable.Range(0, points[itx].Count))
+                for (int itz = 0; itz < points[itx].Count; itz++)
                 {
                     Table3DDot point = points[itx][itz];
-                    if (itx != 0)
+                    //drawing width vertices
+                    if (itz != points[0].Count - 1)
                     {
-                        Table3DDot last = points[itx - 1][itz];
-                        e.Graphics.DrawLine(net1, (float)point.ScreenX, (float)point.ScreenY, (float)last.ScreenX, (float)last.ScreenY);
+                        Table3DDot last = points[itx][itz + 1];
+                        e.Graphics.DrawLine(net2, point.ScreenX, point.ScreenY, last.ScreenX, last.ScreenY);
                     }
-                    if (itz != 0)
+                    //drawing length vertices
+                    if (itx != points.Count - 1)
                     {
-                        Table3DDot last = points[itx][itz - 1];
-                        e.Graphics.DrawLine(net2, (float)point.ScreenX, (float)point.ScreenY, (float)last.ScreenX, (float)last.ScreenY);
+                        Table3DDot last = points[itx + 1][itz];
+                        e.Graphics.DrawLine(net1, point.ScreenX, point.ScreenY, last.ScreenX, last.ScreenY);
                     }
-                }
-            }
-            foreach (int itx in Enumerable.Range(0, points.Count))
-            {
-                foreach (int itz in Enumerable.Range(0, points[itx].Count))
-                {
-                    Table3DDot point = points[itx][itz];
-                    e.Graphics.FillRectangle(wave1, (float)point.ScreenX - 1, (float)point.ScreenY - 1, dotsize, dotsize);
-                    e.Graphics.DrawRectangle(wave1border, (float)point.ScreenX - dotsize / 2, (float)point.ScreenY - dotsize / 2, dotsize, dotsize);
+                    //drawing the point
+                    e.Graphics.FillEllipse(wave1, point.ScreenX - 1, point.ScreenY - 1, dotsize, dotsize);
+                    e.Graphics.DrawEllipse(wave1border, point.ScreenX - dotsize / 2, point.ScreenY - dotsize / 2, dotsize, dotsize);
                 }
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
 
-        private WaveOut waveOut;
 
-        public void Graph3DEditor_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            Console.WriteLine("pressed");
-            StartStopSineWave();
-        }
 
-        private ProtoModule module;
 
-        private void StartStopSineWave()
-        {
-            if (waveOut == null)
-            {
-                Console.WriteLine("start");
-                var output = new OutputWaveProvider32(module);
-                output.SetWaveFormat(samplerate, 1); // 16kHz mono
-                waveOut = new WaveOut();
-                waveOut.Init(output);
-                waveOut.Play();
-            }
-            else
-            {
-                Console.WriteLine("stop");
-                waveOut.Stop();
-                waveOut.Dispose();
-                waveOut = null;
-            }
-        }
 
     }
 }

@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Grapher.GuiElement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static Grapher.Spectrum;
 
 namespace Grapher.Modules
 {
-    public class MockInput : ISpectrumInput
+    public class MockInput : IModule
     {
         private Spectrum main = new Spectrum();
         private Spectrum buffer = new Spectrum();
@@ -28,7 +30,18 @@ namespace Grapher.Modules
                 buffer.Waves.Add(new Wave(w.Type, w.Frequency, w.Amplitude));
             }
         }
-        public Spectrum GetSpectrum(double time)
+
+        public UserControl GetControl()
+        {
+            return null;
+        }
+
+        public string GetName()
+        {
+            return "nothing";
+        }
+
+        public Spectrum GetSpectrum(double time, double bpitch)
         {
             for (int it = 0; it < main.Waves.Count; it++)
             {

@@ -29,56 +29,41 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Graph3DEditor));
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.InputComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.brushSize = new System.Windows.Forms.TrackBar();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.numWidth = new System.Windows.Forms.NumericUpDown();
             this.numLength = new System.Windows.Forms.NumericUpDown();
             this.numDuration = new System.Windows.Forms.NumericUpDown();
-            this.canvas3D1 = new Grapher.Canvas3D();
+            this.AxisSettingsButton = new System.Windows.Forms.Button();
+            this.EditInputButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDuration)).BeginInit();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // InputComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(3, 30);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(75, 21);
-            this.comboBox1.TabIndex = 2;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(3, 57);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(75, 21);
-            this.comboBox2.TabIndex = 3;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(3, 6);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(75, 21);
-            this.comboBox3.TabIndex = 4;
+            this.InputComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.InputComboBox.FormattingEnabled = true;
+            this.InputComboBox.Location = new System.Drawing.Point(84, 19);
+            this.InputComboBox.Name = "InputComboBox";
+            this.InputComboBox.Size = new System.Drawing.Size(75, 21);
+            this.InputComboBox.TabIndex = 4;
+            this.InputComboBox.SelectedIndexChanged += new System.EventHandler(this.InputComboBox_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 101);
+            this.label1.Location = new System.Drawing.Point(0, 46);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(40, 13);
             this.label1.TabIndex = 5;
@@ -87,10 +72,10 @@
             // brushSize
             // 
             this.brushSize.AutoSize = false;
-            this.brushSize.Location = new System.Drawing.Point(6, 117);
+            this.brushSize.Location = new System.Drawing.Point(3, 62);
             this.brushSize.Maximum = 10000;
             this.brushSize.Name = "brushSize";
-            this.brushSize.Size = new System.Drawing.Size(72, 23);
+            this.brushSize.Size = new System.Drawing.Size(75, 23);
             this.brushSize.TabIndex = 6;
             this.brushSize.TickStyle = System.Windows.Forms.TickStyle.None;
             this.brushSize.Scroll += new System.EventHandler(this.brushSizeX_Scroll);
@@ -101,7 +86,7 @@
             this.checkBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("checkBox1.BackgroundImage")));
             this.checkBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(3, 219);
+            this.checkBox1.Location = new System.Drawing.Point(0, 91);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(22, 22);
             this.checkBox1.TabIndex = 8;
@@ -113,7 +98,7 @@
             this.checkBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("checkBox2.BackgroundImage")));
             this.checkBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.checkBox2.Enabled = false;
-            this.checkBox2.Location = new System.Drawing.Point(29, 219);
+            this.checkBox2.Location = new System.Drawing.Point(26, 91);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(22, 22);
             this.checkBox2.TabIndex = 9;
@@ -125,26 +110,16 @@
             this.checkBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("checkBox3.BackgroundImage")));
             this.checkBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.checkBox3.Enabled = false;
-            this.checkBox3.Location = new System.Drawing.Point(55, 219);
+            this.checkBox3.Location = new System.Drawing.Point(52, 91);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(22, 22);
             this.checkBox3.TabIndex = 10;
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(6, 491);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(51, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "start";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(84, 6);
+            this.label2.Location = new System.Drawing.Point(230, 3);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 13;
@@ -153,7 +128,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(154, 6);
+            this.label3.Location = new System.Drawing.Point(300, 3);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 13);
             this.label3.TabIndex = 14;
@@ -162,15 +137,15 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(223, 6);
+            this.label4.Location = new System.Drawing.Point(370, 3);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 13);
+            this.label4.Size = new System.Drawing.Size(67, 13);
             this.label4.TabIndex = 15;
-            this.label4.Text = "duration";
+            this.label4.Text = "duration (ms)";
             // 
             // numWidth
             // 
-            this.numWidth.Location = new System.Drawing.Point(87, 22);
+            this.numWidth.Location = new System.Drawing.Point(233, 20);
             this.numWidth.Name = "numWidth";
             this.numWidth.Size = new System.Drawing.Size(64, 20);
             this.numWidth.TabIndex = 18;
@@ -183,7 +158,12 @@
             // 
             // numLength
             // 
-            this.numLength.Location = new System.Drawing.Point(157, 22);
+            this.numLength.Location = new System.Drawing.Point(303, 20);
+            this.numLength.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.numLength.Name = "numLength";
             this.numLength.Size = new System.Drawing.Size(64, 20);
             this.numLength.TabIndex = 19;
@@ -196,7 +176,7 @@
             // 
             // numDuration
             // 
-            this.numDuration.Location = new System.Drawing.Point(226, 22);
+            this.numDuration.Location = new System.Drawing.Point(373, 20);
             this.numDuration.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -217,37 +197,58 @@
             0});
             this.numDuration.ValueChanged += new System.EventHandler(this.numDuration_ValueChanged);
             // 
-            // canvas3D1
+            // AxisSettingsButton
             // 
-            this.canvas3D1.BrushSize = 0D;
-            this.canvas3D1.Location = new System.Drawing.Point(84, 63);
-            this.canvas3D1.Name = "canvas3D1";
-            this.canvas3D1.Size = new System.Drawing.Size(822, 511);
-            this.canvas3D1.TabIndex = 1;
-            this.canvas3D1.Text = "canvas3D1";
+            this.AxisSettingsButton.Location = new System.Drawing.Point(3, 18);
+            this.AxisSettingsButton.Name = "AxisSettingsButton";
+            this.AxisSettingsButton.Size = new System.Drawing.Size(75, 23);
+            this.AxisSettingsButton.TabIndex = 21;
+            this.AxisSettingsButton.Text = "Axis Settings";
+            this.AxisSettingsButton.UseVisualStyleBackColor = true;
+            this.AxisSettingsButton.Click += new System.EventHandler(this.AxisSettingsButton_Click);
+            // 
+            // EditInputButton
+            // 
+            this.EditInputButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("EditInputButton.BackgroundImage")));
+            this.EditInputButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.EditInputButton.Location = new System.Drawing.Point(165, 19);
+            this.EditInputButton.Name = "EditInputButton";
+            this.EditInputButton.Size = new System.Drawing.Size(22, 21);
+            this.EditInputButton.TabIndex = 22;
+            this.EditInputButton.UseVisualStyleBackColor = true;
+            this.EditInputButton.Click += new System.EventHandler(this.EditInputButton_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(84, 3);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(30, 13);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "input";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // Graph3DEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.EditInputButton);
+            this.Controls.Add(this.AxisSettingsButton);
             this.Controls.Add(this.numDuration);
             this.Controls.Add(this.numLength);
             this.Controls.Add(this.numWidth);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.brushSize);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.canvas3D1);
+            this.Controls.Add(this.InputComboBox);
             this.Name = "Graph3DEditor";
-            this.Size = new System.Drawing.Size(909, 577);
+            this.Size = new System.Drawing.Size(909, 560);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Graph3DEditor_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Graph3DEditor_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).EndInit();
@@ -260,21 +261,21 @@
         }
 
         #endregion
-        private Canvas3D canvas3D1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox InputComboBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar brushSize;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numWidth;
         private System.Windows.Forms.NumericUpDown numLength;
         private System.Windows.Forms.NumericUpDown numDuration;
+        private System.Windows.Forms.Button AxisSettingsButton;
+        private System.Windows.Forms.Button EditInputButton;
+        private System.Windows.Forms.Label label5;
+
     }
 }

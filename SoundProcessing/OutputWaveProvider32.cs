@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using Grapher.SoundProcessing;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,28 +13,29 @@ namespace Grapher
     {
         int sample;
 
-        private ProtoModule engine;
+        //private IModule engine;
         double beginning = 0;
         double time = 0;
+        private SharedStuff shared;
 
         public void Begin(double be)
         {
             beginning = be;
         }
 
-        public OutputWaveProvider32(ProtoModule nen)
+        public OutputWaveProvider32(SharedStuff nshared)
         {
-            engine = nen;
+            shared = nshared;
         }
 
         public override int Read(float[] buffer, int offset, int sampleCount)
         {
             int sampleRate = WaveFormat.SampleRate;
-            double interval = 1000 / (double)sampleRate;//in millis
+            double interval = 1000d / sampleRate;//in millis
             for (int n = 0; n < sampleCount; n++)
             {
 
-                Spectrum spec = engine.GetSpectrum(time);
+                Spectrum spec = shared.Module.GetSpectrum(time, shared.Pitch);
                 float sum = 0;
                 foreach (Wave w in spec.Waves)
                 {
@@ -41,7 +43,7 @@ namespace Grapher
                     sum += val;
                     //Console.WriteLine("val:" + val);
                 }
-               // Console.WriteLine("sum:" + sum * 100);
+                // Console.WriteLine("sum:" + sum * 100);
                 //Console.WriteLine("time:" + time);
                 buffer[n + offset] = sum;//(float)(Amplitude * Math.Sin((2 * Math.PI * sample * Frequency) / sampleRate));
                 time += interval;

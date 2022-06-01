@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace Grapher
+namespace Grapher.GuiElement
 {
-    public interface ISpectrumInput
+    public abstract class ModuleControl : UserControl
     {
-        Spectrum GetSpectrum(double time);
-
     }
 }

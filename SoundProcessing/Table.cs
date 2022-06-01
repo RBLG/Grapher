@@ -12,42 +12,70 @@ namespace Grapher
     {
         public static readonly double MAX = 254;
         public static readonly double MIN = 0;
+
+        public static readonly int defwidth = 10;
+        public static readonly int deflength = 30;
+        public static readonly double defval = 0;
+
+        //moved from canvas3D
+        public readonly Point3D xaxis = new Point3D(0.7, 0.2, 0);
+        public readonly Point3D yaxis = new Point3D(0, -1, 0);
+        public readonly Point3D zaxis = new Point3D(0.5, -0.3, 0);
+        public readonly Point3D Origin = new Point3D(10, 300, 0);
+
+        //private Canvas3D gui;
+
         //temp public
         public List<List<Table3DDot>> dots;
         public InterpolationType Interpolation { get; set; }
 
+        public Table()
+        {
+            Interpolation = InterpolationType.Linear;
+            dots = new List<List<Table3DDot>>();
+            foreach (int itx in Enumerable.Range(0, deflength))
+            {
+                var row = new List<Table3DDot>();
+                dots.Add(row);
+                foreach (int itz in Enumerable.Range(0, defwidth))
+                {
+                    row.Add(CreateDot(itx, itz, defwidth, deflength));
+                }
+            }
+        }
+
         public int Width {
             get { return dots[0].Count; }
             set {
-                if (value == dots[0].Count) { }
-                else if (value < dots[0].Count)
+                if (value < dots[0].Count)
                 {
                     foreach (List<Table3DDot> list in dots)
                     {
                         list.RemoveRange(value, list.Count - value);
                     }
+                    UpdateAll();
                 }
-                else
+                else if (value != dots[0].Count)
                 {
                     int itx = 0;
                     foreach (List<Table3DDot> list in dots)
                     {
-                        list.Add(CreateDot(itx, list.Count));
+                        list.Add(CreateDot(itx, list.Count, dots.Count, list.Count + 1));
                         itx++;
                     }
+                    UpdateAll();
                 }
-
             }
         }
         public int Length {
             get { return dots.Count; }
             set {
-                if (value == dots.Count) { }
-                else if (value < dots.Count)
+                if (value < dots.Count)
                 {
                     dots.RemoveRange(value, dots.Count - value);
+                    UpdateAll();
                 }
-                else
+                else if (value != dots.Count)
                 {
                     foreach (int itx in Enumerable.Range(0, value - dots.Count))
                     {
@@ -55,42 +83,35 @@ namespace Grapher
                         List<Table3DDot> list = new List<Table3DDot>();
                         foreach (int itz in Enumerable.Range(0, dots[0].Count))
                         {
-                            list.Add(CreateDot(trueitx, itz));
+                            list.Add(CreateDot(trueitx, itz, trueitx + 1, dots[0].Count));
                         }
                         dots.Add(list);
                     }
+                    UpdateAll();
                 }
             }
         }
 
-        private Canvas3D gui;
-
-        protected readonly int defsize = 10;
-        protected readonly int deflength = 20;
-        protected readonly double defval = 0;
-
-        public Table(Canvas3D ngui)
+        public void UpdateAll()
         {
-            gui = ngui;
-            Interpolation = InterpolationType.Linear;
-            dots = new List<List<Table3DDot>>();
-            foreach (int itx in Enumerable.Range(0, deflength))
+            foreach (int itx in Enumerable.Range(0, dots.Count))
             {
-                var row = new List<Table3DDot>();
-                dots.Add(row);
-                foreach (int itz in Enumerable.Range(0, defsize))
+                foreach (int itz in Enumerable.Range(0, dots[0].Count))
                 {
-                    row.Add(CreateDot(itx, itz));
+
+                    Table3DDot pt = dots[itx][itz];
+                    pt.Z = itz * (Canvas3D.tablevisualwidth / Math.Max(2, dots[0].Count - 1)) + Canvas3D.oripadding;
+                    //pt.X = itx * (dots.Count / gui.tablevisualwidth) + gui.oripadding;
                 }
             }
         }
 
-        private Table3DDot CreateDot(int itx, int itz)
+        private Table3DDot CreateDot(int itx, int itz, int width, int length)
         {
-            double vx = itx * gui.spacing + gui.oripadding;
+            double vz = itz * (Canvas3D.tablevisualwidth / Math.Max(2, width - 1)) + Canvas3D.oripadding;
+            double vx = itx * Canvas3D.lengthspacing + Canvas3D.oripadding;
             double vy = defval;
-            double vz = itz * gui.spacing + gui.oripadding;
-            return new Table3DDot(() => gui.Origin, () => gui.xaxis, () => gui.yaxis, () => gui.zaxis, vx, vy, vz);
+            return new Table3DDot(() => Origin, () => xaxis, () => yaxis, () => zaxis, vx, vy, vz);
         }
 
         public double GetOn1Value(double freq, double time)

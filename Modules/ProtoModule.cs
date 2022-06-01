@@ -1,4 +1,5 @@
-﻿using Grapher.Modes;
+﻿using Grapher.GuiElement;
+using Grapher.Modes;
 using Grapher.Modules;
 using Grapher.Scale;
 using NAudio.Wave;
@@ -7,30 +8,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static Grapher.Spectrum;
 
 namespace Grapher
 {
-    public class ProtoModule : ISpectrumInput
+    public class ProtoModule : IModule
     {
-        private Table table;
+        public Table table { get; set; }
         public IProcesser Proc { get; set; }
         public IScale Fscale { get; set; }
         public IScale Tscale { get; set; }
-        public ISpectrumInput Input { get; set; }
+        public IModule Input { get; set; }
 
-        public ProtoModule(Table ntable)
+        public ProtoModule()
         {
-            table = ntable;
+            table = new Table();
             Proc = new MultiplyProcesser();
             Fscale = new ExponantialFrequencyScale();
             Tscale = new DynamicToWholeTimeScale();
-            Input = new MockInput();
+            Input = new DefaultPitchModule();
         }
 
-        public Spectrum GetSpectrum(double time)
+        public Spectrum GetSpectrum(double time, double bpitch)
         {
-            Spectrum buffer = Input.GetSpectrum(time);
+            Spectrum buffer = Input.GetSpectrum(time, bpitch);
             foreach (Wave w in buffer.Waves)
             {
                 double freq = Fscale.To01(w.Frequency);
@@ -40,6 +42,20 @@ namespace Grapher
                 Proc.Process(w, val);
             }
             return buffer;
+        }
+
+        public UserControl GetControl()
+        {
+            return new Graph3DEditor(this);
+        }
+
+        private static int count = 0;
+
+        private String name = "3D Editor " + count++;
+
+        public string GetName()
+        {
+            return name;
         }
     }
 }
