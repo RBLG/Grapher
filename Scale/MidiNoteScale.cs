@@ -51,7 +51,7 @@ namespace Grapher.Scale
 
         public double GetUnScaled(int scaled)//?
         {
-            return BaseFrequency * Math.Pow(((scaled - 69) / 12d), 2);
+            return BaseFrequency * Math.Pow(2,((scaled - 69) / 12d));
         }
 
 
