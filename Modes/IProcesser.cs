@@ -8,8 +8,8 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Modes
 {
-    public interface IProcesser
+    public interface IMode
     {
-        void Process(Wave wave, double tabvalue);
+        double Process(double value,double tab);
     }
 }

@@ -18,7 +18,7 @@ namespace Grapher
         private double y;
         private double z;
         public double X { get => x; set { x = value; RecalculateScreenXY(); } }
-        public double Y { get => y; private set { y = Math.Max(0, Math.Min(100, value)); RecalculateScreenXY(); } }
+        public double Y { get => y; private set { y = Math.Max(Table.MIN, Math.Min(Table.MAX, value)); RecalculateScreenXY(); } }
         public double Z { get => z; set { z = value; RecalculateScreenXY(); } }
         public float ScreenX { get; private set; }
         public float ScreenY { get; private set; }

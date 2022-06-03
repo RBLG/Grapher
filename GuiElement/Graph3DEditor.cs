@@ -17,7 +17,7 @@ namespace Grapher
     {
         private ProtoModule module;
 
-        private Canvas3D canvas3D1;
+        public Canvas3D canvas3D1;
         public Graph3DEditor(ProtoModule nmodule)
         {
             InitializeComponent();
@@ -43,7 +43,7 @@ namespace Grapher
             numLength.Value = canvas3D1.module.table.Length;
             InputComboBox.ValueMember = "Factory";
             InputComboBox.DisplayMember = "Name";
-            InputComboBox.Items.AddRange(AvailableModuleList.modules.ToArray());
+            InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
             InputComboBox.SelectedIndex = 0;
             //////
         }
@@ -90,10 +90,16 @@ namespace Grapher
             canvas3D1.BrushSize = brushSize.Value / 1000d;
         }
 
+        public ScaleSettings ssets = null;
+
         private void AxisSettingsButton_Click(object sender, EventArgs e)
         {
-            ScaleSettings settings = new ScaleSettings();
-            settings.ShowDialog();
+            if (ssets == null || ssets.IsDisposed)
+            {
+                ScaleSettings settings = new ScaleSettings(this);
+                ssets = settings;
+                settings.Show();
+            }
 
         }
 
@@ -110,7 +116,7 @@ namespace Grapher
 
         private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var item = AvailableModuleList.modules.ElementAt(InputComboBox.SelectedIndex);
+            var item = AvailableModules.modules.ElementAt(InputComboBox.SelectedIndex);
             canvas3D1.Input = item.Factory();
         }
 

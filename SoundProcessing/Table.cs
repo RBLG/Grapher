@@ -10,12 +10,12 @@ namespace Grapher
     // list of the different rows of values
     public class Table
     {
-        public static readonly double MAX = 254;
+        public static readonly double MAX = 100;
         public static readonly double MIN = 0;
+        public static readonly double defval = 50;
 
         public static readonly int defwidth = 10;
         public static readonly int deflength = 30;
-        public static readonly double defval = 0;
 
         //moved from canvas3D
         public readonly Point3D xaxis = new Point3D(0.7, 0.2, 0);
@@ -115,6 +115,11 @@ namespace Grapher
         }
 
         public double GetOn1Value(double freq, double time)
+        {
+            return (GetOnMaxValue(freq, time) - MIN) / MAX;
+        }
+
+        public double GetOnMaxValue(double freq, double time)
         {
             //Console.WriteLine("time:" + time);
             if (freq < 0 || 1 < freq)

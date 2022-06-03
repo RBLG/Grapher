@@ -127,14 +127,16 @@
     <Compile Include="GuiElement\ScaleSettings.Designer.cs">
       <DependentUpon>ScaleSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\AvailableModuleList.cs" />
+    <Compile Include="Modes\AvailableModes.cs" />
+    <Compile Include="Modules\AvailableModules.cs" />
     <Compile Include="Modules\DefaultPitchModule.cs" />
     <Compile Include="Modules\IModule.cs" />
     <Compile Include="Modules\MockInput.cs" />
-    <Compile Include="Scale\AvailableScaleList.cs" />
+    <Compile Include="Scale\AvailableScales.cs" />
     <Compile Include="Scale\DynamicToWholeTimeScale.cs" />
     <Compile Include="Scale\ExponantialFrequencyScale.cs" />
     <Compile Include="Scale\HarmonicScales.cs" />
+    <Compile Include="Scale\LinearAmplitudeScale.cs" />
     <Compile Include="Scale\MidiNoteScale.cs" />
     <Compile Include="Scale\MeiFrequencyScale.cs" />
     <Compile Include="SoundProcessing\SharedStuff.cs" />

@@ -48,8 +48,8 @@ namespace Grapher.Modules
                 Wave mw = main.Waves[it];
                 Wave bw = buffer.Waves[it];
                 //bw.Type = mw.Type;
-                bw.Frequency = mw.Frequency;
-                bw.Amplitude = mw.Amplitude;
+                bw.Frequency = bpitch * (it * 2 + 1);//mw.Frequency;
+                bw.Amplitude = 0.3 / (Math.Pow(3, it));//mw.Amplitude;
 
             }
             return buffer;

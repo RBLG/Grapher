@@ -73,7 +73,7 @@ namespace Grapher
 
         internal void SetDura(int ndura)
         {
-            var sc = module.Tscale;
+            var sc = module.Lscale;
             if (sc is DynamicToWholeTimeScale scale)
             { //will be handled properly later with scale switching and menus
                 scale.Max = ndura;

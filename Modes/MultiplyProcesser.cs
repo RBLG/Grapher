@@ -8,11 +8,11 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Modes
 {
-    public class MultiplyProcesser : IProcesser
+    public class MultiplyProcesser : IMode
     {
-        public void Process(Wave wave, double tabvalue)
+        public double Process(double value, double tab)
         {
-            wave.Amplitude *= tabvalue;
+            return value * tab * 2;//*2 so that 0,5 make stuff unchanged
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Grapher.Modules
 {
-    public class AvailableModuleList
+    public class AvailableModules
     {
         private static readonly List<AvailableModule> list = new List<AvailableModule>()
         {

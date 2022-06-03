@@ -16,17 +16,19 @@ namespace Grapher
     public class ProtoModule : IModule
     {
         public Table table { get; set; }
-        public IProcesser Proc { get; set; }
-        public IScale Fscale { get; set; }
-        public IScale Tscale { get; set; }
+        public IMode Mode { get; set; }
+        public IScale Wscale { get; set; }
+        public IScale Lscale { get; set; }
+        public IScale Hscale { get; set; }
         public IModule Input { get; set; }
 
         public ProtoModule()
         {
             table = new Table();
-            Proc = new MultiplyProcesser();
-            Fscale = new ExponantialFrequencyScale();
-            Tscale = new DynamicToWholeTimeScale();
+            Mode = new MultiplyProcesser();
+            Wscale = new ExponantialFrequencyScale();
+            Lscale = new DynamicToWholeTimeScale();
+            Hscale = new LinearAmplitudeScale();
             Input = new DefaultPitchModule();
         }
 
@@ -35,11 +37,17 @@ namespace Grapher
             Spectrum buffer = Input.GetSpectrum(time, bpitch);
             foreach (Wave w in buffer.Waves)
             {
-                double freq = Fscale.To01(w.Frequency);
-                double time2 = Tscale.To01(time);
+                double wval = Wscale.To01(Wscale.PickValue(w, time, buffer));
+                double lval = Lscale.To01(Lscale.PickValue(w, time, buffer));
+
+                double tval = table.GetOn1Value(wval, lval);
+
+                double hval = Hscale.GetScaled(Hscale.PickValue(w, time, buffer));
+                hval = Mode.Process(Hscale.GetUnscaled(hval), tval);
+                Hscale.SetValue(hval, w, time, buffer);
                 //till i add output scales
-                double val = table.GetOn1Value(freq, time2) * 0.01;//min=0 max=100;
-                Proc.Process(w, val);
+                //double val = table.GetOn1Value(wval, lval);
+                //Proc.Process(w, val);
             }
             return buffer;
         }

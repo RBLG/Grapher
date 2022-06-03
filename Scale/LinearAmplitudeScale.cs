@@ -7,49 +7,46 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Scale
 {
-    public class HarmonicScales : IScale
+    internal class LinearAmplitudeScale : IScale
     {
-        //need to change the structure so that scale can be aware of pitch
         public double GetMax()
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public double GetMin()
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public double GetScaled(double notscaled)
         {
-            throw new NotImplementedException();
+            return notscaled;
         }
 
         public double To01(double notscaled)
         {
-            throw new NotImplementedException();
+            return notscaled;
         }
 
         public double GetUnscaled(double scaled)
         {
-            throw new NotImplementedException();
+            return scaled;
         }
 
         public double From01(double scaled)
         {
-            throw new NotImplementedException();
+            return scaled;
         }
 
         public double PickValue(Wave wave, double time, Spectrum spectrum)
         {
-            throw new NotImplementedException();
-            //return wave.Frequency;
+            return wave.Amplitude;
         }
 
         public void SetValue(double value, Wave wave, double time, Spectrum spectrum)
         {
-            throw new NotImplementedException();
-            //return wave.Frequency;
+            wave.Amplitude = value;
         }
 
         public List<Milestone> GetMilestones()
@@ -57,7 +54,7 @@ namespace Grapher.Scale
             throw new NotImplementedException();
         }
 
-        private readonly string label = "f(*base)";
+        private readonly string label = "a(??)";
 
         public string GetLabel()
         {

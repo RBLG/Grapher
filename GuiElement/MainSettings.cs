@@ -22,7 +22,7 @@ namespace Grapher.GuiElement
 
             InputComboBox.ValueMember = "Factory";
             InputComboBox.DisplayMember = "Name";
-            InputComboBox.Items.AddRange(AvailableModuleList.modules.ToArray());
+            InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
             InputComboBox.SelectedIndex = 0;
         }
 
@@ -72,26 +72,28 @@ namespace Grapher.GuiElement
 
         private IModule Input { get => shared.Module; set => shared.Module = value; }
 
+        private ModuleForm mform = null;
+
         private void EditInputButton_Click(object sender, EventArgs e)
         {
             var control = Input.GetControl();
-            if (control == null)
+            if (control != null &&( mform == null || mform.IsDisposed))
             {
-                return;
+                ModuleForm moduleform = new ModuleForm(control, Input.GetName());
+                mform = moduleform;
+                moduleform.Show();
             }
-            ModuleForm moduleform = new ModuleForm(control, Input.GetName());
-            moduleform.Show();
         }
 
         private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var item = AvailableModuleList.modules.ElementAt(InputComboBox.SelectedIndex);
+            var item = AvailableModules.modules.ElementAt(InputComboBox.SelectedIndex);
             Input = item.Factory();
         }
 
         private void NoteUpDown_ValueChanged(object sender, EventArgs e)
         {
-            shared.Pitch = midi.GetUnScaled((int)NoteUpDown.Value);
+            shared.Pitch = midi.GetUnscaled((int)NoteUpDown.Value);
         }
     }
 }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Grapher.Spectrum;
 
 namespace Grapher.Scale
 {
+    //not usable rn, just there to stock what i know so far about midi format
     public class MidiNoteScale : IScale
     {
         public enum Note
@@ -36,25 +38,50 @@ namespace Grapher.Scale
 
         public double GetMin()
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public double GetScaled(double notscaled)
         {
-            throw new NotImplementedException();
+            return Math.Log(2, notscaled / BaseFrequency) * 12 + 69;
         }
 
         public double To01(double notscaled)
         {
+            return GetScaled(notscaled) / GetMax();
+        }
+
+        public double GetUnscaled(double scaled)//?
+        {
+            return BaseFrequency * Math.Pow(2, ((scaled - 69) / 12d));
+        }
+
+        public double From01(double scaled)
+        {
+            return GetUnscaled(scaled * GetMax());
+        }
+
+        public double PickValue(Wave wave, double time, Spectrum spectrum)
+        {
+            throw new NotImplementedException();
+            //return wave.Note;
+        }
+
+        public void SetValue(double value, Wave wave, double time, Spectrum spectrum)
+        {
             throw new NotImplementedException();
         }
 
-        public double GetUnScaled(int scaled)//?
+        public List<Milestone> GetMilestones()
         {
-            return BaseFrequency * Math.Pow(2,((scaled - 69) / 12d));
+            throw new NotImplementedException();
         }
 
+        private readonly string label = "midi";
 
-
+        public string GetLabel()
+        {
+            return label;
+        }
     }
 }

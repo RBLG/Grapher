@@ -52,6 +52,8 @@
             this.WidthAxisComboBox.Name = "WidthAxisComboBox";
             this.WidthAxisComboBox.Size = new System.Drawing.Size(121, 21);
             this.WidthAxisComboBox.TabIndex = 0;
+            this.WidthAxisComboBox.SelectedIndexChanged += new System.EventHandler(this.WidthAxisComboBox_SelectedIndexChanged);
+            this.WidthAxisComboBox.Enter += new System.EventHandler(this.WidthAxisComboBox_Enter);
             // 
             // comboBox2
             // 
@@ -69,6 +71,7 @@
             this.HeightAxisComboBox.Name = "HeightAxisComboBox";
             this.HeightAxisComboBox.Size = new System.Drawing.Size(121, 21);
             this.HeightAxisComboBox.TabIndex = 2;
+            this.HeightAxisComboBox.SelectedIndexChanged += new System.EventHandler(this.HeightAxisComboBox_SelectedIndexChanged);
             // 
             // comboBox4
             // 
@@ -86,6 +89,8 @@
             this.LengthAxisComboBox.Name = "LengthAxisComboBox";
             this.LengthAxisComboBox.Size = new System.Drawing.Size(121, 21);
             this.LengthAxisComboBox.TabIndex = 4;
+            this.LengthAxisComboBox.SelectedIndexChanged += new System.EventHandler(this.LengthAxisComboBox_SelectedIndexChanged);
+            this.LengthAxisComboBox.Enter += new System.EventHandler(this.LengthAxisComboBox_Enter);
             // 
             // comboBox6
             // 
