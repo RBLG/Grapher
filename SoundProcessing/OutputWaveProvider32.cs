@@ -11,7 +11,7 @@ namespace Grapher
 {
     public class OutputWaveProvider32 : WaveProvider32
     {
-        int sample;
+        //int sample;
 
         //private IModule engine;
         double beginning = 0;
@@ -39,7 +39,7 @@ namespace Grapher
                 float sum = 0;
                 foreach (Wave w in spec.Waves)
                 {
-                    float val = (float)(w.Amplitude * Math.Sin((2 * Math.PI * sample * w.Frequency) / sampleRate));
+                    float val = (float)(w.Amplitude * Math.Sin((2 * Math.PI * w.Frequency * time) / 1000));
                     sum += val;
                     //Console.WriteLine("val:" + val);
                 }
@@ -47,8 +47,8 @@ namespace Grapher
                 //Console.WriteLine("time:" + time);
                 buffer[n + offset] = sum;//(float)(Amplitude * Math.Sin((2 * Math.PI * sample * Frequency) / sampleRate));
                 time += interval;
-                sample++;
-                if (sample >= sampleRate) sample = 0;
+                //sample++;
+                //if (sample >= sampleRate) sample = 0;
             }
             return sampleCount;
         }

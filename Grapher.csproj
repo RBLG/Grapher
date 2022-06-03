@@ -112,9 +112,6 @@
     <Compile Include="GuiElement\MainSettings.Designer.cs">
       <DependentUpon>MainSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="GuiElement\ModuleControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="GuiElement\ModuleForm.cs">
       <SubType>Form</SubType>
     </Compile>

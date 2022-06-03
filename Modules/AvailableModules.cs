@@ -14,8 +14,9 @@ namespace Grapher.Modules
         {
            new AvailableModule("Pitch",()=>new DefaultPitchModule()),
            new AvailableModule("3D Editor",()=>new ProtoModule()),
+           new AvailableModule("LH Editor",()=>{var r=new ProtoModule(); r.table.Width=1;return r; }),
+           new AvailableModule("WH Editor",()=>{var r=new ProtoModule(); r.table.Length=1;return r; }),
            new AvailableModule("Fake",()=>new MockInput())
-           //,new AvailableModule("2D Editor",()=>new Graph2DModule())
         };
         public static readonly IReadOnlyCollection<AvailableModule> modules = list;
 

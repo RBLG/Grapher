@@ -23,7 +23,7 @@ namespace Grapher.GuiElement
             InputComboBox.ValueMember = "Factory";
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
-            InputComboBox.SelectedIndex = 0;
+            InputComboBox.SelectedIndex = 1;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -81,6 +81,7 @@ namespace Grapher.GuiElement
             {
                 ModuleForm moduleform = new ModuleForm(control, Input.GetName());
                 mform = moduleform;
+                //here: if is 3Deditor, set it input to harmonics editor
                 moduleform.Show();
             }
         }

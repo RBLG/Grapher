@@ -40,6 +40,7 @@ namespace Grapher
         public static readonly float oripadding = 10;
         //public readonly float spacing = 20;
         public static readonly float dotsize = 3;
+        public static readonly float halfdot = dotsize / 2;
 
         public static readonly float tablevisualwidth = 300;
         //public readonly float tablevisuallength = 600;
@@ -48,13 +49,12 @@ namespace Grapher
         //to move
         public static readonly int samplerate = 32000;
 
-        //temporary till all fit in module
-        //public Table Table { get; private set; }
-
         //might need to remove
         public IModule Input { get => module.Input; set => module.Input = value; }
 
         public ProtoModule module;
+
+        public Canvas3D() : this(new ProtoModule()) { }
 
         public Canvas3D(ProtoModule nmodule)
         {
@@ -133,65 +133,114 @@ namespace Grapher
                 }
 
                 //select the dots to move
-                double pres = 10;
+                double pres = 20;
                 foreach (List<Table3DDot> row in module.table.dots)
                 {
                     foreach (Table3DDot point in row)
                     {
-                        double dist = point.DistanceTo(e.Location);
+                        double dist = GetDistance(point, e.Location);
                         if (dist < pres)
                         {
                             pres = dist;
-                            moving = new List<MovingDot>();
-                            moving.Add(new MovingDot(point, 1));
+                            moving = new List<MovingDot>() { new MovingDot(point, 1) };
                             //adding points in range of the brush
-                            //Console.WriteLine("main pt added");
-                            if (BrushSize > 0)
-                            {
-                                foreach (List<Table3DDot> row2 in module.table.dots)
-                                {
-                                    foreach (Table3DDot point2 in row2)
-                                    {
-                                        double dist2 = point.GetBrushDistanceTo(point2) / 20;
-                                        //Console.WriteLine(dist2);
-                                        if (dist2 < BrushSize && !point.Equals(point2))
-                                        {
-                                            //Console.WriteLine("autre pt added");
-                                            moving.Add(new MovingDot(point2, 1 - dist2 / BrushSize));
-                                        }
-                                    }
-                                }
-                            }
+
                             lastmousey = e.Location.Y;
                         }
                     }
                 }
+                if (moving != null && BrushSize > 0)
+                {
+                    AddDotsInBrushRange(moving[0].dot);
+                }
             }
-
         }
+
+        private double GetDistance(Table3DDot pt1, Point pt2)
+        {
+            var ori = module.table.Origin;
+            if (module.table.Width != 1 && module.table.Length != 1)
+            {
+                return GetDistanceSub(pt1.ScreenX, pt1.ScreenY, pt2);
+            }
+            else if (module.table.Width != 1)
+            {
+                float pz = (float)ori.X + (float)pt1.Z * 1.5f;
+                float py = (float)ori.Y + 50 - (float)pt1.Y;
+                return GetDistanceSub(pz, py, pt2);
+            }
+            else if (module.table.Length != 1)
+            {
+                float px = (float)ori.X + (float)pt1.X;
+                float py = (float)ori.Y + 50 - (float)pt1.Y;
+                return GetDistanceSub(px, py, pt2);
+            }
+            return 0;
+        }
+        private double GetDistanceSub(double px, double py, Point pt2)
+        {
+            return Math.Sqrt(Math.Pow(pt2.X - px, 2) + Math.Pow(pt2.Y - py, 2));
+        }
+
+        private void AddDotsInBrushRange(Table3DDot point)
+        {
+            foreach (List<Table3DDot> row2 in module.table.dots)
+            {
+                foreach (Table3DDot point2 in row2)
+                {
+                    double dist2 = point.GetBrushDistanceTo(point2) / 20;
+                    //Console.WriteLine(dist2);
+                    if (dist2 < BrushSize && !point.Equals(point2))
+                    {
+                        moving.Add(new MovingDot(point2, 1 - dist2 / BrushSize));
+                    }
+                }
+            }
+        }
+
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            //to remove so that background can be better
+            //to remove for transparent background
             e.Graphics.FillRectangle(bg, e.ClipRectangle);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
+            if (module.table.Width != 1 && module.table.Length != 1)//3D editor view
+            {
+                Do3DPaint(e);
+            }
+            else if (module.table.Width != 1)//2D typically with horizontal axis being time
+            {
+                DoWidth2DPaint(e);
+            }
+            else if (module.table.Length != 1)//2D editor with horizontal axis being something of fixed width
+            {
+                DoLength2DPaint(e);
+            }
+            else //1D editor, rarely usefull i guess but still nice to have
+            {
+                Do1DPaint(e);
+            }
+        }
+
+
+        private void Do3DPaint(PaintEventArgs e)
+        {
             //result of moving then in table
-            var Origin = module.table.Origin;
             var xaxis = module.table.xaxis;
             var yaxis = module.table.yaxis;
             var zaxis = module.table.zaxis;
 
-            float ox = (float)Origin.X;
-            float oy = (float)Origin.Y;
+            float ox = (float)module.table.Origin.X;
+            float oy = (float)module.table.Origin.Y;
 
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             //drawing axis
             float length = tablevisualwidth + oversize;
             e.Graphics.DrawLine(blue, ox, oy, ox + (float)zaxis.X * length, oy + (float)zaxis.Y * length);
             length = size + oversize;
             e.Graphics.DrawLine(green, ox, oy, ox + (float)yaxis.X * length, oy + (float)yaxis.Y * length);
-            length = lengthspacing * 30 + oversize;
+            length = lengthspacing * module.table.Length + oversize;
             e.Graphics.DrawLine(red, ox, oy, ox + (float)xaxis.X * length, oy + (float)xaxis.Y * length);
 
             var points = module.table.dots;
@@ -213,14 +262,83 @@ namespace Grapher
                         e.Graphics.DrawLine(net1, point.ScreenX, point.ScreenY, last.ScreenX, last.ScreenY);
                     }
                     //drawing the point
-                    e.Graphics.FillEllipse(wave1, point.ScreenX - 1, point.ScreenY - 1, dotsize, dotsize);
-                    e.Graphics.DrawEllipse(wave1border, point.ScreenX - dotsize / 2, point.ScreenY - dotsize / 2, dotsize, dotsize);
+                    e.Graphics.FillEllipse(wave1, point.ScreenX - halfdot, point.ScreenY - halfdot, dotsize, dotsize);
+                    e.Graphics.DrawEllipse(wave1border, point.ScreenX - halfdot, point.ScreenY - halfdot, dotsize, dotsize);
                 }
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////
 
+        private void DoWidth2DPaint(PaintEventArgs e)
+        {
+            float ox = (float)module.table.Origin.X;
+            float oy = (float)module.table.Origin.Y + 50;
+
+            //drawing axis
+            float length = tablevisualwidth + oversize;
+            e.Graphics.DrawLine(blue, ox, oy, ox + length * 1.5f, oy);
+            length = size + oversize;
+            e.Graphics.DrawLine(green, ox, oy, ox, oy - length);
+
+            var points = module.table.dots;
+            for (int itx = 0; itx < points.Count; itx++)
+            {
+                for (int itz = 0; itz < points[itx].Count; itz++)
+                {
+                    Table3DDot point = points[itx][itz];
+                    float px = ox + (float)point.Z * 1.5f;
+                    float py = oy - (float)point.Y;
+
+                    //drawing width vertices
+                    if (itz != points[0].Count - 1)
+                    {
+                        Table3DDot last = points[itx][itz + 1];
+                        e.Graphics.DrawLine(net1, px, py, ox + (float)last.Z * 1.5f, oy - (float)last.Y);
+                    }
+                    //drawing the point
+                    e.Graphics.FillEllipse(wave1, px - halfdot, py - halfdot, dotsize, dotsize);
+                    e.Graphics.DrawEllipse(wave1border, px - halfdot, py - halfdot, dotsize, dotsize);
+                }
+            }
+        }
+
+        private void DoLength2DPaint(PaintEventArgs e)
+        {
+            float ox = (float)module.table.Origin.X;
+            float oy = (float)module.table.Origin.Y + 50;
+
+            //drawing axis
+            float length = size + oversize;
+            e.Graphics.DrawLine(green, ox, oy, ox, oy - length);
+            length = lengthspacing * module.table.Length + oversize;
+            e.Graphics.DrawLine(red, ox, oy, ox + length, oy);
+
+            var points = module.table.dots;
+            for (int itx = 0; itx < points.Count; itx++)
+            {
+                for (int itz = 0; itz < points[itx].Count; itz++)
+                {
+                    Table3DDot point = points[itx][itz];
+                    float px = ox + (float)point.X;
+                    float py = oy - (float)point.Y;
+
+                    //drawing length vertices
+                    if (itx != points.Count - 1)
+                    {
+                        Table3DDot last = points[itx + 1][itz];
+                        e.Graphics.DrawLine(net1, px, py, ox + (float)last.X, oy - (float)last.Y);
+                    }
+                    //drawing the point
+                    e.Graphics.FillEllipse(wave1, px - halfdot, py - halfdot, dotsize, dotsize);
+                    e.Graphics.DrawEllipse(wave1border, px - halfdot, py - halfdot, dotsize, dotsize);
+                }
+            }
+        }
+
+        private void Do1DPaint(PaintEventArgs e)
+        {
+
+        }
 
 
 

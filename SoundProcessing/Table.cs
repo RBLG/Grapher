@@ -21,7 +21,7 @@ namespace Grapher
         public readonly Point3D xaxis = new Point3D(0.7, 0.2, 0);
         public readonly Point3D yaxis = new Point3D(0, -1, 0);
         public readonly Point3D zaxis = new Point3D(0.5, -0.3, 0);
-        public readonly Point3D Origin = new Point3D(10, 300, 0);
+        public Point3D Origin = new Point3D(10, 216, 0);
 
         //private Canvas3D gui;
 

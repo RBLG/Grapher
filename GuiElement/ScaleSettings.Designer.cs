@@ -194,6 +194,8 @@
             this.Controls.Add(this.HeightAxisComboBox);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.WidthAxisComboBox);
+            this.MaximumSize = new System.Drawing.Size(325, 244);
+            this.MinimumSize = new System.Drawing.Size(325, 244);
             this.Name = "ScaleSettings";
             this.Text = "Axis settings";
             this.ResumeLayout(false);

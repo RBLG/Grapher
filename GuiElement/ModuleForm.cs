@@ -22,11 +22,10 @@ namespace Grapher.GuiElement
             Control.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             Control.Location = new System.Drawing.Point(0, 0);
             Control.Name = "control";
-            Control.Size = new System.Drawing.Size(909, 560);
+            Control.Size = new System.Drawing.Size(750, 412);
             Control.TabIndex = 0;
-            this.Text = name;
-
-            this.Controls.Add(Control);
+            Text = name;
+            Controls.Add(Control);
         }
 
 

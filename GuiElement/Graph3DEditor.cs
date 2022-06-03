@@ -18,26 +18,33 @@ namespace Grapher
         private ProtoModule module;
 
         public Canvas3D canvas3D1;
+
+        public Graph3DEditor()
+        {
+            InitializeComponent();
+        }
+
         public Graph3DEditor(ProtoModule nmodule)
         {
             InitializeComponent();
 
             //putting it here because graphical editor doesnt work if i put it in the designer
             module = nmodule;
-            this.canvas3D1 = new Grapher.Canvas3D(nmodule)
+            canvas3D1 = new Grapher.Canvas3D(nmodule)
             {
                 BrushSize = 0D,
-                Location = new System.Drawing.Point(84, 46),
+                Location = new System.Drawing.Point(80, 19),
                 Name = "canvas3D1",
-                Size = new System.Drawing.Size(822, 511),
+                Size = new System.Drawing.Size(667, 390),
                 TabIndex = 1,
-                Text = "canvas3D1"
+                Text = "canvas3D1",
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left
             };
-            this.Controls.Add(this.canvas3D1);
+            Controls.Add(canvas3D1);
 
             //not sure those two do anything
-            this.Select();
-            this.canvas3D1.Focus();
+            Select();
+            canvas3D1.Focus();
 
             numWidth.Value = canvas3D1.module.table.Width;
             numLength.Value = canvas3D1.module.table.Length;
@@ -123,6 +130,13 @@ namespace Grapher
         private void label5_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Graph3DEditor_Resize(object sender, EventArgs e)
+        {
+            canvas3D1.module.table.Origin.Y = canvas3D1.Size.Height / 2;
+            canvas3D1.module.table.UpdateAll();
+            canvas3D1.Invalidate();
         }
     }
 }
