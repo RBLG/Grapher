@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Grapher.Scale
 {
     //default time is in millisecond
-    public class DynamicToWholeTimeScale : IScale
+    public class LoopingTimeScale : IScale
     {
         public static readonly double min = 0;
         public double Max { get; set; } //represent the duration of the table (in millis)
 
-        public DynamicToWholeTimeScale()
+        public LoopingTimeScale()
         {
             Max = 1000;
         }
@@ -29,12 +29,12 @@ namespace Grapher.Scale
 
         public double GetScaled(double notscaled) //in millis
         {
-            return notscaled * 1000 / Max;
+            return (notscaled * 1000 / Max) % 1000;
         }
 
         public double To01(double notscaled) //in millis
         {
-            return notscaled / Max;//basically in seconds
+            return (notscaled / Max) % 1;//so that it loop
         }
 
         public double GetUnscaled(double scaled)
@@ -44,7 +44,7 @@ namespace Grapher.Scale
 
         public double From01(double scaled)
         {
-            return scaled * Max; 
+            return scaled * Max;
         }
 
         public double PickValue(Spectrum.Wave wave, double time, Spectrum spectrum)

@@ -34,21 +34,21 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.WidthLabel = new System.Windows.Forms.Label();
+            this.LengthLabel = new System.Windows.Forms.Label();
+            this.DurationLabel = new System.Windows.Forms.Label();
             this.numWidth = new System.Windows.Forms.NumericUpDown();
             this.numLength = new System.Windows.Forms.NumericUpDown();
             this.numDuration = new System.Windows.Forms.NumericUpDown();
             this.AxisSettingsButton = new System.Windows.Forms.Button();
             this.EditInputButton = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.InputLabel = new System.Windows.Forms.Label();
+            this.BrushGroupBox = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDuration)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.BrushGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // InputComboBox
@@ -109,35 +109,35 @@
             this.checkBox3.TabIndex = 10;
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // WidthLabel
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(636, 3);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "width";
+            this.WidthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.WidthLabel.AutoSize = true;
+            this.WidthLabel.Location = new System.Drawing.Point(636, 3);
+            this.WidthLabel.Name = "WidthLabel";
+            this.WidthLabel.Size = new System.Drawing.Size(32, 13);
+            this.WidthLabel.TabIndex = 13;
+            this.WidthLabel.Text = "width";
             // 
-            // label3
+            // LengthLabel
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(692, 3);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 13);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "length";
+            this.LengthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LengthLabel.AutoSize = true;
+            this.LengthLabel.Location = new System.Drawing.Point(692, 3);
+            this.LengthLabel.Name = "LengthLabel";
+            this.LengthLabel.Size = new System.Drawing.Size(36, 13);
+            this.LengthLabel.TabIndex = 14;
+            this.LengthLabel.Text = "length";
             // 
-            // label4
+            // DurationLabel
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(532, 3);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 13);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "duration (ms)";
+            this.DurationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DurationLabel.AutoSize = true;
+            this.DurationLabel.Location = new System.Drawing.Point(532, 3);
+            this.DurationLabel.Name = "DurationLabel";
+            this.DurationLabel.Size = new System.Drawing.Size(67, 13);
+            this.DurationLabel.TabIndex = 15;
+            this.DurationLabel.Text = "duration (ms)";
             // 
             // numWidth
             // 
@@ -221,43 +221,43 @@
             this.EditInputButton.UseVisualStyleBackColor = false;
             this.EditInputButton.Click += new System.EventHandler(this.EditInputButton_Click);
             // 
-            // label5
+            // InputLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(84, 3);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(30, 13);
-            this.label5.TabIndex = 23;
-            this.label5.Text = "input";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
+            this.InputLabel.AutoSize = true;
+            this.InputLabel.Location = new System.Drawing.Point(84, 3);
+            this.InputLabel.Name = "InputLabel";
+            this.InputLabel.Size = new System.Drawing.Size(30, 13);
+            this.InputLabel.TabIndex = 23;
+            this.InputLabel.Text = "input";
+            this.InputLabel.Click += new System.EventHandler(this.label5_Click);
             // 
-            // groupBox1
+            // BrushGroupBox
             // 
-            this.groupBox1.Controls.Add(this.brushSize);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox3);
-            this.groupBox1.Location = new System.Drawing.Point(3, 32);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(75, 377);
-            this.groupBox1.TabIndex = 24;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Brush :";
+            this.BrushGroupBox.Controls.Add(this.brushSize);
+            this.BrushGroupBox.Controls.Add(this.checkBox1);
+            this.BrushGroupBox.Controls.Add(this.checkBox2);
+            this.BrushGroupBox.Controls.Add(this.checkBox3);
+            this.BrushGroupBox.Location = new System.Drawing.Point(3, 32);
+            this.BrushGroupBox.Name = "BrushGroupBox";
+            this.BrushGroupBox.Size = new System.Drawing.Size(75, 377);
+            this.BrushGroupBox.TabIndex = 24;
+            this.BrushGroupBox.TabStop = false;
+            this.BrushGroupBox.Text = "Brush :";
             // 
             // Graph3DEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.BrushGroupBox);
+            this.Controls.Add(this.InputLabel);
             this.Controls.Add(this.EditInputButton);
             this.Controls.Add(this.AxisSettingsButton);
             this.Controls.Add(this.numDuration);
             this.Controls.Add(this.numLength);
             this.Controls.Add(this.numWidth);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.DurationLabel);
+            this.Controls.Add(this.LengthLabel);
+            this.Controls.Add(this.WidthLabel);
             this.Controls.Add(this.InputComboBox);
             this.Name = "Graph3DEditor";
             this.Size = new System.Drawing.Size(750, 412);
@@ -268,28 +268,28 @@
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDuration)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            this.BrushGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ComboBox InputComboBox;
+        public System.Windows.Forms.ComboBox InputComboBox;
         private System.Windows.Forms.TrackBar brushSize;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numWidth;
-        private System.Windows.Forms.NumericUpDown numLength;
-        private System.Windows.Forms.NumericUpDown numDuration;
-        private System.Windows.Forms.Button AxisSettingsButton;
-        private System.Windows.Forms.Button EditInputButton;
-        private System.Windows.Forms.Label label5;
+        public System.Windows.Forms.NumericUpDown numLength;
+        public System.Windows.Forms.NumericUpDown numDuration;
+        public System.Windows.Forms.Button AxisSettingsButton;
+        public System.Windows.Forms.Button EditInputButton;
         //private Canvas3D canvas3D2;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox BrushGroupBox;
+        public System.Windows.Forms.Label DurationLabel;
+        public System.Windows.Forms.Label WidthLabel;
+        public System.Windows.Forms.Label LengthLabel;
+        public System.Windows.Forms.Label InputLabel;
     }
 }

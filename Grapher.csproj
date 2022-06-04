@@ -127,10 +127,11 @@
     <Compile Include="Modes\AvailableModes.cs" />
     <Compile Include="Modules\AvailableModules.cs" />
     <Compile Include="Modules\DefaultPitchModule.cs" />
+    <Compile Include="Modules\HarmonicModule.cs" />
     <Compile Include="Modules\IModule.cs" />
     <Compile Include="Modules\MockInput.cs" />
     <Compile Include="Scale\AvailableScales.cs" />
-    <Compile Include="Scale\DynamicToWholeTimeScale.cs" />
+    <Compile Include="Scale\LoopingTimeScale.cs" />
     <Compile Include="Scale\ExponantialFrequencyScale.cs" />
     <Compile Include="Scale\HarmonicScales.cs" />
     <Compile Include="Scale\LinearAmplitudeScale.cs" />

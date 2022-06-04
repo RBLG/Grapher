@@ -98,7 +98,6 @@ namespace Grapher
             {
                 foreach (int itz in Enumerable.Range(0, dots[0].Count))
                 {
-
                     Table3DDot pt = dots[itx][itz];
                     pt.Z = itz * (Canvas3D.tablevisualwidth / Math.Max(2, dots[0].Count - 1)) + Canvas3D.oripadding;
                     //pt.X = itx * (dots.Count / gui.tablevisualwidth) + gui.oripadding;
@@ -119,52 +118,60 @@ namespace Grapher
             return (GetOnMaxValue(freq, time) - MIN) / MAX;
         }
 
-        public double GetOnMaxValue(double freq, double time)
+        public double GetOnMaxValue(double wval, double lval)
         {
-            //Console.WriteLine("time:" + time);
-            if (freq < 0 || 1 < freq)
-            {
-                //Console.WriteLine("out of range");
-                return 0;
-            }
-            freq *= dots[0].Count - 1;
-            time %= 1;//so it loop
-            time *= dots.Count - 1;
+            if (wval < 0 || 1 < wval || lval < 0 || 1 < lval)
+            { return 0; }
+            wval *= dots[0].Count - 1;
+            lval *= dots.Count - 1;
 
             if (Interpolation == InterpolationType.None)
-            {
-                return GetNotInterpolatedValue(time, freq);
-            }
+            { return GetNotInterpolatedValue(lval, wval); }
             else
-            {
-                return GetLinearInterpolatedValue(time, freq);
-            }
+            { return GetLinearInterpolatedValue(lval, wval); }
         }
 
         private double GetNotInterpolatedValue(double index1, double index2)
         {
-            return dots[(int)Math.Floor(index1)][(int)Math.Floor(index2)].Y;
+            return dots[(int)index1][(int)index2].Y;
         }
 
         private double GetLinearInterpolatedValue(double index1, double index2)
         {
-            int row1 = (int)Math.Floor(index1);
-            int row2 = (int)Math.Ceiling(index1);
+            int col1 = (int)index2;
+            int col2 = (index2 == col1) ? col1 : col1 + 1; //faster (int)Math.Ceiling(index2);
+            if (col2 >= dots[0].Count)
+            { col2 = 0; }
+
+            int row1 = (int)index1;
+            int row2 = (index1 == row1) ? row1 : row1 + 1; //faster (int)Math.Ceiling(index1);
             if (row2 >= dots.Count)
-            {
-                row2 = 0;
-            }
+            { row2 = 0; }
             double rmix = index1 % 1;
             double mrmix = 1 - rmix;
 
-            int col1 = (int)Math.Floor(index2);
-            int col2 = (int)Math.Ceiling(index2);
-            double cmix = index2 % 1;
-            double mcmix = 1 - cmix;
 
-            double ri1 = dots[row1][col1].Y * mrmix + dots[row2][col1].Y * rmix;
-            double ri2 = dots[row1][col2].Y * mrmix + dots[row2][col2].Y * rmix;
-            return ri1 * mcmix + ri2 * cmix;
+            if (col1 == col2)//all this so it doesnt have to compute much more if interpolation has no effect
+            {
+                if (row1 == row2)
+                { return dots[row1][col1].Y; }
+                else
+                { return dots[row1][col1].Y * mrmix + dots[row2][col1].Y * rmix; }
+            }
+            else
+            {
+                double cmix = index2 % 1;
+                double mcmix = 1 - cmix;
+                if (row1 == row2)
+                { return dots[row1][col1].Y * mcmix + dots[row1][col2].Y * cmix; }
+                else
+                {
+                    double ri1 = dots[row1][col1].Y * mrmix + dots[row2][col1].Y * rmix;
+                    double ri2 = dots[row1][col2].Y * mrmix + dots[row2][col2].Y * rmix;
+                    return ri1 * mcmix + ri2 * cmix;
+                }
+            }
+
         }
 
         public enum InterpolationType

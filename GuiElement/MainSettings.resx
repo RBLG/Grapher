@@ -120,23 +120,32 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="EditInputButton.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAu
-        IgAALiIBquLdkgAAAAd0SU1FB+YFHAodMArE7A4AAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJ
-        TVBXgQ4XAAADQklEQVRoQ+2X30sqQRSA79/dk69SWfQLlArCwDQ0IhGT6MHSipDeevJX5oNEZJRkWWkf
-        zFxv92q5uzN7h2C+B8nZ1j3fmTNnZn8NfjhWwDRWwDRWwDRWYBKvr6/v7+98ghzSir8C3W734uLi6urq
-        /Py8VCr54eCXALF2Oh2CPj09TaVSfPI3I/KyPnwRINCzszPiJvFPT0/MQ6/XYzCdTj88PMh/0oRmAWIl
-        0N3d3YODg+vr6+fnZ3lhMGAlNBqNvb09vQ46BR4fHxOJhCgVQidieeE31BUOOzs7t7e3ckgZbQKibICa
-        kUPjYIoymczU1NTd3Z0cUkOPANHs7+9vbW1NLA+mpVarBYPBk5MTLU1Jg8D9/f3c3Nz6+joa/X5fjn4N
-        1UVTmjhXDlEVIAhCIZ2uliZ3cQs3qk+CdwGKgaCLxSIL121jYRK2t7fX1tbUJ8GjAJmrVCqUzcrKisPK
-        +Qzy9XrdmACPr1arMzMzsViMBSBHXULXCofD6r3IiwAFQNlks1nFLYnoI5EIJvK7J7wIsA2RPM+5H8Ke
-        QOdttVqjW55zXAsQ/fz8PAtA5akCFsDi4qJiFbkToGY2Nzej0ajivAv4kenp6Vwu9/LyIofc40KAx9C8
-        Wbge2s5YOKLyg8fHxyq9yKkAfZPGxzGT0tcSvYApZTnl83lk5JBLHAlQ7hxgNjY21BfuKDc3N4FAwPP5
-        1JEAeVpdXWXbUt93Rnl7e6MlMLfe1tVkAUqfMg2FQhoP8f/AI8RLM41VDjlmggB7VrlcZrsheo2lPwqh
-        I8DxjrciOeSM7wSoeJbXwsKCf7n/DIXKyYo27apQxwjQcFi19MrZ2Vn6NIvM19x/hodySGm326wHEYa8
-        8DV/BLiBXkbWmUrOary5FgoFP9rON5ApnphMJnll46DebDYxYUKAGqOeCXKIuEUK8P3y8vLw8JCs886a
-        SqV4++YGcfU/g8Py8jKdg3cG/lhaWuIzHo+zh4rXICDLwuEvgaOjI7yRJnT1o44KpJxyIOsi/YQkDvBY
-        jRcAvtPOPO+IfkNC0SC8IWJ8zCL+WVgB01gB01gB01gB01gB01gB01gB01gB01gB01gB01gB01gB01gB
-        swwGHz6TVmnl3oN8AAAAAElFTkSuQmCC
+        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
+        0Vv0c2rbeQAAAABJRU5ErkJggg==
 </value>
   </data>
 </root>

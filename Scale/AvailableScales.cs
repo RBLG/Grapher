@@ -11,7 +11,7 @@ namespace Grapher.Scale
         private static readonly List<AvailableScale> list = new List<AvailableScale>()
         {
            new AvailableScale("--Time:---------",()=>null,null,false,ScaleType.Time),
-           new AvailableScale(" Dynamic (T)",()=>new DynamicToWholeTimeScale(),typeof(DynamicToWholeTimeScale),true,ScaleType.Time),
+           new AvailableScale(" Dynamic (T)",()=>new LoopingTimeScale(),typeof(LoopingTimeScale),true,ScaleType.Time),
            new AvailableScale("--Frequency:----",()=>null,null,false,ScaleType.Frequency),
            new AvailableScale("Exponantial (F)",()=>new ExponantialFrequencyScale(),typeof(ExponantialFrequencyScale),true,ScaleType.Frequency),
            new AvailableScale(" Linear (F)",()=>new LinearFrequencyScale(),typeof(LinearFrequencyScale),true,ScaleType.Frequency),

@@ -7,7 +7,7 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Scale
 {
-    public class HarmonicScales : IScale
+    public class HarmonicScale : IScale
     {
         //need to change the structure so that scale can be aware of pitch
         public double GetMax()

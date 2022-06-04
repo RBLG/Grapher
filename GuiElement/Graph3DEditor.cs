@@ -46,8 +46,8 @@ namespace Grapher
             Select();
             canvas3D1.Focus();
 
-            numWidth.Value = canvas3D1.module.table.Width;
-            numLength.Value = canvas3D1.module.table.Length;
+            numWidth.Value = canvas3D1.module.MTable.Width;
+            numLength.Value = canvas3D1.module.MTable.Length;
             InputComboBox.ValueMember = "Factory";
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
@@ -75,15 +75,15 @@ namespace Grapher
 
         private void numWidth_ValueChanged(object sender, EventArgs e)
         {
-            canvas3D1.module.table.Width = (int)Math.Max(1, numWidth.Value);
-            numWidth.Value = canvas3D1.module.table.Width;
+            canvas3D1.module.MTable.Width = (int)Math.Max(1, numWidth.Value);
+            numWidth.Value = canvas3D1.module.MTable.Width;
             canvas3D1.Invalidate();
         }
 
         private void numLength_ValueChanged(object sender, EventArgs e)
         {
-            canvas3D1.module.table.Length = (int)Math.Max(1, numLength.Value);
-            numLength.Value = canvas3D1.module.table.Length;
+            canvas3D1.module.MTable.Length = (int)Math.Max(1, numLength.Value);
+            numLength.Value = canvas3D1.module.MTable.Length;
             canvas3D1.Invalidate();
         }
 
@@ -134,8 +134,8 @@ namespace Grapher
 
         private void Graph3DEditor_Resize(object sender, EventArgs e)
         {
-            canvas3D1.module.table.Origin.Y = canvas3D1.Size.Height / 2;
-            canvas3D1.module.table.UpdateAll();
+            canvas3D1.module.MTable.Origin.Y = canvas3D1.Size.Height / 2;
+            canvas3D1.module.MTable.UpdateAll();
             canvas3D1.Invalidate();
         }
     }

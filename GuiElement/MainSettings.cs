@@ -26,7 +26,7 @@ namespace Grapher.GuiElement
             InputComboBox.SelectedIndex = 1;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             if (button1.Text != "running")
             {
@@ -41,6 +41,8 @@ namespace Grapher.GuiElement
 
         private WaveOut waveOut;
         private SharedStuff shared = new SharedStuff(440, new DefaultPitchModule());
+        public static readonly int samplerate = 32000;//32kHz
+        public static readonly int channels = 1;//mono
 
         public void Graph3DEditor_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -54,7 +56,7 @@ namespace Grapher.GuiElement
             {
                 Console.WriteLine("start");
                 var output = new OutputWaveProvider32(shared);
-                output.SetWaveFormat(Canvas3D.samplerate, 1); // 16kHz mono
+                output.SetWaveFormat(samplerate, channels);
                 waveOut = new WaveOut();
                 waveOut.Init(output);
                 waveOut.Play();
@@ -77,7 +79,7 @@ namespace Grapher.GuiElement
         private void EditInputButton_Click(object sender, EventArgs e)
         {
             var control = Input.GetControl();
-            if (control != null &&( mform == null || mform.IsDisposed))
+            if (control != null && (mform == null || mform.IsDisposed))
             {
                 ModuleForm moduleform = new ModuleForm(control, Input.GetName());
                 mform = moduleform;
@@ -94,7 +96,17 @@ namespace Grapher.GuiElement
 
         private void NoteUpDown_ValueChanged(object sender, EventArgs e)
         {
-            shared.Pitch = midi.GetUnscaled((int)NoteUpDown.Value);
+            UpdatePitch();
+        }
+
+        private void Detuner_Scroll(object sender, EventArgs e)
+        {
+            UpdatePitch();
+        }
+
+        private void UpdatePitch()
+        {
+            shared.Pitch = midi.GetUnscaled((double)NoteUpDown.Value + (Detuner.Value / 100d));
         }
     }
 }
