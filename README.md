@@ -25,7 +25,7 @@ Grapher is composed of the following modules that can be chained:
   for example:
   - with frequency on the width axis, time on the length axis and amplitude on the height axis, you can make both an envelloppe and/or a filter like this:
 
-![screenshot]((https://raw.githubusercontent.com/RBLG/Grapher/blob/dev/res/examples/highpassfilter_and_envelloppe.png)
+![screenshot](https://raw.githubusercontent.com/RBLG/Grapher/blob/dev/res/examples/highpassfilter_and_envelloppe.png)
   
   - you could also replace the amplitude scale on the height axis by frequency to do frequency modulation
   - you can also change the duration of the time scale to make it slower/faster
