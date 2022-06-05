@@ -80,6 +80,10 @@ namespace Grapher.Modules
             }
         }
 
+        public override void SetInput(IModule modude)
+        {
+            return;
+        }
 
     }
 }

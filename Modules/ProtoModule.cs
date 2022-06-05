@@ -63,5 +63,15 @@ namespace Grapher
         {
             return name;
         }
+
+        public virtual IModule GetInput()
+        {
+            return Input;
+        }
+
+        public virtual void SetInput(IModule input)
+        {
+            Input = input;
+        }
     }
 }

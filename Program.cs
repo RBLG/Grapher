@@ -18,5 +18,7 @@ namespace Grapher
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
+
+        //static IModule rootmod;
     }
 }

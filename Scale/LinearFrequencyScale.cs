@@ -14,6 +14,17 @@ namespace Grapher.Scale
         public const double max = 20_000;
         public const double range = max - min;
 
+
+        private readonly List<Milestone> milestones;
+        public LinearFrequencyScale()
+        {
+            milestones = new List<Milestone>() {
+            new Milestone("20", 0),
+            new Milestone("200", To01(200)),
+            new Milestone("2000", To01(2000)),
+            new Milestone("20 000", 1)
+            };
+        }
         public double GetMax()
         {
             return max;
@@ -56,7 +67,7 @@ namespace Grapher.Scale
 
         public List<Milestone> GetMilestones()
         {
-            throw new NotImplementedException();
+            return milestones;
         }
 
         private readonly string label = "f(Hz)";

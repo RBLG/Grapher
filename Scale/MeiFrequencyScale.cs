@@ -13,6 +13,17 @@ namespace Grapher.Scale
         public static readonly double max = ToMei(LinearFrequencyScale.max + 1);
         public static readonly double range = max - min;
 
+        private readonly List<Milestone> milestones;
+        public MeiFrequencyScale()
+        {
+            milestones = new List<Milestone>() {
+            new Milestone("20", 0),
+            new Milestone("200", To01(200)),
+            new Milestone("2000", To01(2000)),
+            new Milestone("20 000", 1)
+            };
+        }
+
         public double GetMax()
         {
             return max;
@@ -65,7 +76,7 @@ namespace Grapher.Scale
 
         public List<Milestone> GetMilestones()
         {
-            throw new NotImplementedException();
+            return milestones;
         }
 
         private readonly string label = "f(Hz)";

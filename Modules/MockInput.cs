@@ -45,7 +45,7 @@ namespace Grapher.Modules
         {
             for (int it = 0; it < main.Waves.Count; it++)
             {
-                Wave mw = main.Waves[it];
+                //Wave mw = main.Waves[it];
                 Wave bw = buffer.Waves[it];
                 //bw.Type = mw.Type;
                 bw.Frequency = bpitch * (it * 2 + 1);//mw.Frequency;
@@ -53,6 +53,16 @@ namespace Grapher.Modules
 
             }
             return buffer;
+        }
+
+        public IModule GetInput()
+        {
+            return null;
+        }
+
+        public void SetInput(IModule input)
+        {
+            return;
         }
     }
 }

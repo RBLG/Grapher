@@ -15,5 +15,8 @@ namespace Grapher
         UserControl GetControl();
 
         String GetName();
+
+        IModule GetInput();
+        void SetInput(IModule input);
     }
 }
