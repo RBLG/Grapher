@@ -42,5 +42,15 @@ namespace Grapher.Modules
             spec.Waves[0].Amplitude = 0.2;
             return spec;
         }
+
+        public IModule GetInput()
+        {
+            return null;
+        }
+
+        public void SetInput(IModule input)
+        {
+            return;
+        }
     }
 }

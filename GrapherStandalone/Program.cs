@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Grapher
+namespace GrapherStandalone
 {
     public static class Program
     {
@@ -16,7 +16,7 @@ namespace Grapher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new Grapher.MainForm());
         }
 
         //static IModule rootmod;
