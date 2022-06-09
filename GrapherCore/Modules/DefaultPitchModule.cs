@@ -10,7 +10,7 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Modules
 {
-    internal class DefaultPitchModule : IModule
+    public class DefaultPitchModule : IModule
     {
         //private MidiNoteScale midi=new MidiNoteScale();
 
