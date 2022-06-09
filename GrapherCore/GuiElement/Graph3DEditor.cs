@@ -20,8 +20,10 @@ namespace Grapher
         public Canvas3D canvas3D1;
 
         public Graph3DEditor()
-        {
+        {   //not to be used, only to trick the visual framework into building it
             InitializeComponent();
+            canvas3D1 = new Canvas3D();
+            module = canvas3D1.module;
         }
 
         public Graph3DEditor(ProtoModule nmodule)
@@ -55,7 +57,7 @@ namespace Grapher
             //////
         }
 
-        private readonly HashSet<int> keys = new HashSet<int>();
+        private readonly HashSet<int> keys = new();
         //private BackgroundWorker worker=new BackgroundWorker();
 
         private void Graph3DEditor_KeyDown(object sender, KeyEventArgs e)
@@ -97,7 +99,7 @@ namespace Grapher
             canvas3D1.BrushSize = brushSize.Value / 1000d;
         }
 
-        public ScaleSettings ssets = null;
+        public ScaleSettings? ssets = null;
 
         private void AxisSettingsButton_Click(object sender, EventArgs e)
         {
