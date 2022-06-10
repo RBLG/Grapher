@@ -73,7 +73,7 @@
             this.brushSize.Size = new System.Drawing.Size(76, 29);
             this.brushSize.TabIndex = 6;
             this.brushSize.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.brushSize.Scroll += new System.EventHandler(this.brushSizeX_Scroll);
+            this.brushSize.Scroll += new System.EventHandler(this.BrushSizeX_Scroll);
             // 
             // checkBox1
             // 
@@ -161,7 +161,7 @@
             0,
             0,
             0});
-            this.numWidth.ValueChanged += new System.EventHandler(this.numWidth_ValueChanged);
+            this.numWidth.ValueChanged += new System.EventHandler(this.NumWidth_ValueChanged);
             // 
             // numLength
             // 
@@ -182,7 +182,7 @@
             0,
             0,
             0});
-            this.numLength.ValueChanged += new System.EventHandler(this.numLength_ValueChanged);
+            this.numLength.ValueChanged += new System.EventHandler(this.NumLength_ValueChanged);
             // 
             // numDuration
             // 
@@ -208,7 +208,7 @@
             0,
             0,
             0});
-            this.numDuration.ValueChanged += new System.EventHandler(this.numDuration_ValueChanged);
+            this.numDuration.ValueChanged += new System.EventHandler(this.NumDuration_ValueChanged);
             // 
             // AxisSettingsButton
             // 
@@ -243,7 +243,6 @@
             this.InputLabel.Size = new System.Drawing.Size(35, 15);
             this.InputLabel.TabIndex = 23;
             this.InputLabel.Text = "input";
-            this.InputLabel.Click += new System.EventHandler(this.label5_Click);
             // 
             // BrushGroupBox
             // 
@@ -278,8 +277,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Graph3DEditor";
             this.Size = new System.Drawing.Size(875, 475);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Graph3DEditor_KeyDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Graph3DEditor_KeyUp);
             this.Resize += new System.EventHandler(this.Graph3DEditor_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).EndInit();

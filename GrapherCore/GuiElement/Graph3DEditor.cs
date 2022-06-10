@@ -15,8 +15,6 @@ namespace Grapher
 {
     public partial class Graph3DEditor : UserControl
     {
-        private ProtoModule module;
-
         public Canvas3D canvas3D1;
 
         //not to be used, only to trick the visual framework into building it
@@ -25,24 +23,21 @@ namespace Grapher
         public Graph3DEditor(ProtoModule nmodule)
         {
             //putting it here because graphical editor doesnt work if i put it in the designer
-            module = nmodule;
+            //module = nmodule;
             canvas3D1 = new Grapher.Canvas3D(nmodule)
             {
                 BrushSize = 0D,
                 Location = new System.Drawing.Point(94, 21),
-                Name = "canvas3D1",
                 Size = new System.Drawing.Size(777, 451),
+                Name = "canvas3D1",
                 TabIndex = 25,
                 Text = "canvas3D1",
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left,
                 //Visible = false
             };
             InitializeComponent();
+            //after init so it is in the background
             Controls.Add(canvas3D1);
-
-            //not sure those two do anything
-            Select();
-            canvas3D1.Focus();
 
             numWidth.Value = canvas3D1.module.MTable.Width;
             numLength.Value = canvas3D1.module.MTable.Length;
@@ -53,47 +48,27 @@ namespace Grapher
             //////
         }
 
-        private readonly HashSet<int> keys = new();
-        //private BackgroundWorker worker=new BackgroundWorker();
-
-        private void Graph3DEditor_KeyDown(object sender, KeyEventArgs e)
-        {
-            keys.Add(e.KeyValue);
-        }
-
-        private void Graph3DEditor_KeyUp(object sender, KeyEventArgs e)
-        {
-            keys.Remove(e.KeyValue);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void numWidth_ValueChanged(object sender, EventArgs e)
+        private void NumWidth_ValueChanged(object sender, EventArgs e)
         {
             canvas3D1.module.MTable.Width = (int)Math.Max(1, numWidth.Value);
             numWidth.Value = canvas3D1.module.MTable.Width;
             canvas3D1.Invalidate();
         }
 
-        private void numLength_ValueChanged(object sender, EventArgs e)
+        private void NumLength_ValueChanged(object sender, EventArgs e)
         {
             canvas3D1.module.MTable.Length = (int)Math.Max(1, numLength.Value);
             numLength.Value = canvas3D1.module.MTable.Length;
             canvas3D1.Invalidate();
         }
 
-        private void numDuration_ValueChanged(object sender, EventArgs e)
+        private void NumDuration_ValueChanged(object sender, EventArgs e)
         {
             canvas3D1.SetDura((int)Math.Max(1, numDuration.Value));
         }
 
-        private void brushSizeX_Scroll(object sender, EventArgs e)
-        {
-            canvas3D1.BrushSize = brushSize.Value / 1000d;
-        }
+        private void BrushSizeX_Scroll(object sender, EventArgs e)
+        { canvas3D1.BrushSize = brushSize.Value / 1000d; }
 
         public ScaleSettings? ssets = null;
 
@@ -101,33 +76,38 @@ namespace Grapher
         {
             if (ssets == null || ssets.IsDisposed)
             {
-                ScaleSettings settings = new ScaleSettings(this);
-                ssets = settings;
-                settings.Show();
+                ssets = new ScaleSettings(this);
+                ssets.Show();
             }
-
+            else
+            { ssets.Dispose(); }
         }
+
+        private ModuleForm? inputform = null;
 
         private void EditInputButton_Click(object sender, EventArgs e)
         {
             var control = canvas3D1.Input.GetControl();
             if (control == null)
+            { return; }
+            if (inputform == null || inputform.IsDisposed)
             {
-                return;
+                inputform = new(control, canvas3D1.Input.GetName());
+                inputform.Show();
             }
-            ModuleForm moduleform = new ModuleForm(control, canvas3D1.Input.GetName());
-            moduleform.Show();
+            else
+            { inputform.Dispose(); }
+
         }
 
         private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var item = AvailableModules.modules.ElementAt(InputComboBox.SelectedIndex);
+            if (item == null)
+            { return; }
+            if (inputform != null && !inputform.IsDisposed)
+            { inputform.Dispose(); }
             canvas3D1.Input = item.Factory();
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void Graph3DEditor_Resize(object sender, EventArgs e)
