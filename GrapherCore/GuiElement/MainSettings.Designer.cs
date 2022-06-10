@@ -44,20 +44,22 @@
             // Detuner
             // 
             this.Detuner.AutoSize = false;
-            this.Detuner.Location = new System.Drawing.Point(3, 89);
+            this.Detuner.Location = new System.Drawing.Point(4, 103);
+            this.Detuner.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Detuner.Maximum = 100;
             this.Detuner.Minimum = -100;
             this.Detuner.Name = "Detuner";
-            this.Detuner.Size = new System.Drawing.Size(103, 23);
+            this.Detuner.Size = new System.Drawing.Size(120, 27);
             this.Detuner.TabIndex = 0;
             this.Detuner.TickStyle = System.Windows.Forms.TickStyle.None;
             this.Detuner.Scroll += new System.EventHandler(this.Detuner_Scroll);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(3, 176);
+            this.button1.Location = new System.Drawing.Point(4, 203);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(88, 27);
             this.button1.TabIndex = 1;
             this.button1.Text = "test";
             this.button1.UseVisualStyleBackColor = true;
@@ -69,19 +71,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.groupBox1.Location = new System.Drawing.Point(112, 3);
+            this.groupBox1.Location = new System.Drawing.Point(131, 3);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(295, 231);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox1.Size = new System.Drawing.Size(344, 267);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 0);
+            this.label5.Location = new System.Drawing.Point(12, 0);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(30, 13);
+            this.label5.Size = new System.Drawing.Size(35, 15);
             this.label5.TabIndex = 26;
             this.label5.Text = "input";
             // 
@@ -89,9 +93,10 @@
             // 
             this.EditInputButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("EditInputButton.BackgroundImage")));
             this.EditInputButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.EditInputButton.Location = new System.Drawing.Point(84, 16);
+            this.EditInputButton.Location = new System.Drawing.Point(98, 18);
+            this.EditInputButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.EditInputButton.Name = "EditInputButton";
-            this.EditInputButton.Size = new System.Drawing.Size(22, 21);
+            this.EditInputButton.Size = new System.Drawing.Size(26, 24);
             this.EditInputButton.TabIndex = 25;
             this.EditInputButton.UseVisualStyleBackColor = true;
             this.EditInputButton.Click += new System.EventHandler(this.EditInputButton_Click);
@@ -100,31 +105,34 @@
             // 
             this.InputComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.InputComboBox.FormattingEnabled = true;
-            this.InputComboBox.Location = new System.Drawing.Point(3, 16);
+            this.InputComboBox.Location = new System.Drawing.Point(4, 18);
+            this.InputComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.InputComboBox.Name = "InputComboBox";
-            this.InputComboBox.Size = new System.Drawing.Size(75, 21);
+            this.InputComboBox.Size = new System.Drawing.Size(87, 23);
             this.InputComboBox.TabIndex = 24;
             this.InputComboBox.SelectedIndexChanged += new System.EventHandler(this.InputComboBox_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 73);
+            this.label1.Location = new System.Drawing.Point(12, 84);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.Size = new System.Drawing.Size(44, 15);
             this.label1.TabIndex = 27;
             this.label1.Text = "detune";
             // 
             // NoteUpDown
             // 
-            this.NoteUpDown.Location = new System.Drawing.Point(3, 205);
+            this.NoteUpDown.Location = new System.Drawing.Point(4, 237);
+            this.NoteUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.NoteUpDown.Maximum = new decimal(new int[] {
             125,
             0,
             0,
             0});
             this.NoteUpDown.Name = "NoteUpDown";
-            this.NoteUpDown.Size = new System.Drawing.Size(75, 20);
+            this.NoteUpDown.Size = new System.Drawing.Size(88, 23);
             this.NoteUpDown.TabIndex = 28;
             this.NoteUpDown.Value = new decimal(new int[] {
             69,
@@ -135,7 +143,7 @@
             // 
             // MainSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.NoteUpDown);
             this.Controls.Add(this.label1);
@@ -145,10 +153,9 @@
             this.Controls.Add(this.EditInputButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Detuner);
-            this.MaximumSize = new System.Drawing.Size(410, 237);
-            this.MinimumSize = new System.Drawing.Size(410, 237);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "MainSettings";
-            this.Size = new System.Drawing.Size(410, 237);
+            this.Size = new System.Drawing.Size(478, 273);
             ((System.ComponentModel.ISupportInitialize)(this.Detuner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NoteUpDown)).EndInit();
             this.ResumeLayout(false);

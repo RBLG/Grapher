@@ -39,8 +39,8 @@ namespace Grapher.GuiElement
             StartStopSineWave();
         }
 
-        private WaveOut waveOut;
-        private SharedStuff shared = new SharedStuff(440, new DefaultPitchModule());
+        private WaveOut? waveOut;
+        private readonly SharedStuff shared = new(440, new DefaultPitchModule());
         public static readonly int samplerate = 32000;//32kHz
         public static readonly int channels = 1;//mono
 
@@ -70,22 +70,25 @@ namespace Grapher.GuiElement
             }
         }
 
-        private MidiNoteScale midi = new MidiNoteScale();
+        private readonly MidiNoteScale midi = new();
 
         private IModule Input { get => shared.Module; set => shared.Module = value; }
 
-        private ModuleForm mform = null;
+        private ModuleForm? inputform = null;
 
         private void EditInputButton_Click(object sender, EventArgs e)
         {
             var control = Input.GetControl();
-            if (control != null && (mform == null || mform.IsDisposed))
+            if (control == null)
+            { return; }
+            if (inputform == null || inputform.IsDisposed)
             {
-                ModuleForm moduleform = new ModuleForm(control, Input.GetName());
-                mform = moduleform;
-                //here: if is 3Deditor, set it input to harmonics editor
-                moduleform.Show();
+                inputform = new(control, Input.GetName());
+                //here: if is 3Deditor, set it input to harmonics editor, maybe
+                inputform.Show();
             }
+            else
+            { inputform.Dispose(); }
         }
 
         private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -95,14 +98,10 @@ namespace Grapher.GuiElement
         }
 
         private void NoteUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            UpdatePitch();
-        }
+        { UpdatePitch(); }
 
         private void Detuner_Scroll(object sender, EventArgs e)
-        {
-            UpdatePitch();
-        }
+        { UpdatePitch(); }
 
         private void UpdatePitch()
         {
