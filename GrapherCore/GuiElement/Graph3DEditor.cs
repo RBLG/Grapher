@@ -19,29 +19,25 @@ namespace Grapher
 
         public Canvas3D canvas3D1;
 
-        public Graph3DEditor()
-        {   //not to be used, only to trick the visual framework into building it
-            InitializeComponent();
-            canvas3D1 = new Canvas3D();
-            module = canvas3D1.module;
-        }
+        //not to be used, only to trick the visual framework into building it
+        public Graph3DEditor() : this(new()) { }
 
         public Graph3DEditor(ProtoModule nmodule)
         {
-            InitializeComponent();
-
             //putting it here because graphical editor doesnt work if i put it in the designer
             module = nmodule;
             canvas3D1 = new Grapher.Canvas3D(nmodule)
             {
                 BrushSize = 0D,
-                Location = new System.Drawing.Point(80, 19),
+                Location = new System.Drawing.Point(94, 21),
                 Name = "canvas3D1",
-                Size = new System.Drawing.Size(667, 390),
-                TabIndex = 1,
+                Size = new System.Drawing.Size(777, 451),
+                TabIndex = 25,
                 Text = "canvas3D1",
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left,
+                //Visible = false
             };
+            InitializeComponent();
             Controls.Add(canvas3D1);
 
             //not sure those two do anything

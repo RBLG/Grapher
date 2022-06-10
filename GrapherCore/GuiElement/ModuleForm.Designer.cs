@@ -32,9 +32,10 @@
             // 
             // ModuleForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(750, 412);
+            this.ClientSize = new System.Drawing.Size(875, 475);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "ModuleForm";
             this.Text = "Module Editor";
             this.ResumeLayout(false);
