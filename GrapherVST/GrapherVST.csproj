@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="UI\MainSettings.cs">
+    <Compile Update="UI\MainSettings2.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

@@ -1,6 +1,6 @@
 ﻿namespace Grapher.GuiElement
 {
-    partial class MainSettings
+    partial class MainSettings2
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

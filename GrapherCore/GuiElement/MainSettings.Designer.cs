@@ -74,6 +74,7 @@
             this.groupBox1.Size = new System.Drawing.Size(295, 231);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Visible = false;
             // 
             // label5
             // 
@@ -144,6 +145,8 @@
             this.Controls.Add(this.EditInputButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Detuner);
+            this.MaximumSize = new System.Drawing.Size(410, 237);
+            this.MinimumSize = new System.Drawing.Size(410, 237);
             this.Name = "MainSettings";
             this.Size = new System.Drawing.Size(410, 237);
             ((System.ComponentModel.ISupportInitialize)(this.Detuner)).EndInit();

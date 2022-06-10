@@ -14,9 +14,9 @@ using System.Windows.Forms;
 
 namespace Grapher.GuiElement
 {
-    public partial class MainSettings : UserControl
+    public partial class MainSettings2 : UserControl
     {
-        public MainSettings()
+        public MainSettings2()
         {
             InitializeComponent();
 
@@ -28,18 +28,9 @@ namespace Grapher.GuiElement
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (button1.Text != "running")
-            {
-                button1.Text = "running";
-            }
-            else
-            {
-                button1.Text = "start";
-            }
-            StartStopSineWave();
+            
         }
 
-        //private WaveOut waveOut;
         private SharedStuff shared = new SharedStuff(440, new DefaultPitchModule());
         public static readonly int samplerate = 32000;//32kHz
         public static readonly int channels = 1;//mono

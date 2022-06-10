@@ -37,6 +37,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainSettings1.Location = new System.Drawing.Point(12, 12);
+            this.mainSettings1.MaximumSize = new System.Drawing.Size(410, 237);
+            this.mainSettings1.MinimumSize = new System.Drawing.Size(410, 237);
             this.mainSettings1.Name = "mainSettings1";
             this.mainSettings1.Size = new System.Drawing.Size(410, 237);
             this.mainSettings1.TabIndex = 0;
