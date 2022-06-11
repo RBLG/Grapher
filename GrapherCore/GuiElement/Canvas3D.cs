@@ -16,15 +16,15 @@ namespace Grapher
     public class Canvas3D : Control
     {
 
-        protected SolidBrush bg = new SolidBrush(Color.DarkBlue);//Color.FromArgb(255, 0, 91, 150)
-        protected Pen red = new Pen(Color.Red);
-        protected Pen blue = new Pen(Color.LightBlue);
-        protected Pen green = new Pen(Color.Green);
-        protected SolidBrush wave1 = new SolidBrush(Color.Yellow);
-        protected Pen wave1border = new Pen(Color.DarkGoldenrod);
-        protected Pen net1 = new Pen(Color.LightGray);
-        protected Pen net2 = new Pen(Color.Blue);
-        protected Pen wave2 = new Pen(Color.Purple);
+        protected SolidBrush bg = new(Color.DarkBlue);//Color.FromArgb(255, 0, 91, 150)
+        protected Pen red = new(Color.Red);
+        protected Pen blue = new(Color.LightBlue);
+        protected Pen green = new(Color.Green);
+        protected SolidBrush wave1 = new(Color.Yellow);
+        protected Pen wave1border = new(Color.DarkGoldenrod);
+        protected Pen net1 = new(Color.LightGray);
+        protected Pen net2 = new(Color.Blue);
+        protected Pen wave2 = new(Color.Purple);
 
         protected int slider = 0;
         public static readonly float size = 100;
@@ -84,13 +84,13 @@ namespace Grapher
 
         }
 
-        private List<MovingDot> moving = null;
+        private List<MovingDot>? moving = null;
         //trick to get better cursor tracking till cam mov
         private double lastmousey = 0;
 
         public double BrushSize { get; set; } = 0;
 
-        private void MyOnMouseMove(object sender, MouseEventArgs e)
+        private void MyOnMouseMove(object? sender, MouseEventArgs e)
         {
 
             if (moving != null)
@@ -106,15 +106,13 @@ namespace Grapher
             }
         }
 
-        private void MyOnMouseUp(object sender, MouseEventArgs e)
+        private void MyOnMouseUp(object? sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-            {
-                moving = null;
-            }
+            { moving = null; }
         }
 
-        private void MyOnMouseDown(object sender, MouseEventArgs e)
+        private void MyOnMouseDown(object? sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -139,9 +137,7 @@ namespace Grapher
                     }
                 }
                 if (moving != null && BrushSize > 0)
-                {
-                    AddDotsInBrushRange(moving[0].dot);
-                }
+                { AddDotsInBrushRange(moving[0].dot); }
             }
         }
 
@@ -166,10 +162,8 @@ namespace Grapher
             }
             return 0;
         }
-        private double GetDistanceSub(double px, double py, Point pt2)
-        {
-            return Math.Sqrt(Math.Pow(pt2.X - px, 2) + Math.Pow(pt2.Y - py, 2));
-        }
+        private static double GetDistanceSub(double px, double py, Point pt2)
+        { return Math.Sqrt(Math.Pow(pt2.X - px, 2) + Math.Pow(pt2.Y - py, 2)); }
 
         private void AddDotsInBrushRange(Table3DDot point)
         {
@@ -180,9 +174,7 @@ namespace Grapher
                     double dist2 = point.GetBrushDistanceTo(point2) / 20;
                     //Console.WriteLine(dist2);
                     if (dist2 < BrushSize && !point.Equals(point2))
-                    {
-                        moving.Add(new MovingDot(point2, 1 - dist2 / BrushSize));
-                    }
+                    { moving!.Add(new MovingDot(point2, 1 - dist2 / BrushSize)); }
                 }
             }
         }
@@ -334,7 +326,7 @@ namespace Grapher
 
         private void Do1DPaint(PaintEventArgs e)
         {
-
+            Do3DPaint(e);
         }
 
 

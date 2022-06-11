@@ -15,9 +15,12 @@ namespace GrapherVST
         /// Constructs a new instance.
         /// </summary>
         public Plugin()
-            : base("Grapher Synth", 0x30313233,
-                new VstProductInfo("Grapher synth", "some guy on the internet", 0001),
-                VstPluginCategory.Synth)
+            : base(
+                    "Grapher Synth",
+                    0x30313233,
+                    new VstProductInfo("Grapher synth", "some guy on the internet", 0001),
+                    VstPluginCategory.Synth
+                  )
         { }
 
         protected override void ConfigureServices(IServiceCollection services)

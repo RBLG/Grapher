@@ -1,5 +1,6 @@
 ﻿namespace GrapherVST
 {
+    using GrapherVST.SynthHandling;
     using Jacobi.Vst.Core;
     using Jacobi.Vst.Plugin.Framework;
     using System;
@@ -10,10 +11,11 @@
     {
         //private readonly MapNoteItemList _noteMap;
         private readonly Encoding _encoding = Encoding.ASCII;
+        private readonly ModuleProvider _moduleProvider;
 
-        public PluginPersistence()//MapNoteItemList noteMap)
+        public PluginPersistence(ModuleProvider modprov)
         {
-            //_noteMap = noteMap ?? throw new ArgumentNullException(nameof(noteMap));
+            _moduleProvider = modprov ?? throw new ArgumentNullException(nameof(modprov));
         }
 
         #region IVstPluginPersistence Members

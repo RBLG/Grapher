@@ -11,44 +11,31 @@ namespace Grapher
 {
     public class OutputWaveProvider32 : WaveProvider32
     {
-        //int sample;
-
-        //private IModule engine;
-        double beginning = 0;
         double time = 0;
-        private SharedStuff shared;
+        private readonly SharedStuff shared;
 
-        public void Begin(double be)
-        {
-            beginning = be;
-        }
+        public void Begin()
+        { time = 0; }
 
         public OutputWaveProvider32(SharedStuff nshared)
-        {
-            shared = nshared;
-        }
+        { shared = nshared; }
 
         public override int Read(float[] buffer, int offset, int sampleCount)
         {
+            var mod = shared.Module.GetRootModule();
             int sampleRate = WaveFormat.SampleRate;
             double interval = 1000d / sampleRate;//in millis
             for (int n = 0; n < sampleCount; n++)
             {
-
-                Spectrum spec = shared.Module.GetSpectrum(time, shared.Pitch);
+                Spectrum spec = mod.GetSpectrum(time,-1, shared.Pitch);
                 float sum = 0;
                 foreach (Wave w in spec.Waves)
                 {
                     float val = (float)(w.Amplitude * Math.Sin((2 * Math.PI * w.Frequency * time) / 1000));
                     sum += val;
-                    //Console.WriteLine("val:" + val);
                 }
-                // Console.WriteLine("sum:" + sum * 100);
-                //Console.WriteLine("time:" + time);
-                buffer[n + offset] = sum;//(float)(Amplitude * Math.Sin((2 * Math.PI * sample * Frequency) / sampleRate));
+                buffer[n + offset] = sum;
                 time += interval;
-                //sample++;
-                //if (sample >= sampleRate) sample = 0;
             }
             return sampleCount;
         }

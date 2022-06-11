@@ -33,13 +33,15 @@ namespace Grapher
             Input = new DefaultPitchModule();
         }
 
-        public virtual Spectrum GetSpectrum(double time, double bpitch)
+        public virtual Spectrum GetSpectrum(double time, double timeoff, double bpitch)
         {
-            Spectrum buffer = Input.GetSpectrum(time, bpitch);
+            Spectrum buffer = Input.GetSpectrum(time, timeoff, bpitch);
             foreach (Wave w in buffer.Waves)
             {
                 double wval = Wscale.To01(Wscale.PickValue(w, time, buffer));
                 double lval = Lscale.To01(Lscale.PickValue(w, time, buffer));
+                //temporary till its properly encapsulated by scale
+                if (lval > 1) { buffer.IsOver = true; };
 
                 double tval = MTable.GetOn1Value(wval, lval);
 
@@ -50,7 +52,7 @@ namespace Grapher
             return buffer;
         }
 
-        public virtual UserControl GetControl()
+        public virtual UserControl? GetControl()
         {
             return new Graph3DEditor(this);
         }
@@ -64,7 +66,7 @@ namespace Grapher
             return name;
         }
 
-        public virtual IModule GetInput()
+        public virtual IModule? GetInput()
         {
             return Input;
         }

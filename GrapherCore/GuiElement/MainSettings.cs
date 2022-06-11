@@ -29,18 +29,28 @@ namespace Grapher.GuiElement
         private void Button1_Click(object sender, EventArgs e)
         {
             if (button1.Text != "running")
-            {
-                button1.Text = "running";
-            }
+            { button1.Text = "running"; }
             else
-            {
-                button1.Text = "start";
-            }
+            { button1.Text = "test"; }
             StartStopSineWave();
         }
 
+        public class HollowModuleProvider : IModuleChainProvider
+        {
+            public HollowModuleProvider(IModule mod)
+            { root = mod; }
+
+            private IModule root;
+
+            public IModule GetRootModule()
+            { return root; }
+
+            public void SetRootModule(IModule module)
+            { root = module; }
+        }
+
         private WaveOut? waveOut;
-        private readonly SharedStuff shared = new(440, new DefaultPitchModule());
+        private readonly SharedStuff shared = new(440, new HollowModuleProvider(new DefaultPitchModule()));
         public static readonly int samplerate = 32000;//32kHz
         public static readonly int channels = 1;//mono
 
@@ -72,18 +82,25 @@ namespace Grapher.GuiElement
 
         private readonly MidiNoteScale midi = new();
 
-        private IModule Input { get => shared.Module; set => shared.Module = value; }
+        public IModuleChainProvider Chain {
+            get => shared.Module;
+            set {
+                InputComboBox.SelectedIndex = AvailableModules.GetIndex(value.GetRootModule().GetType());
+                shared.Module = value;
+            }
+        }
 
         private ModuleForm? inputform = null;
 
         private void EditInputButton_Click(object sender, EventArgs e)
         {
-            var control = Input.GetControl();
+            var root = Chain.GetRootModule();
+            var control = root.GetControl();
             if (control == null)
             { return; }
             if (inputform == null || inputform.IsDisposed)
             {
-                inputform = new(control, Input.GetName());
+                inputform = new(control, root.GetName());
                 //here: if is 3Deditor, set it input to harmonics editor, maybe
                 inputform.Show();
             }
@@ -94,7 +111,7 @@ namespace Grapher.GuiElement
         private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var item = AvailableModules.modules.ElementAt(InputComboBox.SelectedIndex);
-            Input = item.Factory();
+            Chain.SetRootModule(item.Factory());
         }
 
         private void NoteUpDown_ValueChanged(object sender, EventArgs e)

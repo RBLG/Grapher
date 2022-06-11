@@ -1,5 +1,6 @@
 ﻿using Grapher.GuiElement;
 using Grapher.Modules;
+using Grapher.Scale;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
@@ -115,6 +116,15 @@ namespace Grapher
             canvas3D1.module.MTable.Origin.Y = canvas3D1.Size.Height / 2;
             canvas3D1.module.MTable.UpdateAll();
             canvas3D1.Invalidate();
+        }
+
+        private void TimeLoop_CheckedChanged(object sender, EventArgs e)
+        {
+            var sc = canvas3D1.module.Lscale;
+            if (sc is LoopingTimeScale ts)
+            { //will be handled properly later with scale switching and menus
+                ts.IsLooping = TimeLoop.Checked;
+            }
         }
     }
 }

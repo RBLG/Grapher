@@ -14,43 +14,35 @@ namespace Grapher.Modules
     {
         //private MidiNoteScale midi=new MidiNoteScale();
 
-        private Spectrum spec = new Spectrum();
+        private readonly Spectrum spec = new();
 
         public DefaultPitchModule()
         {
             spec.Waves.Add(new Wave(WaveType.Sinus, 0, 0));
         }
 
-        public UserControl GetControl()
-        {
-            return null;
-        }
+        public UserControl? GetControl()
+        { return null; }
 
         private static int count = 0;
 
         //no pitch editor yet but who knows
-        private String name = "Pitch Editor " + count++;
+        private readonly string name = "Pitch Editor " + count++;
 
         public string GetName()
-        {
-            return name;
-        }
+        { return name; }
 
-        public Spectrum GetSpectrum(double time, double bpitch)
+        public Spectrum GetSpectrum(double time, double timeoff, double bpitch)
         {
             spec.Waves[0].Frequency = bpitch;
             spec.Waves[0].Amplitude = 0.2;
             return spec;
         }
 
-        public IModule GetInput()
-        {
-            return null;
-        }
+        public IModule? GetInput()
+        { return null; }
 
         public void SetInput(IModule input)
-        {
-            return;
-        }
+        { return; }
     }
 }

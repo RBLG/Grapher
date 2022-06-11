@@ -11,13 +11,13 @@ namespace Grapher.Modules
 {
     public class AvailableModules
     {
-        private static readonly List<AvailableModule> list = new List<AvailableModule>()
+        private static readonly List<AvailableModule> list = new()
         {
-           new AvailableModule("Pitch",()=>new DefaultPitchModule()),
-           new AvailableModule("Harmo Editor",()=>new HarmonicModule()),
-           new AvailableModule("3D Editor",()=>new ProtoModule()),
-           new AvailableModule("LH Editor",()=>{var r=new ProtoModule(); r.MTable.Width=1;return r; }),
-           new AvailableModule("WH Editor",()=>{var r=new ProtoModule(); r.MTable.Length=1;return r; }),
+           new AvailableModule("Pitch",()=>new DefaultPitchModule(),typeof(DefaultPitchModule)),
+           new AvailableModule("Harmo Editor",()=>new HarmonicModule(),typeof(HarmonicModule)),
+           new AvailableModule("3D Editor",()=>new ProtoModule(), typeof(ProtoModule)),
+           new AvailableModule("LH Editor",()=>{var r=new ProtoModule(); r.MTable.Width=1;return r; },typeof(ProtoModule)),
+           new AvailableModule("WH Editor",()=>{var r=new ProtoModule(); r.MTable.Length=1;return r; }, typeof(ProtoModule)),
            //new AvailableModule("Fake",()=>new MockInput())
         };
         public static readonly IReadOnlyCollection<AvailableModule> modules = list;
@@ -27,12 +27,33 @@ namespace Grapher.Modules
         {
             public String Name { get; private set; }
             public Func<IModule> Factory { get; private set; }
+            public Type CType { get; private set; }
 
-            public AvailableModule(String nname, Func<IModule> nfactory)
+            public AvailableModule(String nname, Func<IModule> nfactory, Type cType)
             {
                 Name = nname;
                 Factory = nfactory;
+                CType = cType;
             }
+        }
+
+        public static int GetIndex(Type type)
+        {
+            int it = 0;
+            foreach (AvailableModule scale in list)
+            {
+                if (scale.CType == type)
+                {
+                    return it;
+                }
+                it++;
+            }
+            return -1;
+        }
+
+        public static AvailableModule Get(int index)
+        {
+            return modules.ElementAt(index);
         }
     }
 }

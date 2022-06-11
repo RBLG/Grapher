@@ -10,13 +10,13 @@ namespace Grapher
 {
     public interface IModule
     {
-        Spectrum GetSpectrum(double time, double bpitch);
+        Spectrum GetSpectrum(double time,double timeoff, double bpitch);
 
-        UserControl GetControl();
+        UserControl? GetControl();
 
-        String GetName();
+        string GetName();
 
-        IModule GetInput();
+        IModule? GetInput();
         void SetInput(IModule input);
     }
 }

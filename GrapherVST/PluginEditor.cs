@@ -1,5 +1,6 @@
 ﻿namespace GrapherVST
 {
+    using GrapherVST.SynthHandling;
     using Jacobi.Vst.Core;
     using Jacobi.Vst.Plugin.Framework;
     using Jacobi.Vst.Plugin.Framework.Common;
@@ -10,51 +11,34 @@
     /// </summary>
     internal sealed class PluginEditor : IVstPluginEditor
     {
-        private readonly MidiProcessor _midiProcessor;
-        //private readonly MapNoteItemList _noteMap;
-        private readonly WinFormsControlWrapper<UI.MidiNoteMapperView> _uiWrapper =
-            new WinFormsControlWrapper<UI.MidiNoteMapperView>();
+        private readonly WinFormsControlWrapper<UI.MainWindow> _uiWrapper = new();
+        private readonly ModuleProvider _moduleProvider;
 
-        /// <summary>
-        /// Constructs a new instance.
-        /// </summary>
-        /// <param name="plugin">Must not be null.</param>
-        public PluginEditor(MidiProcessor midiProcessor) //MapNoteItemList noteMap)
+        public PluginEditor(ModuleProvider prov)
         {
-            _midiProcessor = midiProcessor ?? throw new ArgumentNullException(nameof(midiProcessor));
-            //_noteMap = noteMap ?? throw new ArgumentNullException(nameof(noteMap));
+            _moduleProvider = prov ?? throw new ArgumentNullException(nameof(prov));
         }
 
         #region IVstPluginEditor Members
 
-        public System.Drawing.Rectangle Bounds
-        {
+        public System.Drawing.Rectangle Bounds {
             get { return _uiWrapper.Bounds; }
         }
 
         public void Close()
-        {
-            _uiWrapper.Close();
-        }
+        { _uiWrapper.Close(); }
 
         public bool KeyDown(byte ascii, VstVirtualKey virtualKey, VstModifierKeys modifers)
-        {
-            // no-op
-            return false;
-        }
+        { return false; }
 
         public bool KeyUp(byte ascii, VstVirtualKey virtualKey, VstModifierKeys modifers)
-        {
-            // no-op
-            return false;
-        }
+        { return false; }
 
         public VstKnobMode KnobMode { get; set; }
 
         public void Open(IntPtr hWnd)
         {
-            //_uiWrapper.SafeInstance.NoteMap = _noteMap;
-            //_uiWrapper.SafeInstance.NoteOnEvents = _midiProcessor.NoteOnEvents;
+            _uiWrapper.SafeInstance.ModuleProvider = _moduleProvider;
             _uiWrapper.Open(hWnd);
         }
 

@@ -12,10 +12,6 @@ namespace GrapherVST
     {
         private readonly ModuleProvider _moduleProvider;
 
-        /// <summary>
-        /// Constructs a new instance.
-        /// </summary>
-        /// <param name="plugin"></param>
         public MidiProcessor(ModuleProvider sampleManager)
         {
             _moduleProvider = sampleManager ?? throw new ArgumentNullException(nameof(sampleManager));

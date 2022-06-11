@@ -29,10 +29,10 @@ namespace Grapher.Modules
             MTable.dots[0][0].Y = Table.MAX;
         }
 
-        private readonly Spectrum wavstock = new Spectrum();
-        private readonly Spectrum buffer = new Spectrum();
+        private readonly Spectrum wavstock = new();
+        private readonly Spectrum buffer = new();
 
-        public override Spectrum GetSpectrum(double time, double bpitch)
+        public override Spectrum GetSpectrum(double time, double timeoff, double bpitch)
         {
             UpdateStock();
             buffer.Waves.Clear();
@@ -81,9 +81,7 @@ namespace Grapher.Modules
         }
 
         public override void SetInput(IModule modude)
-        {
-            return;
-        }
+        { return; }
 
     }
 }

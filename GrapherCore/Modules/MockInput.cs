@@ -11,8 +11,8 @@ namespace Grapher.Modules
 {
     public class MockInput : IModule
     {
-        private Spectrum main = new Spectrum();
-        private Spectrum buffer = new Spectrum();
+        private readonly Spectrum main = new();
+        private readonly Spectrum buffer = new();
 
         public MockInput()
         {
@@ -31,17 +31,13 @@ namespace Grapher.Modules
             }
         }
 
-        public UserControl GetControl()
-        {
-            return null;
-        }
+        public UserControl? GetControl()
+        { return null; }
 
         public string GetName()
-        {
-            return "nothing";
-        }
+        { return "nothing"; }
 
-        public Spectrum GetSpectrum(double time, double bpitch)
+        public Spectrum GetSpectrum(double time, double timeoff, double bpitch)
         {
             for (int it = 0; it < main.Waves.Count; it++)
             {
@@ -55,14 +51,10 @@ namespace Grapher.Modules
             return buffer;
         }
 
-        public IModule GetInput()
-        {
-            return null;
-        }
+        public IModule? GetInput()
+        { return null; }
 
         public void SetInput(IModule input)
-        {
-            return;
-        }
+        { return; }
     }
 }

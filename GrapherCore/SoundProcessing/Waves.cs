@@ -9,11 +9,13 @@ namespace Grapher
 {
     public class Spectrum
     {
-        public List<Wave> Waves { get; private set; }
+        public List<Wave> Waves { get; private set; } = new();
+
+        public Boolean IsOver { get; set; } = false;
 
         public Spectrum()
         {
-            Waves = new List<Wave>();
+
         }
 
         public class Wave

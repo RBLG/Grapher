@@ -44,6 +44,8 @@
             this.EditInputButton = new System.Windows.Forms.Button();
             this.InputLabel = new System.Windows.Forms.Label();
             this.BrushGroupBox = new System.Windows.Forms.GroupBox();
+            this.TimeLoop = new System.Windows.Forms.CheckBox();
+            this.LoopLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).BeginInit();
@@ -259,10 +261,31 @@
             this.BrushGroupBox.TabStop = false;
             this.BrushGroupBox.Text = "Brush :";
             // 
+            // TimeLoop
+            // 
+            this.TimeLoop.Location = new System.Drawing.Point(583, 23);
+            this.TimeLoop.Name = "TimeLoop";
+            this.TimeLoop.Size = new System.Drawing.Size(22, 23);
+            this.TimeLoop.TabIndex = 25;
+            this.TimeLoop.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.TimeLoop.UseVisualStyleBackColor = true;
+            this.TimeLoop.CheckedChanged += new System.EventHandler(this.TimeLoop_CheckedChanged);
+            // 
+            // LoopLabel
+            // 
+            this.LoopLabel.AutoSize = true;
+            this.LoopLabel.Location = new System.Drawing.Point(583, 3);
+            this.LoopLabel.Name = "LoopLabel";
+            this.LoopLabel.Size = new System.Drawing.Size(31, 15);
+            this.LoopLabel.TabIndex = 26;
+            this.LoopLabel.Text = "loop";
+            // 
             // Graph3DEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.TimeLoop);
+            this.Controls.Add(this.LoopLabel);
             this.Controls.Add(this.InputComboBox);
             this.Controls.Add(this.EditInputButton);
             this.Controls.Add(this.numLength);
@@ -305,5 +328,7 @@
         public System.Windows.Forms.Label WidthLabel;
         public System.Windows.Forms.Label LengthLabel;
         public System.Windows.Forms.Label InputLabel;
+        private System.Windows.Forms.CheckBox TimeLoop;
+        private System.Windows.Forms.Label LoopLabel;
     }
 }

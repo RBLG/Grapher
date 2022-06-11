@@ -18,14 +18,10 @@ namespace Grapher.Scale
         }
 
         public double GetMax()
-        {
-            return Max;
-        }
+        { return Max; }
 
         public double GetMin()
-        {
-            return min;
-        }
+        { return min; }
 
         public double GetScaled(double notscaled) //in millis
         {
@@ -34,7 +30,10 @@ namespace Grapher.Scale
 
         public double To01(double notscaled) //in millis
         {
-            return (notscaled / Max) % 1;//so that it loop
+            double rtn = notscaled / Max;
+            if (IsLooping)
+            { rtn %= 1; }
+            return rtn;//so that it loop
         }
 
         public double GetUnscaled(double scaled)
@@ -68,5 +67,7 @@ namespace Grapher.Scale
         {
             return label;
         }
+
+        public bool IsLooping { get; set; } = false;
     }
 }
