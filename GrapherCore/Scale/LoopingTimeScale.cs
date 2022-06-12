@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Grapher.Modules;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,43 +8,41 @@ using System.Threading.Tasks;
 namespace Grapher.Scale
 {
     //default time is in millisecond
-    public class LoopingTimeScale : IScale
+    public class LoopingTimeScale : ITimeScale
     {
-        public static readonly double min = 0;
-        public double Max { get; set; } //represent the duration of the table (in millis)
+        public double Min { get; } = 0;
+        public double Max { get; set; } = 1000; //represent the duration of the table (in millis)
 
-        public LoopingTimeScale()
+        public LoopingTimeScale() { }
+
+        public double Scale(double notscaled) //in millis
         {
-            Max = 1000;
+            return notscaled * 1000 / Max;
+        }
+        public double Unscale(double scaled)
+        {
+            return scaled * Max / 1000;
         }
 
-        public double GetMax()
-        { return Max; }
-
-        public double GetMin()
-        { return min; }
-
-        public double GetScaled(double notscaled) //in millis
-        {
-            return (notscaled * 1000 / Max) % 1000;
-        }
-
-        public double To01(double notscaled) //in millis
+        public double ScaleTo01(double notscaled) //in millis
         {
             double rtn = notscaled / Max;
             if (IsLooping)
             { rtn %= 1; }
             return rtn;//so that it loop
         }
-
-        public double GetUnscaled(double scaled)
-        {
-            return scaled * Max / 1000;
-        }
-
-        public double From01(double scaled)
+        public double UnscaleFrom01(double scaled)
         {
             return scaled * Max;
+        }
+
+        public double ScaleTo(double notscaled, double max)
+        {
+            return ScaleTo01(notscaled) * max;
+        }
+        public double UnscaleFrom(double scaled, double max)
+        {
+            return UnscaleFrom01(scaled / max);
         }
 
         public double PickValue(Spectrum.Wave wave, double time, Spectrum spectrum)
@@ -56,16 +55,19 @@ namespace Grapher.Scale
             return;//cant set time
         }
 
-        public List<Milestone> GetMilestones()
+        public List<Graduations> GetMilestones()
         {
             throw new NotImplementedException();
         }
 
-        private readonly string label = "t(ms)";
+        public string Label { get; } = "t(ms)";
 
-        public string GetLabel()
+        public bool IsContinuous()
+        { return true; }
+
+        public EnvStatus GetEnvStatus(double time, double timeoff)
         {
-            return label;
+            return IsLooping ? EnvStatus.NotHandled : ((Scale(time) > Max) ? EnvStatus.Done : EnvStatus.Handled);
         }
 
         public bool IsLooping { get; set; } = false;

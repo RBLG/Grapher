@@ -1,7 +1,5 @@
-﻿using Grapher.GuiElement;
-using Grapher.Modules;
+﻿using Grapher.Modules;
 using Grapher.Scale;
-using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -43,11 +41,11 @@ namespace Grapher
         //might need to remove
         public IModule Input { get => module.Input; set => module.Input = value; }
 
-        public ProtoModule module;
+        public TableModule module;
 
-        public Canvas3D() : this(new ProtoModule()) { }
+        public Canvas3D() : this(new TableModule()) { }
 
-        public Canvas3D(ProtoModule nmodule)
+        public Canvas3D(TableModule nmodule)
         {
             module = nmodule;
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);

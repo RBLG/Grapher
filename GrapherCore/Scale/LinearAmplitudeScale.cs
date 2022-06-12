@@ -9,32 +9,32 @@ namespace Grapher.Scale
 {
     internal class LinearAmplitudeScale : IScale
     {
-        public double GetMax()
-        {
-            return 1;
-        }
+        public double Max { get; } = 1;
+        public double Min { get; } = 0;
 
-        public double GetMin()
-        {
-            return 0;
-        }
-
-        public double GetScaled(double notscaled)
+        public double Scale(double notscaled)
         {
             return notscaled;
         }
-
-        public double To01(double notscaled)
-        {
-            return notscaled;
-        }
-
-        public double GetUnscaled(double scaled)
+        public double Unscale(double scaled)
         {
             return scaled;
         }
 
-        public double From01(double scaled)
+        public double ScaleTo01(double notscaled)
+        {
+            return notscaled;
+        }
+        public double UnscaleFrom01(double scaled)
+        {
+            return scaled;
+        }
+
+        public double ScaleTo(double notscaled, double max)
+        {
+            return notscaled;
+        }
+        public double UnscaleFrom(double scaled, double max)
         {
             return scaled;
         }
@@ -49,16 +49,14 @@ namespace Grapher.Scale
             wave.Amplitude = value;
         }
 
-        public List<Milestone> GetMilestones()
+        public List<Graduations> GetMilestones()
         {
             throw new NotImplementedException();
         }
 
-        private readonly string label = "a(??)";
+        public bool IsContinuous()
+        { return true; }
 
-        public string GetLabel()
-        {
-            return label;
-        }
+        public string Label { get; } = "a(??)";
     }
 }

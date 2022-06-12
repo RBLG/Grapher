@@ -11,12 +11,7 @@ namespace Grapher
     {
         public List<Wave> Waves { get; private set; } = new();
 
-        public Boolean IsOver { get; set; } = false;
-
-        public Spectrum()
-        {
-
-        }
+        public Spectrum() { }
 
         public class Wave
         {
@@ -32,7 +27,7 @@ namespace Grapher
         }
 
         public enum WaveType
-        {
+        { // to replace by self generation of the wave
             Sinus, Noise, Triangle, Power
         }
     }

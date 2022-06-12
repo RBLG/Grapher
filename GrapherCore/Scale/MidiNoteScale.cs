@@ -22,6 +22,9 @@ namespace Grapher.Scale
         }
         public static readonly double STANDARD_PITCH = 440;
 
+        public double Max { get; } = 127;
+        public double Min { get; } = 0;
+
         public double BaseFrequency { get; set; }
 
         public MidiNoteScale(double basefreq)
@@ -31,34 +34,32 @@ namespace Grapher.Scale
 
         public MidiNoteScale() : this(STANDARD_PITCH) { }
 
-        public double GetMax()
-        {
-            throw new NotImplementedException();
-        }
 
-        public double GetMin()
-        {
-            return 0;
-        }
-
-        public double GetScaled(double notscaled)
+        public double Scale(double notscaled)
         {
             return Math.Log(2, notscaled / BaseFrequency) * 12 + 69;
         }
-
-        public double To01(double notscaled)
-        {
-            return GetScaled(notscaled) / GetMax();
-        }
-
-        public double GetUnscaled(double scaled)//?
+        public double Unscale(double scaled)//?
         {
             return BaseFrequency * Math.Pow(2, ((scaled - 69) / 12d));
         }
 
-        public double From01(double scaled)
+        public double ScaleTo01(double notscaled)
         {
-            return GetUnscaled(scaled * GetMax());
+            return Scale(notscaled) / Max;
+        }
+        public double UnscaleFrom01(double scaled)
+        {
+            return Unscale(scaled * Max);
+        }
+
+        public double ScaleTo(double notscaled, double max)
+        {
+            return ScaleTo01(notscaled) * max;
+        }
+        public double UnscaleFrom(double scaled, double max)
+        {
+            return UnscaleFrom01(scaled / max);
         }
 
         public double PickValue(Wave wave, double time, Spectrum spectrum)
@@ -72,16 +73,14 @@ namespace Grapher.Scale
             throw new NotImplementedException();
         }
 
-        public List<Milestone> GetMilestones()
+        public List<Graduations> GetMilestones()
         {
             throw new NotImplementedException();
         }
 
-        private readonly string label = "midi";
+        public bool IsContinuous()
+        { return false; }
 
-        public string GetLabel()
-        {
-            return label;
-        }
+        public string Label { get; } = "midi";
     }
 }

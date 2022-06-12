@@ -10,34 +10,34 @@ namespace Grapher.Scale
     public class HarmonicScale : IScale
     {
         //need to change the structure so that scale can be aware of pitch
-        public double GetMax()
+        public double Max { get; }
+        public double Min { get; }
+
+        public double Scale(double notscaled)
+        {
+            throw new NotImplementedException();
+        }
+        public double Unscale(double scaled)
         {
             throw new NotImplementedException();
         }
 
-        public double GetMin()
+        public double ScaleTo01(double notscaled)
+        {
+            throw new NotImplementedException();
+        }
+        public double UnscaleFrom01(double scaled)
         {
             throw new NotImplementedException();
         }
 
-        public double GetScaled(double notscaled)
+        public double ScaleTo(double notscaled, double max)
         {
-            throw new NotImplementedException();
+            return ScaleTo01(notscaled) * max;
         }
-
-        public double To01(double notscaled)
+        public double UnscaleFrom(double scaled, double max)
         {
-            throw new NotImplementedException();
-        }
-
-        public double GetUnscaled(double scaled)
-        {
-            throw new NotImplementedException();
-        }
-
-        public double From01(double scaled)
-        {
-            throw new NotImplementedException();
+            return UnscaleFrom01(scaled / max);
         }
 
         public double PickValue(Wave wave, double time, Spectrum spectrum)
@@ -52,16 +52,17 @@ namespace Grapher.Scale
             //return wave.Frequency;
         }
 
-        public List<Milestone> GetMilestones()
+        public List<Graduations> GetMilestones()
         {
             throw new NotImplementedException();
         }
 
-        private readonly string label = "f(*base)";
+        public string Label { get; } = "f(*base)";
 
-        public string GetLabel()
+        public Boolean IsContinuous()
         {
-            return label;
+            return false;
         }
+
     }
 }

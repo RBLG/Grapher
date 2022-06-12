@@ -10,72 +10,67 @@ namespace Grapher.Scale
     public class ExponantialFrequencyScale : IScale
     {
         public static readonly double min = Math.Log(LinearFrequencyScale.min + 1);
-        public static readonly double max = Math.Log(LinearFrequencyScale.max + 1);
-        public static readonly double range = max - min;
+        public static readonly double max= Math.Log(LinearFrequencyScale.max + 1);
+        public readonly double range = max - min;
+        public double Min { get; } = min;
+        public double Max { get; } = max;
 
-
-        private readonly List<Milestone> milestones;
+        private readonly List<Graduations> milestones;
         public ExponantialFrequencyScale()
         {
-            milestones = new List<Milestone>() {
-            new Milestone("20", 0),
-            new Milestone("200", To01(200)),
-            new Milestone("2000", To01(2000)),
-            new Milestone("20 000", 1)
+            milestones = new List<Graduations>() {
+            new Graduations("20", 0),
+            new Graduations("200", ScaleTo01(200)),
+            new Graduations("2000", ScaleTo01(2000)),
+            new Graduations("20 000", 1)
             };
         }
 
-        public double GetMax()
-        {
-            return max;
+        public double Scale(double notscaled)
+        { //+1 so no positive value can give negative value (not that it matter)
+            return Math.Log(notscaled + 1);
         }
-
-        public double GetMin()
-        {
-            return min;
-        }
-
-        public double GetScaled(double notscaled)
-        {
-            return Math.Log(notscaled + 1);//+1 so no positive value can give negative value (not that it matter)
-        }
-
-        public double To01(double notscaled)
-        {
-            return (Math.Log(notscaled + 1) - min) / range;
-        }
-
-        public double GetUnscaled(double scaled)
+        public double Unscale(double scaled)
         {
             return Math.Exp(scaled) - 1;
         }
 
-        public double From01(double scaled)
+        public double ScaleTo01(double notscaled)
         {
-            return Math.Exp(scaled * range + min) - 1;
+            return (Scale(notscaled) - min) / range;
+        }
+        public double UnscaleFrom01(double scaled)
+        {
+            return Unscale(scaled * range + min);
+        }
+
+        public double ScaleTo(double notscaled, double max)
+        {
+            return ScaleTo01(notscaled) * max;
+        }
+        public double UnscaleFrom(double scaled, double max)
+        {
+            return UnscaleFrom01(scaled / max);
         }
 
         public double PickValue(Wave wave, double time, Spectrum spectrum)
         {
             return wave.Frequency;
         }
-
         public void SetValue(double value, Wave wave, double time, Spectrum spectrum)
         {
             wave.Frequency = value;
         }
 
-
-        public List<Milestone> GetMilestones()
+        public List<Graduations> GetMilestones()
         {
             return milestones;
         }
 
-        private readonly string label = "f(Hz)";
+        public bool IsContinuous()
+        { return true; }
 
-        public string GetLabel()
-        {
-            return label;
-        }
+        public string Label { get; } = "f(Hz)";
+
     }
 }

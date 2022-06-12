@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrapherVST", "GrapherVST.csproj", "{59D67493-9ADB-467B-80D9-2458325E00F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grapher", "..\GrapherCore\Grapher.csproj", "{106E11C6-CF6F-455A-BF30-800249719E11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grapher", "..\GrapherCore\Grapher.csproj", "{106E11C6-CF6F-455A-BF30-800249719E11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

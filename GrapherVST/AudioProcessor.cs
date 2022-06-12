@@ -12,11 +12,16 @@
     {
         private readonly ModuleProvider _modprovider;
 
-        /// <summary>
-        /// Constructs a new instance.
-        /// </summary>
-        /// <param name="plugin">Must not be null.</param>
-        public AudioProcessor(ModuleProvider nmoddprovider) : base(1, 2, 10, noSoundInStop: true)
+
+        public override float SampleRate {
+            get { return _modprovider.SampleRate; }
+            set {
+                _modprovider.SampleRate = value;
+                _modprovider.interval = 1000d / value;
+            }
+        }
+
+        public AudioProcessor(ModuleProvider nmoddprovider) : base(1, 2, 100, noSoundInStop: true)
         {
             _modprovider = nmoddprovider ?? throw new ArgumentNullException(nameof(nmoddprovider));
         }
@@ -24,7 +29,7 @@
         public override void Process(VstAudioBuffer[] inChannels, VstAudioBuffer[] outChannels)
         {
             if (_modprovider.IsPlaying)
-            { _modprovider.PlayAudio(outChannels, SampleRate); }
+            { _modprovider.PlayAudio(outChannels); }
             else // audio thru //need it?
             { base.Process(inChannels, outChannels); }
         }

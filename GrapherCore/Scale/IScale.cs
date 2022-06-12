@@ -1,38 +1,57 @@
-﻿using System.Collections.Generic;
+﻿using Grapher.Modules;
+using System;
+using System.Collections.Generic;
 using static Grapher.Spectrum;
 
 namespace Grapher.Scale
 {
-    //handle conversion from default scales (linear frequency, milliseconds,etc) to table scale
-    //idk im lost on how it work but it does
+    /// <summary>
+    /// handle conversion from default scales (linear frequency, milliseconds,etc) to table scale
+    /// </summary>
     public interface IScale
     {
-        double GetScaled(double notscaled);
+        double Min { get; }
+        double Max { get; }
 
-        double GetUnscaled(double scaled);
+        double Scale(double notscaled);
+        double Unscale(double scaled);
 
-        double GetMin();
-        double GetMax();
+        double ScaleTo(double notscaled, double max);
+        double UnscaleFrom(double scaled, double max);
 
-        double To01(double notscaled);
-
-        double From01(double scaled);
+        double ScaleTo01(double notscaled);
+        double UnscaleFrom01(double scaled);
 
         double PickValue(Wave wave, double time, Spectrum spectrum);
         void SetValue(double value, Wave wave, double time, Spectrum spectrum);
 
-        List<Milestone> GetMilestones();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        List<Graduations> GetMilestones();
 
-        string GetLabel();
+        /// <summary>
+        /// Axis label for the GUI
+        /// </summary>
+        string Label { get; }
 
-
+        /// <summary>
+        /// return if the scale accept values inbetween
+        /// </summary>
+        /// <returns></returns>
+        Boolean IsContinuous();
     }
-    public class Milestone
+
+    /// <summary>
+    /// visual marks on the side of the axis 
+    /// </summary>
+    public class Graduations
     {
         public string Label { get; private set; }
         public double Position { get; private set; }
 
-        public Milestone(string nlabel, double npos)
+        public Graduations(string nlabel, double npos)
         {
             Label = nlabel;
             Position = npos;

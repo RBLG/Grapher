@@ -12,8 +12,6 @@ namespace Grapher.Modules
 {
     public class DefaultPitchModule : IModule
     {
-        //private MidiNoteScale midi=new MidiNoteScale();
-
         private readonly Spectrum spec = new();
 
         public DefaultPitchModule()
@@ -24,13 +22,9 @@ namespace Grapher.Modules
         public UserControl? GetControl()
         { return null; }
 
-        private static int count = 0;
-
         //no pitch editor yet but who knows
-        private readonly string name = "Pitch Editor " + count++;
-
-        public string GetName()
-        { return name; }
+        public string Name { get; set; } = "Pitch Module" + count++;
+        private static int count = 0;
 
         public Spectrum GetSpectrum(double time, double timeoff, double bpitch)
         {
@@ -39,10 +33,11 @@ namespace Grapher.Modules
             return spec;
         }
 
-        public IModule? GetInput()
-        { return null; }
-
+        public IModule? Input { get; }
         public void SetInput(IModule input)
         { return; }
+
+        public EnvStatus IsOver(double time, double timeoff)
+        { return EnvStatus.NotHandled; }
     }
 }

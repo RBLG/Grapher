@@ -16,45 +16,36 @@ namespace Grapher.Modules
 
         public MockInput()
         {
-            double mfreq = 100;
-            double mamp = 0.3;
-            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq, mamp));
-            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 3, mamp / Math.Pow(3, 1)));
-            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 5, mamp / Math.Pow(3, 2)));
-            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 7, mamp / Math.Pow(3, 3)));
-            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 9, mamp / Math.Pow(3, 4)));
-            main.Waves.Add(new Spectrum.Wave(Spectrum.WaveType.Sinus, mfreq * 11, mamp / Math.Pow(3, 5)));
-
-            foreach (Wave w in main.Waves)
-            {
-                buffer.Waves.Add(new Wave(w.Type, w.Frequency, w.Amplitude));
-            }
+            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
+            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
+            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
+            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
+            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
+            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
         }
 
         public UserControl? GetControl()
         { return null; }
 
-        public string GetName()
-        { return "nothing"; }
+        public string Name { get; set; } = "Mock Input";
 
         public Spectrum GetSpectrum(double time, double timeoff, double bpitch)
         {
             for (int it = 0; it < main.Waves.Count; it++)
             {
-                //Wave mw = main.Waves[it];
                 Wave bw = buffer.Waves[it];
-                //bw.Type = mw.Type;
                 bw.Frequency = bpitch * (it * 2 + 1);//mw.Frequency;
-                bw.Amplitude = 0.3 / (Math.Pow(3, it));//mw.Amplitude;
-
+                bw.Amplitude = 0.3 / Math.Pow(3, it);//mw.Amplitude;
             }
             return buffer;
         }
 
-        public IModule? GetInput()
-        { return null; }
+        public IModule? Input { get; }
 
         public void SetInput(IModule input)
         { return; }
+
+        public EnvStatus IsOver(double time, double timeoff)
+        { return EnvStatus.NotHandled; }
     }
 }

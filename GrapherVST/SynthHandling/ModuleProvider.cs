@@ -13,16 +13,21 @@ namespace GrapherVST.SynthHandling
 {
     internal class ModuleProvider : IModuleChainProvider
     {
-        private readonly List<OnGoingEvent> events = new();
+        private readonly List<MyMidiEvent> events = new();
 
-        public class OnGoingEvent
+        public class MyMidiEvent
         {
-            public OnGoingEvent(int nnote)
+            public MyMidiEvent(int nnote)
             { note = nnote; }
             public int note;
             public double time = 0;
-            public double timeoff = -1;
+            public double timeoff = Double.NaN;//NaN till the off event happen
         }
+
+        //double interval = 1000d / SampleRate;//in millis
+        public double interval = 1000;
+
+        public float SampleRate { get; set; }
 
         private readonly MidiNoteScale midi = new();
 
@@ -39,42 +44,41 @@ namespace GrapherVST.SynthHandling
 
         public bool IsPlaying { get { return events.Count != 0; } private set { } }
 
-        public void PlayAudio(VstAudioBuffer[] outChannels, double sampleRate)
+        public void PlayAudio(VstAudioBuffer[] outChannels)
         {
-
-
             for (int i = events.Count - 1; i >= 0; i--)
             {
                 var evnt = events[i];
-                var mod = root;
-                //double sampleRate = samplerate;
-                int offset = 0;
-                double pitch = midi.GetUnscaled(evnt.note);
-                double interval = 1000d / sampleRate;//in millis
-                bool done = false;
+                var isover = root.IsOver(evnt.time, evnt.timeoff);
+                if ((isover == EnvStatus.NotHandled && !Double.IsNaN(evnt.timeoff)) || isover.HasFlag(EnvStatus.Done))
+                {
+                    events.RemoveAt(i);
+                    continue;
+                }
+                double pitch = midi.Unscale(evnt.note);
                 for (int n = 0; n < outChannels[0].SampleCount; n++)
                 {
-                    Spectrum spec = mod.GetSpectrum(evnt.time, evnt.timeoff, pitch);
+                    Spectrum spec = root.GetSpectrum(evnt.time, evnt.timeoff, pitch);
                     float sum = 0;
                     foreach (Wave w in spec.Waves)
                     {
                         float val = (float)(w.Amplitude * Math.Sin(2 * Math.PI * w.Frequency * evnt.time / 1000));
                         sum += val;
                     }
-                    outChannels[0][n + offset] = outChannels[1][n + offset] = sum;
+                    outChannels[0][n] += sum;//for each channel
                     evnt.time += interval;
-                    done |= spec.IsOver;
+                    evnt.timeoff += interval;
                 }
-                if (done)
-                { events.RemoveAt(i); }
+
             }
+            for (int n = 0; n < outChannels[0].SampleCount; n++)
+            { outChannels[1][n] = outChannels[0][n]; }
 
         }
 
         public void ProcessNoteOffEvent(byte v)
         {
-            //events.RemoveAll((item) => item.note == v);
-            foreach (OnGoingEvent e in events)
+            foreach (MyMidiEvent e in events)
             {
                 if (e.note == v)
                 { e.timeoff = 0; }

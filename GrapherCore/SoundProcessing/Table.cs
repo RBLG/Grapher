@@ -113,7 +113,7 @@ namespace Grapher
             return new Table3DDot(() => Origin, () => xaxis, () => yaxis, () => zaxis, vx, vy, vz);
         }
 
-        public double GetOn1Value(double freq, double time)
+        public double Get01ValueFrom0101(double freq, double time)
         {
             return (GetOnMaxValue(freq, time) - MIN) / MAX;
         }

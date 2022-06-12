@@ -12,53 +12,51 @@ namespace Grapher.Scale
         public static readonly double min = ToMei(LinearFrequencyScale.min + 1);
         public static readonly double max = ToMei(LinearFrequencyScale.max + 1);
         public static readonly double range = max - min;
+        public double Min { get; } = min;
+        public double Max { get; } = max;
 
-        private readonly List<Milestone> milestones;
+        private readonly List<Graduations> milestones;
         public MeiFrequencyScale()
         {
-            milestones = new List<Milestone>() {
-            new Milestone("20", 0),
-            new Milestone("200", To01(200)),
-            new Milestone("2000", To01(2000)),
-            new Milestone("20 000", 1)
+            milestones = new List<Graduations>() {
+            new Graduations("20", 0),
+            new Graduations("200", ScaleTo01(200)),
+            new Graduations("2000", ScaleTo01(2000)),
+            new Graduations("20 000", 1)
             };
         }
 
-        public double GetMax()
-        {
-            return max;
-        }
-
-        public double GetMin()
-        {
-            return min;
-        }
-
-        public double GetScaled(double notscaled)
+        public double Scale(double notscaled)
         {
             return ToMei(notscaled);
         }
+        public double Unscale(double scaled)
+        {
+            return FromMei(scaled);
+        }
 
-        public double To01(double notscaled)
+        public double ScaleTo01(double notscaled)
         {
             return (ToMei(notscaled) - min) / range;
+        }
+        public double UnscaleFrom01(double scaled)
+        {
+            return FromMei(scaled / range + min);
+        }
+
+        public double ScaleTo(double notscaled, double max)
+        {
+            return ScaleTo01(notscaled) * max;
+        }
+        public double UnscaleFrom(double scaled, double max)
+        {
+            return UnscaleFrom01(scaled / max);
         }
 
         private static double ToMei(double lfreq)
         {
             return 2595 * Math.Log10(1 + lfreq / 700);
         }
-
-        public double GetUnscaled(double scaled)
-        {
-            return FromMei(scaled);
-        }
-
-        public double From01(double scaled)
-        {
-            return FromMei(scaled / range + min);
-        }
-
         private static double FromMei(double lfreq)
         {
             return (Math.Pow(10, lfreq / 2595) + 1) / 700;
@@ -74,16 +72,14 @@ namespace Grapher.Scale
             wave.Frequency = value;
         }
 
-        public List<Milestone> GetMilestones()
+        public List<Graduations> GetMilestones()
         {
             return milestones;
         }
 
-        private readonly string label = "f(Hz)";
+        public bool IsContinuous()
+        { return true; }
 
-        public string GetLabel()
-        {
-            return label;
-        }
+        public string Label { get; } = "f(Hz)";
     }
 }

@@ -9,7 +9,7 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Modules
 {
-    public class HarmonicModule : ProtoModule
+    public class HarmonicModule : TableModule
     {
         //to reference specific stuff of the harmonic scale, not used rn tho
         private new HarmonicScale Wscale { get; set; }
@@ -21,7 +21,7 @@ namespace Grapher.Modules
             //Lscale = null;
             //Input = null;
             MTable.Interpolation = Table.InterpolationType.None;
-            name = "Harmonic " + name;
+            Name = "Harmonic " + Name;
             foreach (Table3DDot dot in MTable.dots[0])
             {
                 dot.Y = Table.MIN;
@@ -39,7 +39,7 @@ namespace Grapher.Modules
             int it = 0;
             foreach (Table3DDot dot in MTable.dots[0])
             {
-                double wval = MTable.GetOn1Value(it / (double)MTable.Width, 0);
+                double wval = MTable.Get01ValueFrom0101(it / (double)MTable.Width, 0);
                 if (wval > 0)
                 {
                     Wave wav = wavstock.Waves[it];

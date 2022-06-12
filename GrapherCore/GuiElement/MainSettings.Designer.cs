@@ -28,17 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainSettings));
             this.Detuner = new System.Windows.Forms.TrackBar();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.EditInputButton = new System.Windows.Forms.Button();
             this.InputComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.NoteUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.Detuner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NoteUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // Detuner
@@ -52,18 +48,6 @@
             this.Detuner.Size = new System.Drawing.Size(120, 27);
             this.Detuner.TabIndex = 0;
             this.Detuner.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.Detuner.Scroll += new System.EventHandler(this.Detuner_Scroll);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(4, 203);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 27);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "test";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // groupBox1
             // 
@@ -91,7 +75,6 @@
             // 
             // EditInputButton
             // 
-            this.EditInputButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("EditInputButton.BackgroundImage")));
             this.EditInputButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.EditInputButton.Location = new System.Drawing.Point(98, 18);
             this.EditInputButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -122,42 +105,20 @@
             this.label1.TabIndex = 27;
             this.label1.Text = "detune";
             // 
-            // NoteUpDown
-            // 
-            this.NoteUpDown.Location = new System.Drawing.Point(4, 237);
-            this.NoteUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.NoteUpDown.Maximum = new decimal(new int[] {
-            125,
-            0,
-            0,
-            0});
-            this.NoteUpDown.Name = "NoteUpDown";
-            this.NoteUpDown.Size = new System.Drawing.Size(88, 23);
-            this.NoteUpDown.TabIndex = 28;
-            this.NoteUpDown.Value = new decimal(new int[] {
-            69,
-            0,
-            0,
-            0});
-            this.NoteUpDown.ValueChanged += new System.EventHandler(this.NoteUpDown_ValueChanged);
-            // 
             // MainSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.NoteUpDown);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.InputComboBox);
             this.Controls.Add(this.EditInputButton);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.Detuner);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "MainSettings";
             this.Size = new System.Drawing.Size(478, 273);
             ((System.ComponentModel.ISupportInitialize)(this.Detuner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NoteUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,13 +126,11 @@
 
         #endregion
 
-        private System.Windows.Forms.TrackBar Detuner;
-        private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.TrackBar Detuner;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button EditInputButton;
         private System.Windows.Forms.ComboBox InputComboBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown NoteUpDown;
     }
 }

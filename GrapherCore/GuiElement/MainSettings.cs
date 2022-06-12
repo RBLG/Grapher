@@ -1,7 +1,5 @@
 ﻿using Grapher.Modules;
-using Grapher.Scale;
 using Grapher.SoundProcessing;
-using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,14 +24,7 @@ namespace Grapher.GuiElement
             InputComboBox.SelectedIndex = 1;
         }
 
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            if (button1.Text != "running")
-            { button1.Text = "running"; }
-            else
-            { button1.Text = "test"; }
-            StartStopSineWave();
-        }
+
 
         public class HollowModuleProvider : IModuleChainProvider
         {
@@ -49,38 +40,7 @@ namespace Grapher.GuiElement
             { root = module; }
         }
 
-        private WaveOut? waveOut;
-        private readonly SharedStuff shared = new(440, new HollowModuleProvider(new DefaultPitchModule()));
-        public static readonly int samplerate = 32000;//32kHz
-        public static readonly int channels = 1;//mono
-
-        public void Graph3DEditor_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            Console.WriteLine("pressed");
-            StartStopSineWave();
-        }
-
-        private void StartStopSineWave()
-        {
-            if (waveOut == null)
-            {
-                Console.WriteLine("start");
-                var output = new OutputWaveProvider32(shared);
-                output.SetWaveFormat(samplerate, channels);
-                waveOut = new WaveOut();
-                waveOut.Init(output);
-                waveOut.Play();
-            }
-            else
-            {
-                Console.WriteLine("stop");
-                waveOut.Stop();
-                waveOut.Dispose();
-                waveOut = null;
-            }
-        }
-
-        private readonly MidiNoteScale midi = new();
+        public readonly SharedStuff shared = new(440, new HollowModuleProvider(new DefaultPitchModule()));
 
         public IModuleChainProvider Chain {
             get => shared.Module;
@@ -100,7 +60,7 @@ namespace Grapher.GuiElement
             { return; }
             if (inputform == null || inputform.IsDisposed)
             {
-                inputform = new(control, root.GetName());
+                inputform = new(control, root.Name);
                 //here: if is 3Deditor, set it input to harmonics editor, maybe
                 inputform.Show();
             }
@@ -114,15 +74,9 @@ namespace Grapher.GuiElement
             Chain.SetRootModule(item.Factory());
         }
 
-        private void NoteUpDown_ValueChanged(object sender, EventArgs e)
-        { UpdatePitch(); }
-
-        private void Detuner_Scroll(object sender, EventArgs e)
-        { UpdatePitch(); }
-
-        private void UpdatePitch()
+        private void MainSettings_Load(object sender, EventArgs e)
         {
-            shared.Pitch = midi.GetUnscaled((double)NoteUpDown.Value + (Detuner.Value / 100d));
+
         }
     }
 }

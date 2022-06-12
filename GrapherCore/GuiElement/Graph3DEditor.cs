@@ -1,7 +1,6 @@
 ﻿using Grapher.GuiElement;
 using Grapher.Modules;
 using Grapher.Scale;
-using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +20,7 @@ namespace Grapher
         //not to be used, only to trick the visual framework into building it
         public Graph3DEditor() : this(new()) { }
 
-        public Graph3DEditor(ProtoModule nmodule)
+        public Graph3DEditor(TableModule nmodule)
         {
             //putting it here because graphical editor doesnt work if i put it in the designer
             //module = nmodule;
@@ -93,7 +92,7 @@ namespace Grapher
             { return; }
             if (inputform == null || inputform.IsDisposed)
             {
-                inputform = new(control, canvas3D1.Input.GetName());
+                inputform = new(control, canvas3D1.Input.Name);
                 inputform.Show();
             }
             else
