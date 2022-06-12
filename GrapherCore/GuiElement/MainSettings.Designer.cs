@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainSettings));
             this.Detuner = new System.Windows.Forms.TrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -75,6 +76,7 @@
             // 
             // EditInputButton
             // 
+            this.EditInputButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("EditInputButton.BackgroundImage")));
             this.EditInputButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.EditInputButton.Location = new System.Drawing.Point(98, 18);
             this.EditInputButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
