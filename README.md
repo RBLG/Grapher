@@ -2,35 +2,40 @@
 
 a grid based synthesizer
 
-![screenshot](https://github.com/RBLG/Grapher/blob/master/Doc/imgs/screenshot.PNG)
+![screenshot of the 3D editor](https://github.com/RBLG/Grapher/blob/master/Doc/imgs/screenshot.PNG)
 
-#How to install:
+### How to install:
 
-work in progress, so far you have to clone and compile yourself
+work in progress, so far you have to:
+- clone the repo
+- open GrapherVST/GrapherVST.sln with Visual Studio
+- build GrapherVST
+- copy GrapherVST/bin/x64/Debug/net5.0-windows/deploy/bin/Grapher.dll in GrapherVST/bin/x64/Debug/net5.0-windows/deploy/
+- you can now use it by opening GrapherVST/bin/x64/Debug/net5.0-windows/deploy/GrapherVST.dll
 
+### How to use:
+Grapher is composed of multiple modules. you can chain modules by using the Input setting
 
-#How to use:
-
-Grapher is composed of the following modules that can be chained:
-
-- Pitch:
-  this module produce a sin wave of the note choosen. it is the default intput module for all module with inputs.
-
-- Harmonic Editor:
-  this module produce a base sin wave and/or it harmonics based on what you do with the interface
-
-
+Here's some modules:
 - 3D Editor:
-  the main module. it modulate extensively the sound produced by it input based on the grid and the scales choosen for axis.
-  for example:
-  - with frequency on the width axis, time on the length axis and amplitude on the height axis, you can make both an envelloppe and/or a filter like this:
+  the main module. it allow you to modulate any property (on the Height axis) of a wave based on 2 others (the Width axis and Length axis)
+  LH and WH Editors are variants with no Width or no Length for convenience
 
-![screenshot](https://github.com/RBLG/Grapher/blob/master/Doc/imgs/highpassfilter_and_envelloppe.PNG)
+### Example:
+
+- you can do both a filter and envelloppe (including filter envelloppes and sort of LFOs) with a 3D editor with:
+  - Frequency as Width
+  - Time as Length
+  - Amplitude as Height
+
+![example of filter-envelloppe settup](https://github.com/RBLG/Grapher/blob/master/Doc/imgs/highpassfilter_and_envelloppe.PNG)
   
-  - you could also replace the amplitude scale on the height axis by frequency to do frequency modulation
-  - you can also change the duration of the time scale to make it slower/faster
-
-- 2D Editor:
-  in the 3D editor you can change the length and width of the grid to get more or less resolution. when setting one or the other to 1, it will switch to 2D editor, which is basically a conventional graphic envelloppe editor... but it can do much more!
-  you can open a 2D editor by default using LH Editor (length & height) or WH Editor (width & height) in the input menu. (the difference being visual format)
-
+  
+### In Construction:
+- plugin persistance
+- detune
+- note hold
+- advanced axis settings
+- release automation
+- optimization
+- maybe more stuff
