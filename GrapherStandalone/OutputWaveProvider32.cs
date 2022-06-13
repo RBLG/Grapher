@@ -11,7 +11,7 @@ namespace Grapher
 {
     public class OutputWaveProvider32 : WaveProvider32
     {
-        double time = 0;
+        public double time = 0;
         private readonly SharedStuff shared;
 
         public void Begin()
@@ -27,12 +27,14 @@ namespace Grapher
             double interval = 1000d / sampleRate;//in millis
             for (int n = 0; n < sampleCount; n++)
             {
-                Spectrum spec = mod.GetSpectrum(time,-1, shared.Pitch);
+                Spectrum spec = mod.GetSpectrum(time, -1, shared.Pitch);
                 float sum = 0;
                 foreach (Wave w in spec.Waves)
                 {
-                    float val = (float)(w.Amplitude * Math.Sin((2 * Math.PI * w.Frequency * time) / 1000));
+                    float val = (float)(w.Amplitude * Math.Sin(w.Frequency * (2 * Math.PI * time / 1000 + w.Phase * 1000)));
                     sum += val;
+                    w.Phase = 0.5;//dirty reset
+                    //w.Padding = 0.5; //useless since there's no
                 }
                 buffer[n + offset] = sum;
                 time += interval;

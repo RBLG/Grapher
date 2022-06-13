@@ -19,6 +19,9 @@ namespace Grapher.Scale
            new AvailableScale("--Amplitude:----",()=>null,null,false,ScaleType.Amplitude),
            new AvailableScale(" Linear (A)",()=>new LinearAmplitudeScale(),typeof(LinearAmplitudeScale),true, ScaleType.Frequency),
            //new AvailableScale("Decibel (A)",()=>new DecibelAmplitudeScale(),typeof(DecibelAmplitudeScale),true ,ScaleType.Amplitude)
+           new AvailableScale("--Others:----",()=>null,null,false,ScaleType.Amplitude),
+           new AvailableScale(" Padding",()=>new PaddingScale(),typeof(PaddingScale),true, ScaleType.Padding),
+           new AvailableScale(" Phase",()=>new PhaseScale(),typeof(PhaseScale),true, ScaleType.Phase),
         };
         public static readonly IReadOnlyCollection<AvailableScale> scales = list;
 
@@ -28,7 +31,7 @@ namespace Grapher.Scale
             public Func<IScale?> Factory { get; private set; }
             public bool Selectable { get; private set; }
             public Type? CType { get; private set; }
-            public ScaleType SType { get; private set; }
+            public ScaleType SType { get; private set; }//TODO rework to use interface ineritance to need even less code
 
             //factory take either null or a module already existing to build around
             public AvailableScale(String nname, Func<IScale?> nfactory, Type? ntype, bool nselectable, ScaleType nstype)
@@ -41,9 +44,9 @@ namespace Grapher.Scale
             }
         }
 
-        public enum ScaleType
+        public enum ScaleType 
         {
-            Time, Frequency, Amplitude, Padding
+            Time, Frequency, Amplitude, Padding, Phase
         }
 
         public static int GetIndex(Type type)

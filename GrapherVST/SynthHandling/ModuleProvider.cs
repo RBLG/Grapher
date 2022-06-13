@@ -59,20 +59,25 @@ namespace GrapherVST.SynthHandling
                 for (int n = 0; n < outChannels[0].SampleCount; n++)
                 {
                     Spectrum spec = root.GetSpectrum(evnt.time, evnt.timeoff, pitch);
-                    float sum = 0;
+                    double sum = 0;
+                    double sum2 = 0;
                     foreach (Wave w in spec.Waves)
                     {
-                        float val = (float)(w.Amplitude * Math.Sin(2 * Math.PI * w.Frequency * evnt.time / 1000));
-                        sum += val;
+                        double val = w.Amplitude * Math.Sin(w.Frequency * (2 * Math.PI * evnt.time / 1000 + w.Phase));
+                        sum += val * w.Padding;
+                        sum2 += val * (1 - w.Padding);
+                        w.Phase = 0.5;//dirty reset
+                        w.Padding = 0.5;
                     }
-                    outChannels[0][n] += sum;//for each channel
+                    outChannels[0][n] += (float)sum;
+                    outChannels[1][n] += (float)sum2;
                     evnt.time += interval;
                     evnt.timeoff += interval;
                 }
 
             }
-            for (int n = 0; n < outChannels[0].SampleCount; n++)
-            { outChannels[1][n] = outChannels[0][n]; }
+            //for (int n = 0; n < outChannels[0].SampleCount; n++)
+            //{ outChannels[1][n] = outChannels[0][n]; }
 
         }
 

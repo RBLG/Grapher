@@ -16,8 +16,11 @@ namespace Grapher
         public class Wave
         {
             public WaveType Type { get; private set; }
-            public double Frequency { get; set; }
-            public double Amplitude { get; set; }
+            //public Func<Wave, double> WaveGenerator { get; private set; } = (w) => 0; //todo
+            public double Frequency { get; set; } //see LinearFrequencyScale
+            public double Amplitude { get; set; } //see LinearAmplitudeScale
+            public double Phase { get; set; } = 0.5; //see PhaseScale
+            public double Padding { get; set; } = 0.5; //see PadddingScale
             public Wave(WaveType ntype, double nfreq, double namp)
             {
                 Type = ntype;
@@ -28,7 +31,7 @@ namespace Grapher
 
         public enum WaveType
         { // to replace by self generation of the wave
-            Sinus, Noise, Triangle, Power
+            Sinus, Complex
         }
     }
 }

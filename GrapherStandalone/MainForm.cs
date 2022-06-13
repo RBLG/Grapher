@@ -44,6 +44,7 @@ namespace Grapher
             {
                 Console.WriteLine("start");
                 var output = new OutputWaveProvider32(mainSettings1.shared);
+                output.time = 0;
                 output.SetWaveFormat(samplerate, channels);
                 waveOut = new WaveOut();
                 waveOut.Init(output);
