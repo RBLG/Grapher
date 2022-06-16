@@ -14,17 +14,17 @@ namespace Grapher.GuiElement
 {
     public partial class MainSettings : UserControl
     {
+        private readonly Boolean inInit = true;
+
         public MainSettings()
         {
             InitializeComponent();
-
             InputComboBox.ValueMember = "Factory";
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
             InputComboBox.SelectedIndex = 1;
+            inInit = false;
         }
-
-
 
         public class HollowModuleProvider : IModuleChainProvider
         {
@@ -70,6 +70,7 @@ namespace Grapher.GuiElement
 
         private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (inInit) { return; }
             var item = AvailableModules.modules.ElementAt(InputComboBox.SelectedIndex);
             Chain.SetRootModule(item.Factory());
         }

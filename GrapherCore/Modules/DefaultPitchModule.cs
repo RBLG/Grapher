@@ -26,10 +26,14 @@ namespace Grapher.Modules
         public string Name { get; set; } = "Pitch Module" + count++;
         private static int count = 0;
 
-        public Spectrum GetSpectrum(double time, double timeoff, double bpitch)
+        public Spectrum GetSpectrum(double time, double timeoff, double bpitch, double seed)
         {
             spec.Waves[0].Frequency = bpitch;
             spec.Waves[0].Amplitude = 0.2;
+            spec.Time = time;
+            spec.TimeOff = timeoff;
+            spec.BasePitch = bpitch;
+            spec.NoteSeed = seed;
             return spec;
         }
 

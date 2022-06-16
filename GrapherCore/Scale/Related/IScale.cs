@@ -1,6 +1,8 @@
-﻿using Grapher.Modules;
+﻿using Grapher.Modes;
+using Grapher.Modules;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using static Grapher.Spectrum;
 
 namespace Grapher.Scale
@@ -16,14 +18,27 @@ namespace Grapher.Scale
         double Scale(double notscaled);
         double Unscale(double scaled);
 
-        double ScaleTo(double notscaled, double max);
-        double UnscaleFrom(double scaled, double max);
+        double ScaleTo(double notscaled, double size);
+        double UnscaleFrom(double scaled, double size);
 
         double ScaleTo01(double notscaled);
         double UnscaleFrom01(double scaled);
 
-        double PickValue(Wave wave, double time, Spectrum spectrum);
-        void SetValue(double value, Wave wave, double time, Spectrum spectrum);
+        //uncomment if ever needed
+        //double PickValue(Wave wave, Spectrum spectrum);
+        //void SetValue(Wave wave, Spectrum spectrum, double value);
+
+        double PickValueTo(Wave wave, Spectrum spectrum, double size);
+
+        /// <summary>
+        /// pick the value, scale it to 01, process it with mode then unscale it from 01 and set it back
+        /// </summary>
+        /// <param name="wave"></param>
+        /// <param name="spectrum"></param>
+        /// <param name="size">Height size(tval is normalized on 0-1 anyway)</param>
+        /// <param name="mode"></param>
+        /// <param name="tval">the value from the table</param>
+        void ProcessValue(Wave wave, Spectrum spectrum, double size, IMode mode, double tval);
 
         /// <summary>
         /// 
@@ -40,7 +55,9 @@ namespace Grapher.Scale
         /// return if the scale accept values inbetween
         /// </summary>
         /// <returns></returns>
-        Boolean IsContinuous();
+        Boolean Continuous { get; }
+
+        Control GetControl();
     }
 
     /// <summary>

@@ -35,7 +35,6 @@ Here's some modules:
 - plugin persistance
 - detune
 - note hold
-- advanced axis settings
 - release automation
 - optimization
 - maybe more stuff

@@ -63,7 +63,7 @@ namespace Grapher
         internal void SetDura(int ndura)
         {
             var sc = module.Lscale;
-            if (sc is LoopingTimeScale scale)
+            if (sc is TimeLinearScale scale)
             { //will be handled properly later with scale switching and menus
                 scale.Max = ndura;
             }
@@ -229,13 +229,13 @@ namespace Grapher
                 {
                     Table3DDot point = points[itx][itz];
                     //drawing width vertices
-                    if (itz != points[0].Count - 1)
+                    if (itz != points[0].Count - 1 && module.Wscale.Continuous)
                     {
                         Table3DDot last = points[itx][itz + 1];
                         e.Graphics.DrawLine(net2, point.ScreenX, point.ScreenY, last.ScreenX, last.ScreenY);
                     }
                     //drawing length vertices
-                    if (itx != points.Count - 1)
+                    if (itx != points.Count - 1 && module.Lscale.Continuous)
                     {
                         Table3DDot last = points[itx + 1][itz];
                         e.Graphics.DrawLine(net1, point.ScreenX, point.ScreenY, last.ScreenX, last.ScreenY);
@@ -275,7 +275,7 @@ namespace Grapher
                     }
                     else
                     {//drawing width vertices
-                        if (itz != points[0].Count - 1)
+                        if (itz != points[0].Count - 1 && module.Wscale.Continuous)
                         {
                             Table3DDot last = points[itx][itz + 1];
                             e.Graphics.DrawLine(net1, px, py, ox + (float)last.Z * 1.5f, oy - (float)last.Y);
@@ -310,7 +310,7 @@ namespace Grapher
                     float py = oy - (float)point.Y;
 
                     //drawing length vertices
-                    if (itx != points.Count - 1)
+                    if (itx != points.Count - 1 && module.Lscale.Continuous)
                     {
                         Table3DDot last = points[itx + 1][itz];
                         e.Graphics.DrawLine(net1, px, py, ox + (float)last.X, oy - (float)last.Y);

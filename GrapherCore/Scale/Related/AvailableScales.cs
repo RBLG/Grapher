@@ -11,13 +11,14 @@ namespace Grapher.Scale
         private static readonly List<AvailableScale> list = new()
         {
            new AvailableScale("--Time:---------",()=>null,null,false,ScaleType.Time),
-           new AvailableScale(" Dynamic (T)",()=>new LoopingTimeScale(),typeof(LoopingTimeScale),true,ScaleType.Time),
+           new AvailableScale(" Dynamic (T)",()=>new TimeLinearScale(),typeof(TimeLinearScale),true,ScaleType.Time),
+           new AvailableScale(" Modulo (T%)",()=>new TimeModuloScale(),typeof(TimeModuloScale),true,ScaleType.TimeModulo),
            new AvailableScale("--Frequency:----",()=>null,null,false,ScaleType.Frequency),
-           new AvailableScale("Exponantial (F)",()=>new ExponantialFrequencyScale(),typeof(ExponantialFrequencyScale),true,ScaleType.Frequency),
-           new AvailableScale(" Linear (F)",()=>new LinearFrequencyScale(),typeof(LinearFrequencyScale),true,ScaleType.Frequency),
-           new AvailableScale(" Mei (F)",()=>new MeiFrequencyScale(),typeof(MeiFrequencyScale),true,ScaleType.Frequency),
+           new AvailableScale("Exponantial (F)",()=>new FrequencyExponantialScale(),typeof(FrequencyExponantialScale),true,ScaleType.Frequency),
+           new AvailableScale(" Linear (F)",()=>new FrequencyLinearScale(),typeof(FrequencyLinearScale),true,ScaleType.Frequency),
+           new AvailableScale(" Mei (F)",()=>new FrequencyMeiScale(),typeof(FrequencyMeiScale),true,ScaleType.Frequency),
            new AvailableScale("--Amplitude:----",()=>null,null,false,ScaleType.Amplitude),
-           new AvailableScale(" Linear (A)",()=>new LinearAmplitudeScale(),typeof(LinearAmplitudeScale),true, ScaleType.Frequency),
+           new AvailableScale(" Linear (A)",()=>new AmplitudeLinearScale(),typeof(AmplitudeLinearScale),true, ScaleType.Frequency),
            //new AvailableScale("Decibel (A)",()=>new DecibelAmplitudeScale(),typeof(DecibelAmplitudeScale),true ,ScaleType.Amplitude)
            new AvailableScale("--Others:----",()=>null,null,false,ScaleType.Amplitude),
            new AvailableScale(" Padding",()=>new PaddingScale(),typeof(PaddingScale),true, ScaleType.Padding),
@@ -44,9 +45,9 @@ namespace Grapher.Scale
             }
         }
 
-        public enum ScaleType 
+        public enum ScaleType
         {
-            Time, Frequency, Amplitude, Padding, Phase
+            Time, TimeModulo, Frequency, Amplitude, Padding, Phase
         }
 
         public static int GetIndex(Type type)

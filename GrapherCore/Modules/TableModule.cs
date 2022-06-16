@@ -16,11 +16,11 @@ namespace Grapher
     {
         public IModule Input { get; set; } = new DefaultPitchModule();
         public Table MTable { get; set; } = new Table();
-        public IMode Mode { get; set; } = new MultiplyProcesser();
+        public IMode Mode { get; set; } = new MultiplyMode();
 
-        private IScale wscale = new ExponantialFrequencyScale();
-        private IScale lscale = new LoopingTimeScale();
-        private IScale hscale = new LinearAmplitudeScale();
+        private IScale wscale = new FrequencyExponantialScale();
+        private IScale lscale = new TimeLinearScale();
+        private IScale hscale = new AmplitudeLinearScale();
         public IScale Wscale { get => wscale; set { wscale = value; UpdateUniqueScales(); } }
         public IScale Lscale { get => lscale; set { lscale = value; UpdateUniqueScales(); } }
         public IScale Hscale { get => hscale; set { hscale = value; UpdateUniqueScales(); } }
@@ -30,22 +30,18 @@ namespace Grapher
             UpdateUniqueScales();
         }
 
-        public virtual Spectrum GetSpectrum(double time, double timeoff, double bpitch)
+        public virtual Spectrum GetSpectrum(double time, double timeoff, double bpitch, double seed)
         {
-            Spectrum buffer = Input.GetSpectrum(time, timeoff, bpitch);
+            Spectrum buffer = Input.GetSpectrum(time, timeoff, bpitch, seed);
             foreach (Wave w in buffer.Waves)
             {
                 //TODO implement the effect of IScale.IsContinuous
-                //TODO remove the convertion to 01 by using ScaleTo
-                double wval = Wscale.ScaleTo01(Wscale.PickValue(w, time, buffer));
-                double lval = Lscale.ScaleTo01(Lscale.PickValue(w, time, buffer));
+                double wval = Wscale.PickValueTo(w, buffer, MTable.Width);
+                double lval = Lscale.PickValueTo(w, buffer, MTable.Length);
 
-                //TODO and replace by Get01ValueFromWL
-                double tval = MTable.Get01ValueFrom0101(wval, lval);
+                double tval = MTable.Get01ValueFromWL(wval, lval);
 
-                double hval = Hscale.Scale(Hscale.PickValue(w, time, buffer));
-                hval = Hscale.Unscale(Mode.Process(hval, tval));
-                Hscale.SetValue(hval, w, time, buffer);
+                Hscale.ProcessValue(w, buffer, MTable.Height, Mode, tval);
             }
             return buffer;
         }

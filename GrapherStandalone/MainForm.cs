@@ -43,10 +43,10 @@ namespace Grapher
             if (waveOut == null)
             {
                 Console.WriteLine("start");
-                var output = new OutputWaveProvider32(mainSettings1.shared);
-                output.time = 0;
+                OutputWaveProvider32 output = new(mainSettings1.shared);
                 output.SetWaveFormat(samplerate, channels);
-                waveOut = new WaveOut();
+                output.time = 0;
+                waveOut = new();
                 waveOut.Init(output);
                 waveOut.Play();
             }

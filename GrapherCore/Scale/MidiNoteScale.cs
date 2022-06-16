@@ -22,8 +22,8 @@ namespace Grapher.Scale
         }
         public static readonly double STANDARD_PITCH = 440;
 
-        public double Max { get; } = 127;
-        public double Min { get; } = 0;
+        public double Max => 127;
+        public double Min => 0;
 
         public double BaseFrequency { get; set; }
 
@@ -53,24 +53,20 @@ namespace Grapher.Scale
             return Unscale(scaled * Max);
         }
 
-        public double ScaleTo(double notscaled, double max)
+        public double ScaleTo(double notscaled, double size)
         {
-            return ScaleTo01(notscaled) * max;
+            return ScaleTo01(notscaled) * size;
         }
-        public double UnscaleFrom(double scaled, double max)
+        public double UnscaleFrom(double scaled, double size)
         {
-            return UnscaleFrom01(scaled / max);
-        }
-
-        public double PickValue(Wave wave, double time, Spectrum spectrum)
-        {
-            throw new NotImplementedException();
-            //return wave.Note;
+            return UnscaleFrom01(scaled / size);
         }
 
-        public void SetValue(double value, Wave wave, double time, Spectrum spectrum)
+        public double PickValueTo(Wave wave, Spectrum spectrum, double size)
+        { return ScaleTo(wave.Frequency, size); }
+        public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {
-            throw new NotImplementedException();
+            wave.Frequency = UnscaleFrom01(mode.Process(ScaleTo01(wave.Frequency), tval));
         }
 
         public List<Graduations> GetMilestones()
@@ -78,9 +74,12 @@ namespace Grapher.Scale
             throw new NotImplementedException();
         }
 
-        public bool IsContinuous()
-        { return false; }
+        public System.Windows.Forms.Control GetControl()
+        {
+            return new GuiElement.ScaleSettings.BlankScaleGui();
+        }
 
-        public string Label { get; } = "midi";
+        public bool Continuous => false;
+        public string Label => "midi notes";
     }
 }

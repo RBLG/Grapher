@@ -17,6 +17,8 @@ namespace Grapher
     {
         public Canvas3D canvas3D1;
 
+        private readonly Boolean inInit = true;
+
         //not to be used, only to trick the visual framework into building it
         public Graph3DEditor() : this(new()) { }
 
@@ -33,7 +35,6 @@ namespace Grapher
                 TabIndex = 25,
                 Text = "canvas3D1",
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left,
-                //Visible = false
             };
             InitializeComponent();
             //after init so it is in the background
@@ -45,11 +46,13 @@ namespace Grapher
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
             InputComboBox.SelectedIndex = 0;
-            //////
+            // ////
+            inInit = false;
         }
 
         private void NumWidth_ValueChanged(object sender, EventArgs e)
         {
+            if (inInit) { return; }
             canvas3D1.module.MTable.Width = (int)Math.Max(1, numWidth.Value);
             numWidth.Value = canvas3D1.module.MTable.Width;
             canvas3D1.Invalidate();
@@ -57,26 +60,22 @@ namespace Grapher
 
         private void NumLength_ValueChanged(object sender, EventArgs e)
         {
+            if (inInit) { return; }
             canvas3D1.module.MTable.Length = (int)Math.Max(1, numLength.Value);
             numLength.Value = canvas3D1.module.MTable.Length;
             canvas3D1.Invalidate();
         }
 
-        private void NumDuration_ValueChanged(object sender, EventArgs e)
-        {
-            canvas3D1.SetDura((int)Math.Max(1, numDuration.Value));
-        }
-
         private void BrushSizeX_Scroll(object sender, EventArgs e)
         { canvas3D1.BrushSize = brushSize.Value / 1000d; }
 
-        public ScaleSettings? ssets = null;
+        public ScalesSettings? ssets = null;
 
         private void AxisSettingsButton_Click(object sender, EventArgs e)
         {
             if (ssets == null || ssets.IsDisposed)
             {
-                ssets = new ScaleSettings(this);
+                ssets = new ScalesSettings(this);
                 ssets.Show();
             }
             else
@@ -102,6 +101,7 @@ namespace Grapher
 
         private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (inInit) { return; }
             var item = AvailableModules.modules.ElementAt(InputComboBox.SelectedIndex);
             if (item == null)
             { return; }
@@ -117,13 +117,6 @@ namespace Grapher
             canvas3D1.Invalidate();
         }
 
-        private void TimeLoop_CheckedChanged(object sender, EventArgs e)
-        {
-            var sc = canvas3D1.module.Lscale;
-            if (sc is LoopingTimeScale ts)
-            { //will be handled properly later with scale switching and menus
-                ts.IsLooping = TimeLoop.Checked;
-            }
-        }
+
     }
 }

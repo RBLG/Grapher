@@ -27,14 +27,14 @@ namespace Grapher
             double interval = 1000d / sampleRate;//in millis
             for (int n = 0; n < sampleCount; n++)
             {
-                Spectrum spec = mod.GetSpectrum(time, -1, shared.Pitch);
+                Spectrum spec = mod.GetSpectrum(time, -1, shared.Pitch, (int)(time / 3_000d));
                 float sum = 0;
                 foreach (Wave w in spec.Waves)
                 {
-                    float val = (float)(w.Amplitude * Math.Sin(w.Frequency * (2 * Math.PI * time / 1000 + w.Phase * 1000)));
+                    float val = (float)(w.Amplitude * Math.Sin(w.Frequency * (2 * Math.PI * time / 1000d + w.Phase)));
                     sum += val;
                     w.Phase = 0.5;//dirty reset
-                    //w.Padding = 0.5; //useless since there's no
+                    //w.Padding = 0.5; //useless since there's no padding in the standalone version so far
                 }
                 buffer[n + offset] = sum;
                 time += interval;

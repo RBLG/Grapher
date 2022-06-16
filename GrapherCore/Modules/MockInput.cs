@@ -29,8 +29,12 @@ namespace Grapher.Modules
 
         public string Name { get; set; } = "Mock Input";
 
-        public Spectrum GetSpectrum(double time, double timeoff, double bpitch)
+        public Spectrum GetSpectrum(double time, double timeoff, double bpitch, double seed)
         {
+            buffer.Time = time;
+            buffer.TimeOff = timeoff;
+            buffer.BasePitch = bpitch;
+            buffer.NoteSeed = seed;
             for (int it = 0; it < main.Waves.Count; it++)
             {
                 Wave bw = buffer.Waves[it];

@@ -32,10 +32,14 @@ namespace Grapher.Modules
         private readonly Spectrum wavstock = new();
         private readonly Spectrum buffer = new();
 
-        public override Spectrum GetSpectrum(double time, double timeoff, double bpitch)
+        public override Spectrum GetSpectrum(double time, double timeoff, double bpitch, double seed)
         {
             UpdateStock();
             buffer.Waves.Clear();
+            buffer.Time = time;
+            buffer.TimeOff = timeoff;
+            buffer.BasePitch = bpitch;
+            buffer.NoteSeed = seed;
             int it = 0;
             foreach (Table3DDot dot in MTable.dots[0])
             {
@@ -60,8 +64,6 @@ namespace Grapher.Modules
             control.EditInputButton.Visible = false;
             control.numLength.Visible = false;
             control.LengthLabel.Visible = false;
-            control.numDuration.Visible = false;
-            control.DurationLabel.Visible = false;
             control.AxisSettingsButton.Visible = false;
             return control;
         }

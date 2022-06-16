@@ -11,6 +11,12 @@ namespace Grapher
     {
         public List<Wave> Waves { get; private set; } = new();
 
+        public double Time { get; set; }
+        public double TimeOff { get; set; }
+        public double BasePitch { get; set; }
+        public double NoteSeed { get; set; }
+
+
         public Spectrum() { }
 
         public class Wave

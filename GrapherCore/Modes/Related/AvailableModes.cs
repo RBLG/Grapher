@@ -10,7 +10,7 @@ namespace Grapher.Modes
     {
         private static readonly List<AvailableMode> list = new List<AvailableMode>()
         {
-           new AvailableMode("Multiply (0-200%)",()=>new MultiplyProcesser(),typeof(MultiplyProcesser))
+           new AvailableMode("Multiply (0-200%)",()=>new MultiplyMode(),typeof(MultiplyMode))
         };
         public static readonly IReadOnlyCollection<AvailableMode> modes = list;
 

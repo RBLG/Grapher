@@ -36,20 +36,15 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.WidthLabel = new System.Windows.Forms.Label();
             this.LengthLabel = new System.Windows.Forms.Label();
-            this.DurationLabel = new System.Windows.Forms.Label();
             this.numWidth = new System.Windows.Forms.NumericUpDown();
             this.numLength = new System.Windows.Forms.NumericUpDown();
-            this.numDuration = new System.Windows.Forms.NumericUpDown();
             this.AxisSettingsButton = new System.Windows.Forms.Button();
             this.EditInputButton = new System.Windows.Forms.Button();
             this.InputLabel = new System.Windows.Forms.Label();
             this.BrushGroupBox = new System.Windows.Forms.GroupBox();
-            this.TimeLoop = new System.Windows.Forms.CheckBox();
-            this.LoopLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDuration)).BeginInit();
             this.BrushGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -138,17 +133,6 @@
             this.LengthLabel.TabIndex = 14;
             this.LengthLabel.Text = "length";
             // 
-            // DurationLabel
-            // 
-            this.DurationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DurationLabel.AutoSize = true;
-            this.DurationLabel.Location = new System.Drawing.Point(621, 3);
-            this.DurationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.DurationLabel.Name = "DurationLabel";
-            this.DurationLabel.Size = new System.Drawing.Size(79, 15);
-            this.DurationLabel.TabIndex = 15;
-            this.DurationLabel.Text = "duration (ms)";
-            // 
             // numWidth
             // 
             this.numWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -185,32 +169,6 @@
             0,
             0});
             this.numLength.ValueChanged += new System.EventHandler(this.NumLength_ValueChanged);
-            // 
-            // numDuration
-            // 
-            this.numDuration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numDuration.BackColor = System.Drawing.SystemColors.Control;
-            this.numDuration.Location = new System.Drawing.Point(624, 24);
-            this.numDuration.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.numDuration.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numDuration.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numDuration.Name = "numDuration";
-            this.numDuration.Size = new System.Drawing.Size(75, 23);
-            this.numDuration.TabIndex = 20;
-            this.numDuration.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numDuration.ValueChanged += new System.EventHandler(this.NumDuration_ValueChanged);
             // 
             // AxisSettingsButton
             // 
@@ -261,40 +219,17 @@
             this.BrushGroupBox.TabStop = false;
             this.BrushGroupBox.Text = "Brush :";
             // 
-            // TimeLoop
-            // 
-            this.TimeLoop.Location = new System.Drawing.Point(583, 23);
-            this.TimeLoop.Name = "TimeLoop";
-            this.TimeLoop.Size = new System.Drawing.Size(22, 23);
-            this.TimeLoop.TabIndex = 25;
-            this.TimeLoop.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.TimeLoop.UseVisualStyleBackColor = true;
-            this.TimeLoop.CheckedChanged += new System.EventHandler(this.TimeLoop_CheckedChanged);
-            // 
-            // LoopLabel
-            // 
-            this.LoopLabel.AutoSize = true;
-            this.LoopLabel.Location = new System.Drawing.Point(583, 3);
-            this.LoopLabel.Name = "LoopLabel";
-            this.LoopLabel.Size = new System.Drawing.Size(31, 15);
-            this.LoopLabel.TabIndex = 26;
-            this.LoopLabel.Text = "loop";
-            // 
             // Graph3DEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.TimeLoop);
-            this.Controls.Add(this.LoopLabel);
             this.Controls.Add(this.InputComboBox);
             this.Controls.Add(this.EditInputButton);
             this.Controls.Add(this.numLength);
             this.Controls.Add(this.numWidth);
-            this.Controls.Add(this.numDuration);
             this.Controls.Add(this.BrushGroupBox);
             this.Controls.Add(this.InputLabel);
             this.Controls.Add(this.AxisSettingsButton);
-            this.Controls.Add(this.DurationLabel);
             this.Controls.Add(this.LengthLabel);
             this.Controls.Add(this.WidthLabel);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -304,7 +239,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDuration)).EndInit();
             this.BrushGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -319,16 +253,12 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.NumericUpDown numWidth;
         public System.Windows.Forms.NumericUpDown numLength;
-        public System.Windows.Forms.NumericUpDown numDuration;
         public System.Windows.Forms.Button AxisSettingsButton;
         public System.Windows.Forms.Button EditInputButton;
         //private Canvas3D canvas3D2;
         private System.Windows.Forms.GroupBox BrushGroupBox;
-        public System.Windows.Forms.Label DurationLabel;
         public System.Windows.Forms.Label WidthLabel;
         public System.Windows.Forms.Label LengthLabel;
         public System.Windows.Forms.Label InputLabel;
-        private System.Windows.Forms.CheckBox TimeLoop;
-        private System.Windows.Forms.Label LoopLabel;
     }
 }

@@ -17,8 +17,14 @@ namespace GrapherVST.SynthHandling
 
         public class MyMidiEvent
         {
+            private static int count = 0;
             public MyMidiEvent(int nnote)
-            { note = nnote; }
+            {
+                note = nnote;
+                count++;
+                seed = count;
+            }
+            public double seed;
             public int note;
             public double time = 0;
             public double timeoff = Double.NaN;//NaN till the off event happen
@@ -58,7 +64,7 @@ namespace GrapherVST.SynthHandling
                 double pitch = midi.Unscale(evnt.note);
                 for (int n = 0; n < outChannels[0].SampleCount; n++)
                 {
-                    Spectrum spec = root.GetSpectrum(evnt.time, evnt.timeoff, pitch);
+                    Spectrum spec = root.GetSpectrum(evnt.time, evnt.timeoff, pitch, evnt.seed);
                     double sum = 0;
                     double sum2 = 0;
                     foreach (Wave w in spec.Waves)

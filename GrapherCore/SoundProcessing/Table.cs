@@ -18,10 +18,10 @@ namespace Grapher
         public static readonly int deflength = 30;
 
         //moved from canvas3D
-        public readonly Point3D xaxis = new Point3D(0.7, 0.2, 0);
-        public readonly Point3D yaxis = new Point3D(0, -1, 0);
-        public readonly Point3D zaxis = new Point3D(0.5, -0.3, 0);
-        public Point3D Origin = new Point3D(10, 216, 0);
+        public readonly Point3D xaxis = new(0.7, 0.2, 0);
+        public readonly Point3D yaxis = new(0, -1, 0);
+        public readonly Point3D zaxis = new(0.5, -0.3, 0);
+        public Point3D Origin = new(10, 216, 0);
 
         //private Canvas3D gui;
 
@@ -32,7 +32,7 @@ namespace Grapher
         public Table()
         {
             Interpolation = InterpolationType.Linear;
-            dots = new List<List<Table3DDot>>();
+            dots = new();
             foreach (int itx in Enumerable.Range(0, deflength))
             {
                 var row = new List<Table3DDot>();
@@ -44,7 +44,9 @@ namespace Grapher
             }
         }
 
-        public int Width {
+        public int Height { get; set; } = (int)MAX;
+
+        public int Width {//TODO make resize use last row/collumn values
             get { return dots[0].Count; }
             set {
                 if (value < dots[0].Count)
@@ -80,7 +82,7 @@ namespace Grapher
                     foreach (int itx in Enumerable.Range(0, value - dots.Count))
                     {
                         int trueitx = dots.Count;
-                        List<Table3DDot> list = new List<Table3DDot>();
+                        List<Table3DDot> list = new();
                         foreach (int itz in Enumerable.Range(0, dots[0].Count))
                         {
                             list.Add(CreateDot(trueitx, itz, trueitx + 1, dots[0].Count));
@@ -113,17 +115,22 @@ namespace Grapher
             return new Table3DDot(() => Origin, () => xaxis, () => yaxis, () => zaxis, vx, vy, vz);
         }
 
-        public double Get01ValueFrom0101(double freq, double time)
+        public double Get01ValueFrom0101(double wval, double lval)
         {
-            return (GetOnMaxValue(freq, time) - MIN) / MAX;
+            return Get01ValueFromWL(wval * Width, lval * Length);
         }
 
-        public double GetOnMaxValue(double wval, double lval)
+        public double Get01ValueFromWL(double wval, double lval)
         {
-            if (wval < 0 || 1 < wval || lval < 0 || 1 < lval)
+            return (GetOnMaxValueFromWL(wval, lval) - MIN) / MAX;
+        }
+
+        public double GetOnMaxValueFromWL(double wval, double lval)
+        {
+            if (wval < 0 || Width <= wval || lval < 0 || Length <= lval)
             { return 0; }
-            wval *= dots[0].Count - 1;
-            lval *= dots.Count - 1;
+            //wval *= dots[0].Count - 1;
+            //lval *= dots.Count - 1;
 
             if (Interpolation == InterpolationType.None)
             { return GetNotInterpolatedValue(lval, wval); }

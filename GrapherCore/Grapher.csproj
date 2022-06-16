@@ -38,6 +38,21 @@
     <Compile Update="GuiElement\MainSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="GuiElement\ScaleSettings\FrequencyExponentialGui.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="GuiElement\ScaleSettings\FrequencyMeiGui.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="GuiElement\ScaleSettings\PhaseGui.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="GuiElement\ScaleSettings\PaddingGui.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="GuiElement\ScaleSettings\FrequencyLinearGui.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

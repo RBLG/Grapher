@@ -14,7 +14,7 @@ namespace Grapher.Modules
         /// return the decomposed set of (usually sinuses) waves.<br/>
         /// will be replaced by ApplySpectrum with a Spectrum as param to allow multithreading
         /// </summary>
-        Spectrum GetSpectrum(double time, double timeoff, double bpitch);
+        Spectrum GetSpectrum(double time, double timeoff, double bpitch, double seed);
 
 
         /// <summary>
