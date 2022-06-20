@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Grapher
@@ -18,26 +19,32 @@ namespace Grapher
         public static readonly int deflength = 30;
 
         //moved from canvas3D
+        [JsonIgnore]
         public readonly Point3D xaxis = new(0.7, 0.2, 0);
+        [JsonIgnore]
         public readonly Point3D yaxis = new(0, -1, 0);
+        [JsonIgnore]
         public readonly Point3D zaxis = new(0.5, -0.3, 0);
+        [JsonIgnore]
         public readonly Point3D Origin = new(10, 216, 0);
-
-        //private Canvas3D gui;
 
         //temp public
         public List<List<Table3DDot>> dots;
         public InterpolationType Interpolation { get; set; }
-        public Table(List<List<double>> ndots)
+        /// <summary>
+        /// constructor for the deserializer
+        /// </summary>
+        public Table(List<List<Table3DDot>> Dots, InterpolationType interpolation, int height)
         {
-            dots = ndots;
-            Interpolation = InterpolationType.Linear;
-            //dots.ForEach((r) => r.ForEach((d) =>
-            //{
-            //    d.SetReferencial(() => Origin, () => xaxis, () => yaxis, () => zaxis);
-            //    d.RecalculateScreenXY();
-            //}
-            //));
+            dots = Dots;
+            Interpolation = interpolation;
+            Height = height;
+            dots.ForEach((r) => r.ForEach((d) =>
+            {
+                d.SetReferencial(() => Origin, () => xaxis, () => yaxis, () => zaxis);
+                d.RecalculateScreenXY();
+            }
+            ));
         }
 
         public Table()
@@ -112,8 +119,11 @@ namespace Grapher
                 foreach (int itz in Enumerable.Range(0, dots[0].Count))
                 {
                     Table3DDot pt = dots[itx][itz];
+                    pt.SetReferencial(() => Origin, () => xaxis, () => yaxis, () => zaxis);
                     pt.Z = itz * (Canvas3D.tablevisualwidth / Math.Max(2, dots[0].Count - 1)) + Canvas3D.oripadding;
                     //pt.X = itx * (dots.Count / gui.tablevisualwidth) + gui.oripadding;
+                    //fix for the deserialization
+                    
                 }
             }
         }
@@ -123,7 +133,9 @@ namespace Grapher
             double vz = itz * (Canvas3D.tablevisualwidth / Math.Max(2, width - 1)) + Canvas3D.oripadding;
             double vx = itx * Canvas3D.lengthspacing + Canvas3D.oripadding;
             double vy = defval;
-            return new Table3DDot(() => Origin, () => xaxis, () => yaxis, () => zaxis, vx, vy, vz);
+            var dot = new Table3DDot(vx, vy, vz);
+            dot.SetReferencial(() => Origin, () => xaxis, () => yaxis, () => zaxis);
+            return dot;
         }
 
         public double Get01ValueFrom0101(double wval, double lval)

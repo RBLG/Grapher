@@ -69,7 +69,7 @@ namespace Grapher.Modules
         }
 
         public virtual UserControl? GetControl()
-        { return new Graph3DEditor(this); }
+        { this.MTable.UpdateAll(); return new Graph3DEditor(this); }
 
         public String Name { get; set; } = "Editor " + count++;
         private static int count = 0;

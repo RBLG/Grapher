@@ -33,7 +33,7 @@ namespace Grapher
         [JsonIgnore]
         public float ScreenZ { get; private set; }
 
-        
+
 
         public Table3DDot(double x, double y, double z)
         {
@@ -64,9 +64,12 @@ namespace Grapher
         }
 
         public double GetBrushDistanceTo(Table3DDot pt)
-        public void SetReferencial(Func<Point3D> nori, Func<Point3D> nxaxis, Func<Point3D> nyaxis, Func<Point3D> nzaxis)
         {
             return Math.Sqrt(Math.Pow(pt.X - X, 2) + Math.Pow(pt.Y - Y, 2) + Math.Pow(pt.Z - Z, 2));
+        }
+        public void SetReferencial(Func<Point3D> nori, Func<Point3D> nxaxis, Func<Point3D> nyaxis, Func<Point3D> nzaxis)
+        {
+
             Ori = nori;
             Xaxis = nxaxis;
             Yaxis = nyaxis;
