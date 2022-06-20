@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Grapher
 {
     public class Table3DDot
     {
-        private readonly Func<Point3D> ori;
-        private readonly Func<Point3D> xaxis;
-        private readonly Func<Point3D> yaxis;
-        private readonly Func<Point3D> zaxis;
+        [JsonIgnore]
+        public Func<Point3D>? Ori { get; private set; }
+        [JsonIgnore]
+        public Func<Point3D>? Xaxis { get; private set; }
+        [JsonIgnore]
+        public Func<Point3D>? Yaxis { get; private set; }
+        [JsonIgnore]
+        public Func<Point3D>? Zaxis { get; private set; }
 
         private double x;
         private double y;
@@ -20,29 +25,31 @@ namespace Grapher
         public double X { get => x; set { x = value; RecalculateScreenXY(); } }
         public double Y { get => y; set { y = Math.Max(Table.MIN, Math.Min(Table.MAX, value)); RecalculateScreenXY(); } }
         public double Z { get => z; set { z = value; RecalculateScreenXY(); } }
+
+        [JsonIgnore]
         public float ScreenX { get; private set; }
+        [JsonIgnore]
         public float ScreenY { get; private set; }
+        [JsonIgnore]
         public float ScreenZ { get; private set; }
 
-        public Table3DDot(Func<Point3D> nori, Func<Point3D> nxaxis, Func<Point3D> nyaxis, Func<Point3D> nzaxis, double nx, double ny, double nz)
+        
+
+        public Table3DDot(double x, double y, double z)
         {
-            ori = nori;
-            xaxis = nxaxis;
-            yaxis = nyaxis;
-            zaxis = nzaxis;
-            x = nx;
-            y = ny;
-            z = nz;
-            X = nx;
-            Y = ny;
-            Z = nz;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+
         }
 
-        private void RecalculateScreenXY()
+        public void RecalculateScreenXY()
         {
-            ScreenX = (float)(ori().X + x * xaxis().X + y * yaxis().X + z * zaxis().X);
-            ScreenY = (float)(ori().Y + x * xaxis().Y + y * yaxis().Y + z * zaxis().Y);
-            ScreenZ = (float)(ori().Z + x * xaxis().Z + y * yaxis().Z + z * zaxis().Z);
+            if (Ori == null || Xaxis == null || Yaxis == null || Zaxis == null)
+            { return; }
+            ScreenX = (float)(Ori().X + x * Xaxis().X + y * Yaxis().X + z * Zaxis().X);
+            ScreenY = (float)(Ori().Y + x * Xaxis().Y + y * Yaxis().Y + z * Zaxis().Y);
+            ScreenZ = (float)(Ori().Z + x * Xaxis().Z + y * Yaxis().Z + z * Zaxis().Z);
         }
 
         //to remove
@@ -57,8 +64,13 @@ namespace Grapher
         }
 
         public double GetBrushDistanceTo(Table3DDot pt)
+        public void SetReferencial(Func<Point3D> nori, Func<Point3D> nxaxis, Func<Point3D> nyaxis, Func<Point3D> nzaxis)
         {
             return Math.Sqrt(Math.Pow(pt.X - X, 2) + Math.Pow(pt.Y - Y, 2) + Math.Pow(pt.Z - Z, 2));
+            Ori = nori;
+            Xaxis = nxaxis;
+            Yaxis = nyaxis;
+            Zaxis = nzaxis;
         }
     }
 }
