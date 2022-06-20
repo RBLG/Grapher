@@ -1,11 +1,15 @@
 ﻿namespace GrapherVST
 {
+    using Grapher.Modules;
     using GrapherVST.SynthHandling;
     using Jacobi.Vst.Core;
     using Jacobi.Vst.Plugin.Framework;
     using System;
     using System.IO;
+    using System.Linq;
     using System.Text;
+    using System.Text.Json;
+    using System.Text.Json.Serialization;
 
     internal sealed class PluginPersistence : IVstPluginPersistence
     {
@@ -29,40 +33,30 @@
         {
             var reader = new BinaryReader(stream, _encoding);
 
-            //WHERE TO READ SAVES
-
-            //_noteMap.Clear();
-            //int count = reader.ReadInt32();
-
-            //for (int n = 0; n < count; n++)
-            //{
-            //    var item = new MapNoteItem
-            //    {
-            //        KeyName = reader.ReadString(),
-            //        TriggerNoteNumber = reader.ReadByte(),
-            //        OutputNoteNumber = reader.ReadByte()
-            //    };
-
-            //    _noteMap.Add(item);
-            //}
+            IModule nroot = Cereal.Deserialize<IModule>(reader.ReadString());
+            _moduleProvider.SetRootModule(nroot);
         }
 
         public void WritePrograms(Stream stream, VstProgramCollection programs)
         {
             var writer = new BinaryWriter(stream, _encoding);
 
-            //WHERE TO WRITE SAVES
+            IModule root = _moduleProvider.GetRootModule();
+            string str = Cereal.Serialize<IModule>(root);
+            //to fix this stupid behavior that add double curly brackets
+            str = str.Replace("{{", "{");
+            str = str.Replace("}}", "}");
+            writer.Write(str);
+            //throw new Exception(str);
 
-            //writer.Write(_noteMap.Count);
-
-            //foreach (MapNoteItem item in _noteMap)
-            //{
-            //    writer.Write(item.KeyName);
-            //    writer.Write(item.TriggerNoteNumber);
-            //    writer.Write(item.OutputNoteNumber);
-            //}
         }
 
+
+
         #endregion
+
+
+
+
     }
 }

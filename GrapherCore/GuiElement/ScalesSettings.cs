@@ -1,4 +1,5 @@
 ﻿using Grapher.Modes;
+using Grapher.Modules;
 using Grapher.Scale;
 using System;
 using System.Collections.Generic;

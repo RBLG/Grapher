@@ -21,18 +21,29 @@ namespace Grapher
         public readonly Point3D xaxis = new(0.7, 0.2, 0);
         public readonly Point3D yaxis = new(0, -1, 0);
         public readonly Point3D zaxis = new(0.5, -0.3, 0);
-        public Point3D Origin = new(10, 216, 0);
+        public readonly Point3D Origin = new(10, 216, 0);
 
         //private Canvas3D gui;
 
         //temp public
         public List<List<Table3DDot>> dots;
         public InterpolationType Interpolation { get; set; }
+        public Table(List<List<double>> ndots)
+        {
+            dots = ndots;
+            Interpolation = InterpolationType.Linear;
+            //dots.ForEach((r) => r.ForEach((d) =>
+            //{
+            //    d.SetReferencial(() => Origin, () => xaxis, () => yaxis, () => zaxis);
+            //    d.RecalculateScreenXY();
+            //}
+            //));
+        }
 
         public Table()
         {
             Interpolation = InterpolationType.Linear;
-            dots = new();
+            dots = new(deflength);
             foreach (int itx in Enumerable.Range(0, deflength))
             {
                 var row = new List<Table3DDot>();

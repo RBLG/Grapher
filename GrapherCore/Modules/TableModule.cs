@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Grapher.Spectrum;
 
-namespace Grapher
+namespace Grapher.Modules
 {
     public class TableModule : IModule
     {
