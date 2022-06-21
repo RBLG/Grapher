@@ -11,6 +11,9 @@ using System.Windows.Forms;
 
 namespace Grapher
 {
+    /// <summary>
+    /// a Gui element that draw and allow interaction with the table/grid (whatever it should be called)
+    /// </summary>
     public class Canvas3D : Control
     {
 
@@ -24,26 +27,26 @@ namespace Grapher
         protected Pen net2 = new(Color.Blue);
         protected Pen wave2 = new(Color.Purple);
 
-        protected int slider = 0;
-        public static readonly float size = 100;
-        public static readonly float oversize = 20;
+        protected int slider = 0;//unused yet, to slide the length of the grid
+        public static readonly float size = 100;//size of width and height (i think?)
+        public static readonly float oversize = 20;//additional length of the length axis past grid size
 
-        public static readonly float oripadding = 10;
+        public static readonly float oripadding = 10;// the distance between the axis origin and the grid closest point
         //public readonly float spacing = 20;
-        public static readonly float dotsize = 3;
+        public static readonly float dotsize = 3;// size of the grid point in pixel
         public static readonly float halfdot = dotsize / 2;
 
-        public static readonly float tablevisualwidth = 300;
+        public static readonly float tablevisualwidth = 300;//width of the grid
         //public readonly float tablevisuallength = 600;
-        public static readonly float lengthspacing = 20;
+        public static readonly float lengthspacing = 20;//distance between points on the grid
 
 
         //might need to remove
         public IModule Input { get => module.Input; set => module.Input = value; }
 
-        public TableModule module;
+        public TableModule module;// the module this gui element interact with
 
-        public Canvas3D() : this(new TableModule()) { }
+        public Canvas3D() : this(new TableModule()) { }//trick to get visual studio to compile it
 
         public Canvas3D(TableModule nmodule)
         {
@@ -54,24 +57,13 @@ namespace Grapher
             this.MouseDown += MyOnMouseDown;
             this.MouseMove += MyOnMouseMove;
             this.MouseUp += MyOnMouseUp;
-            //Table = new Table(this);
-            //Table = module.table;
-            //points = Table.dots;
-            //module = new ProtoModule(Table);
-        }
+        }     
 
-        internal void SetDura(int ndura)
-        {
-            var sc = module.Lscale;
-            if (sc is TimeLinearScale scale)
-            { //will be handled properly later with scale switching and menus
-                scale.Max = ndura;
-            }
-        }
-
+        /// <summary>
+        /// a holder to remember what points are being moven during an interaction. will get reworked eventually
+        /// </summary>
         private class MovingDot
         {
-
             public Table3DDot dot;
             public double strength;
             public MovingDot(Table3DDot ndot, double nstrength)
@@ -90,9 +82,8 @@ namespace Grapher
 
         private void MyOnMouseMove(object? sender, MouseEventArgs e)
         {
-
             if (moving != null)
-            {
+            {//while the mouse is down, it update points values
                 double offset = e.Y - lastmousey;
                 foreach (MovingDot dot in moving)
                 {
@@ -105,7 +96,7 @@ namespace Grapher
         }
 
         private void MyOnMouseUp(object? sender, MouseEventArgs e)
-        {
+        {//terminate the edition of the grid
             if (e.Button == MouseButtons.Left)
             { moving = null; }
         }
@@ -135,10 +126,13 @@ namespace Grapher
                     }
                 }
                 if (moving != null && BrushSize > 0)
-                { AddDotsInBrushRange(moving[0].dot); }
+                { AddPointsInBrushRange(moving[0].dot); }
             }
         }
 
+        /// <summary>
+        /// return the distance between two point to be used for brush size handling
+        /// </summary>
         private double GetDistance(Table3DDot pt1, Point pt2)
         {
             var ori = module.MTable.Origin;
@@ -163,7 +157,7 @@ namespace Grapher
         private static double GetDistanceSub(double px, double py, Point pt2)
         { return Math.Sqrt(Math.Pow(pt2.X - px, 2) + Math.Pow(pt2.Y - py, 2)); }
 
-        private void AddDotsInBrushRange(Table3DDot point)
+        private void AddPointsInBrushRange(Table3DDot point)
         {
             foreach (List<Table3DDot> row2 in module.MTable.dots)
             {
@@ -176,7 +170,6 @@ namespace Grapher
                 }
             }
         }
-
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -326,9 +319,6 @@ namespace Grapher
         {
             Do3DPaint(e);
         }
-
-
-
 
     }
 }

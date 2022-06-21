@@ -22,13 +22,16 @@ namespace Grapher.Scale
         public double Min => 0;
         public double Max { get; set; } = 10;
 
-        public double Seed { get; set; } = 13;
-        public double Modulo { get; set; } = 50;
+        public double Seed { get; set; } = 13; //customizable number to change the randomness of the random pattern
+        public double Modulo { get; set; } = 50; //the size of a chunk (in ms)
+
+        public bool IsLooping { get; set; } = false;//if true, the sequence of chunks will loop every table.Width*Modulo ms
+
+        public bool IsRandom { get; set; } = true;// if false, chunk will follow in order from the lowest Width value to the highest
 
         public string Label => "t(%)";
 
         public bool Continuous => false;
-
 
         public List<Graduations> GetMilestones()
         {
@@ -56,23 +59,18 @@ namespace Grapher.Scale
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
         {
             double rtn = Scale(spectrum.Time);
+            if (IsLooping) { rtn %= size; }
             // randomizing through modulo, shader noise style
             if (IsRandom)
             {
                 rtn = (Math.Sin((rtn * spectrum.NoteSeed) * 13) + 1) * (size * 100_000 - 1);
                 rtn %= size;
             }
-            else if (IsLooping) { rtn %= size; }
             return rtn;
         }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, IMode mode, double tval)
         { return; }
-
-        public bool IsLooping { get; set; } = false;
-
-        public bool IsRandom { get; set; } = true;
-
 
     }
 }

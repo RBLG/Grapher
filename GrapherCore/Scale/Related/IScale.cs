@@ -15,33 +15,32 @@ namespace Grapher.Scale
         double Min { get; }
         double Max { get; }
 
-        double Scale(double notscaled);
-        double Unscale(double scaled);
+        double Scale(double notscaled);// convert a default scale value to it on the scale value
+        double Unscale(double scaled);// does the oposite
 
-        double ScaleTo(double notscaled, double size);
-        double UnscaleFrom(double scaled, double size);
+        double ScaleTo(double notscaled, double size);//same as Scale() but /size
+        double UnscaleFrom(double scaled, double size);// does the oposite
 
-        double ScaleTo01(double notscaled);
-        double UnscaleFrom01(double scaled);
+        double ScaleTo01(double notscaled);//convert it to this scale and put it in 0 to 1 format
+        double UnscaleFrom01(double scaled);//does he oposite
 
         //uncomment if ever needed
         //double PickValue(Wave wave, Spectrum spectrum);
         //void SetValue(Wave wave, Spectrum spectrum, double value);
 
+
+        /// <summary>
+        /// pick, scale and return the value corresponding to this scale
+        /// </summary>
         double PickValueTo(Wave wave, Spectrum spectrum, double size);
 
         /// <summary>
         /// pick the value, scale it to 01, process it with mode then unscale it from 01 and set it back
         /// </summary>
-        /// <param name="wave"></param>
-        /// <param name="spectrum"></param>
-        /// <param name="size">Height size(tval is normalized on 0-1 anyway)</param>
-        /// <param name="mode"></param>
-        /// <param name="tval">the value from the table</param>
         void ProcessValue(Wave wave, Spectrum spectrum, double size, IMode mode, double tval);
 
         /// <summary>
-        /// 
+        /// return the list of visual marks on the table axis
         /// </summary>
         /// <returns></returns>
         List<Graduations> GetMilestones();
@@ -52,11 +51,15 @@ namespace Grapher.Scale
         string Label { get; }
 
         /// <summary>
-        /// return if the scale accept values inbetween
+        /// return if the scale accept values inbetween.<br/>
+        /// TODO will control interpolation and generation
         /// </summary>
-        /// <returns></returns>
         Boolean Continuous { get; }
 
+        /// <summary>
+        /// return the Gui element that allow to manipulate the scale. 
+        /// this element will be visible in the axis settings
+        /// </summary>
         Control GetControl();
     }
 
@@ -65,8 +68,8 @@ namespace Grapher.Scale
     /// </summary>
     public class Graduations
     {
-        public string Label { get; private set; }
-        public double Position { get; private set; }
+        public string Label { get; private set; }//what to display alongside the mark. may it be text or number for example
+        public double Position { get; private set; }//the position on the axis (between 0 and 1)
 
         public Graduations(string nlabel, double npos)
         {

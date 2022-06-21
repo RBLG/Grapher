@@ -19,13 +19,9 @@ namespace Grapher
         public static readonly int deflength = 30;
 
         //moved from canvas3D
-        [JsonIgnore]
         public readonly Point3D xaxis = new(0.7, 0.2, 0);
-        [JsonIgnore]
         public readonly Point3D yaxis = new(0, -1, 0);
-        [JsonIgnore]
         public readonly Point3D zaxis = new(0.5, -0.3, 0);
-        [JsonIgnore]
         public readonly Point3D Origin = new(10, 216, 0);
 
         //temp public
@@ -64,6 +60,9 @@ namespace Grapher
 
         public int Height { get; set; } = (int)MAX;
 
+        /// <summary>
+        /// Width of the grid, changing it will resize the grid
+        /// </summary>
         public int Width {//TODO make resize use last row/collumn values
             get { return dots[0].Count; }
             set {
@@ -87,6 +86,10 @@ namespace Grapher
                 }
             }
         }
+
+        /// <summary>
+        /// length of the grid
+        /// </summary>
         public int Length {
             get { return dots.Count; }
             set {
@@ -123,7 +126,7 @@ namespace Grapher
                     pt.Z = itz * (Canvas3D.tablevisualwidth / Math.Max(2, dots[0].Count - 1)) + Canvas3D.oripadding;
                     //pt.X = itx * (dots.Count / gui.tablevisualwidth) + gui.oripadding;
                     //fix for the deserialization
-                    
+
                 }
             }
         }

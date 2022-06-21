@@ -10,7 +10,6 @@ work in progress, so far you have to:
 - clone the repo
 - open GrapherVST/GrapherVST.sln with Visual Studio
 - build GrapherVST
-- copy GrapherVST/bin/x64/Debug/net5.0-windows/deploy/bin/Grapher.dll in GrapherVST/bin/x64/Debug/net5.0-windows/deploy/
 - you can now use it by opening GrapherVST/bin/x64/Debug/net5.0-windows/deploy/GrapherVST.dll
 
 ### How to use:
@@ -32,7 +31,6 @@ Here's some modules:
   
   
 ### In Construction:
-- plugin persistance
 - detune
 - note hold
 - release automation

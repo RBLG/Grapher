@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Grapher.Scale
 {
+    /// <summary>
+    /// handle the list of all scales that should be available in the Gui
+    /// </summary>
     public static class AvailableScales
     {
         private static readonly List<AvailableScale> list = new()
@@ -14,12 +17,12 @@ namespace Grapher.Scale
            new AvailableScale(" Dynamic (T)",()=>new TimeLinearScale(),typeof(TimeLinearScale),true,ScaleType.Time),
            new AvailableScale(" Modulo (T%)",()=>new TimeModuloScale(),typeof(TimeModuloScale),true,ScaleType.TimeModulo),
            new AvailableScale("--Frequency:----",()=>null,null,false,ScaleType.Frequency),
-           new AvailableScale("Exponantial (F)",()=>new FrequencyExponantialScale(),typeof(FrequencyExponantialScale),true,ScaleType.Frequency),
+           new AvailableScale(" Exponantial (F)",()=>new FrequencyExponantialScale(),typeof(FrequencyExponantialScale),true,ScaleType.Frequency),
            new AvailableScale(" Linear (F)",()=>new FrequencyLinearScale(),typeof(FrequencyLinearScale),true,ScaleType.Frequency),
            new AvailableScale(" Mei (F)",()=>new FrequencyMeiScale(),typeof(FrequencyMeiScale),true,ScaleType.Frequency),
            new AvailableScale("--Amplitude:----",()=>null,null,false,ScaleType.Amplitude),
            new AvailableScale(" Linear (A)",()=>new AmplitudeLinearScale(),typeof(AmplitudeLinearScale),true, ScaleType.Frequency),
-           //new AvailableScale("Decibel (A)",()=>new DecibelAmplitudeScale(),typeof(DecibelAmplitudeScale),true ,ScaleType.Amplitude)
+           //new AvailableScale(" Decibel (A)",()=>new DecibelAmplitudeScale(),typeof(DecibelAmplitudeScale),true ,ScaleType.Amplitude)
            new AvailableScale("--Others:----",()=>null,null,false,ScaleType.Amplitude),
            new AvailableScale(" Padding",()=>new PaddingScale(),typeof(PaddingScale),true, ScaleType.Padding),
            new AvailableScale(" Phase",()=>new PhaseScale(),typeof(PhaseScale),true, ScaleType.Phase),

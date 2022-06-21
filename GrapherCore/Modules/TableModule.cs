@@ -15,7 +15,7 @@ namespace Grapher.Modules
     public class TableModule : IModule
     {
         public IModule Input { get; set; } = new DefaultPitchModule();
-        public Table MTable { get; set; } = new Table();
+        public Table MTable { get; set; } = new Table();//the grid handler
         public IMode Mode { get; set; } = new MultiplyMode();
 
         private IScale wscale = new FrequencyExponantialScale();
@@ -35,6 +35,7 @@ namespace Grapher.Modules
             Spectrum buffer = Input.GetSpectrum(time, timeoff, bpitch, seed);
             foreach (Wave w in buffer.Waves)
             {
+                
                 //TODO implement the effect of IScale.IsContinuous
                 double wval = Wscale.PickValueTo(w, buffer, MTable.Width);
                 double lval = Lscale.PickValueTo(w, buffer, MTable.Length);
@@ -77,6 +78,10 @@ namespace Grapher.Modules
         public virtual void SetInput(IModule input)
         { Input = input; }
 
+
+        /// <summary>
+        /// will probably get removed
+        /// </summary>
         public EnvStatus IsOver(double time, double timeoff)
         {
             var status1 = Input.IsOver(time, timeoff); //timescale could be defaulted to hide the need to handle null

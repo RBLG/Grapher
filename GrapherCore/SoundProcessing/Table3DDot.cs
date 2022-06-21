@@ -10,6 +10,9 @@ namespace Grapher
 {
     public class Table3DDot
     {
+        /// <summary>
+        /// the origin and the 3 axis to translate from internal grid referential to gui referential
+        /// </summary>
         [JsonIgnore]
         public Func<Point3D>? Ori { get; private set; }
         [JsonIgnore]

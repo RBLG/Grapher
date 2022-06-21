@@ -9,6 +9,9 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Modules
 {
+    /// <summary>
+    /// a basic harmonic handling module, might be deleted later when TableModule handle generation
+    /// </summary>
     public class HarmonicModule : TableModule
     {
         //to reference specific stuff of the harmonic scale, not used rn tho
@@ -68,14 +71,17 @@ namespace Grapher.Modules
             return control;
         }
 
+        /// <summary>
+        /// update the amount of waves in the buffer spectrum
+        /// </summary>
         public void UpdateStock()
         {
             int goal = MTable.Width;
             int current = wavstock.Waves.Count;
-
-            if (goal < current)
+            if (goal == current) { }
+            else if (goal < current)
             { wavstock.Waves.RemoveRange(goal, current - goal); }
-            else if (goal > current)
+            else
             {
                 for (int itx = 0; itx < goal - current; itx++)
                 { wavstock.Waves.Add(new Wave(WaveType.Sinus, 0, 0)); }

@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 
 namespace Grapher
 {
+    /// <summary>
+    /// a decomposition of the sample value at a time t.
+    /// allow for a less mathematicaly complex handling of pretty much everything
+    /// </summary>
     public class Spectrum
     {
         public List<Wave> Waves { get; private set; } = new();
 
-        public double Time { get; set; }
-        public double TimeOff { get; set; }
-        public double BasePitch { get; set; }
-        public double NoteSeed { get; set; }
+        public double Time { get; set; }//time since the the beginning of the note event
+        public double TimeOff { get; set; }//time since the end of the note event
+        public double BasePitch { get; set; }//frequency post conversion from midi to Hz and detune
+        public double NoteSeed { get; set; }// a seed for random values
 
 
         public Spectrum() { }

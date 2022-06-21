@@ -12,13 +12,13 @@ using Grapher.Scale;
 
 namespace GrapherVST
 {
+    /// <summary>
+    /// implements safe-ish (de)serialization of polymorphism through filtering by namespace
+    /// </summary>
+    /// <typeparam name="TBase">the interface to handle</typeparam>
     public abstract class IHSConverter<TBase> : JsonConverter<TBase> where TBase : class
     {
-        /// <summary>
-        /// Gets the expected property name of the number in JSON whose
-        /// <typeparamref name="TTypeDescriptor"/> representation is used to determine the specific
-        /// type of <typeparamref name="TBase"/> instantiated.
-        /// </summary>
+       
         protected string TypePropertyName => "Type";
 
         /// <summary>
