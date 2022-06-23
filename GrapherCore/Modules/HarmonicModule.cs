@@ -92,5 +92,9 @@ namespace Grapher.Modules
         public override void SetInput(IModule modude)
         { return; }
 
+        public override EnvStatus IsOver(double time, double timeoff)
+        {
+            return EnvStatus.NotHandled;
+        }
     }
 }

@@ -40,13 +40,13 @@ namespace Grapher.Scale
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
         {
-            return wave.Frequency / spectrum.Waves[0].Frequency;
+            return wave.Frequency / spectrum.Waves[0].Frequency - 1;
         }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {
             double bpitch = spectrum.Waves[0].Frequency;
-            double val = wave.Frequency / bpitch;
+            double val = wave.Frequency / bpitch - 1;
             val = mode.Process(val, tval);
             wave.Frequency = val * bpitch;
         }

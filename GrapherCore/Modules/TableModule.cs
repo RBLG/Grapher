@@ -80,7 +80,7 @@ namespace Grapher.Modules
         /// <summary>
         /// will probably get removed
         /// </summary>
-        public EnvStatus IsOver(double time, double timeoff)
+        public virtual EnvStatus IsOver(double time, double timeoff)
         {
             var status1 = Input.IsOver(time, timeoff); //timescale could be defaulted to hide the need to handle null
             var status2 = (timescale == null) ? EnvStatus.NotHandled : timescale.GetEnvStatus(time, timeoff);
