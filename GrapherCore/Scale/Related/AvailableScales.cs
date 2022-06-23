@@ -20,6 +20,7 @@ namespace Grapher.Scale
            new AvailableScale(" Exponantial (F)",()=>new FrequencyExponantialScale(),typeof(FrequencyExponantialScale),true,ScaleType.Frequency),
            new AvailableScale(" Linear (F)",()=>new FrequencyLinearScale(),typeof(FrequencyLinearScale),true,ScaleType.Frequency),
            new AvailableScale(" Mei (F)",()=>new FrequencyMeiScale(),typeof(FrequencyMeiScale),true,ScaleType.Frequency),
+           new AvailableScale(" Harmonics (F)",()=>new HarmonicScale(),typeof(HarmonicScale),true,ScaleType.Frequency),
            new AvailableScale("--Amplitude:----",()=>null,null,false,ScaleType.Amplitude),
            new AvailableScale(" Linear (A)",()=>new AmplitudeLinearScale(),typeof(AmplitudeLinearScale),true, ScaleType.Frequency),
            //new AvailableScale(" Decibel (A)",()=>new DecibelAmplitudeScale(),typeof(DecibelAmplitudeScale),true ,ScaleType.Amplitude)

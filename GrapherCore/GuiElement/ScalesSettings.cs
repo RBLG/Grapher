@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Grapher.Scale.AvailableScales;
 
 namespace Grapher.GuiElement
 {
@@ -21,26 +20,30 @@ namespace Grapher.GuiElement
 
         public ScalesSettings(Graph3DEditor neditor)
         {
+            var scales = AvailableScales.scales;
             Editor = neditor;
             InitializeComponent();
             WidthComboBox.ValueMember = "Factory";
             WidthComboBox.DisplayMember = "Name";
-            WidthComboBox.Items.AddRange(AvailableScales.scales.ToArray());
+            WidthComboBox.Items.AddRange(scales.ToArray());
             WidthComboBox.SelectedIndex = AvailableScales.GetIndex(WidthAxis.GetType());
+            WidthComboBox.DropDownHeight = scales.Count * 20;
             oldwidth = WidthComboBox.SelectedIndex;
             WidthSocket.Set(WidthAxis.GetControl());
 
             LengthComboBox.ValueMember = "Factory";
             LengthComboBox.DisplayMember = "Name";
-            LengthComboBox.Items.AddRange(AvailableScales.scales.ToArray());
+            LengthComboBox.Items.AddRange(scales.ToArray());
             LengthComboBox.SelectedIndex = AvailableScales.GetIndex(LengthAxis.GetType());
+            LengthComboBox.DropDownHeight = scales.Count * 20;
             oldlength = LengthComboBox.SelectedIndex;
             LengthSocket.Set(LengthAxis.GetControl());
 
             HeightComboBox.ValueMember = "Factory";
             HeightComboBox.DisplayMember = "Name";
-            HeightComboBox.Items.AddRange(AvailableScales.scales.ToArray());
+            HeightComboBox.Items.AddRange(scales.ToArray());
             HeightComboBox.SelectedIndex = AvailableScales.GetIndex(HeightAxis.GetType());
+            HeightComboBox.DropDownHeight = scales.Count * 20;
             oldheight = HeightComboBox.SelectedIndex;
             HeightSocket.Set(HeightAxis.GetControl());
 
@@ -48,6 +51,7 @@ namespace Grapher.GuiElement
             ModeComboBox.DisplayMember = "Name";
             ModeComboBox.Items.AddRange(AvailableModes.modes.ToArray());
             ModeComboBox.SelectedIndex = AvailableModes.GetIndex(Mode.GetType());
+            //ModeComboBox.DropDownHeight = AvailableModes.modes.Count * 20; useless for now
             oldmode = ModeComboBox.SelectedIndex;
             ModeSocket.Set(Mode.GetControl());
             inInit = false;

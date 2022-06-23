@@ -1,20 +1,14 @@
 ﻿using Grapher.Modules;
 using Grapher.SoundProcessing;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Grapher.GuiElement
 {
     public partial class MainSettings : UserControl
     {
-        private readonly Boolean inInit = true;
+        private Boolean inInit = true;
 
         public MainSettings()
         {
@@ -22,31 +16,29 @@ namespace Grapher.GuiElement
             InputComboBox.ValueMember = "Factory";
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
-            InputComboBox.SelectedIndex = 1;
+            //doesnt work, it give the wrong one as it does it before load take place
+            InputComboBox.SelectedIndex = AvailableModules.GetIndex(ChainProvider.GetRootModule().GetType());
             inInit = false;
         }
 
         public class HollowModuleProvider : IModuleChainProvider
         {
-            public HollowModuleProvider(IModule mod)
-            { root = mod; }
-
             private IModule root;
-
-            public IModule GetRootModule()
-            { return root; }
-
-            public void SetRootModule(IModule module)
-            { root = module; }
+            public HollowModuleProvider(IModule module) { root = module; }
+            public IModule GetRootModule() => root;
+            public void SetRootModule(IModule module) { root = module; }
         }
 
+        /// <summary>
+        /// old way that need rework
+        /// </summary>
         public readonly SharedStuff shared = new(440, new HollowModuleProvider(new DefaultPitchModule()));
 
-        public IModuleChainProvider Chain {
-            get => shared.Module;
+        public IModuleChainProvider ChainProvider {
+            get => shared.ModuleProvider;
             set {
-                InputComboBox.SelectedIndex = AvailableModules.GetIndex(value.GetRootModule().GetType());
-                shared.Module = value;
+                shared.ModuleProvider = value;
+                //MyRefresh();//doesnt work
             }
         }
 
@@ -54,7 +46,8 @@ namespace Grapher.GuiElement
 
         private void EditInputButton_Click(object sender, EventArgs e)
         {
-            var root = Chain.GetRootModule();
+            //MyRefresh();//it work but its too late
+            var root = ChainProvider.GetRootModule();
             var control = root.GetControl();
             if (control == null)
             { return; }
@@ -72,12 +65,24 @@ namespace Grapher.GuiElement
         {
             if (inInit) { return; }
             var item = AvailableModules.modules.ElementAt(InputComboBox.SelectedIndex);
-            Chain.SetRootModule(item.Factory());
+            if (item == null)
+            { return; }
+            if (inputform != null && !inputform.IsDisposed)
+            { inputform.Dispose(); }
+            ChainProvider.SetRootModule(item.Factory());
         }
 
-        private void MainSettings_Load(object sender, EventArgs e)
+        public void MainSettings_Load(object sender, EventArgs e)
         {
+            //MyRefresh();//doesnt work
+        }
 
+        public void MyRefresh()
+        {
+            inInit = true;
+            InputComboBox.SelectedIndex = AvailableModules.GetIndex(ChainProvider.GetRootModule().GetType());
+            inInit = false;
+            //throw new Exception("type: " + ChainProvider.GetRootModule().GetType());
         }
     }
 }

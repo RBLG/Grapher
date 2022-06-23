@@ -4,7 +4,9 @@ using GrapherVST.SynthHandling;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace GrapherVST.UI
 {
@@ -18,12 +20,11 @@ namespace GrapherVST.UI
             InitializeComponent();
         }
 
-        public IModuleChainProvider ModuleProvider { get => settings.Chain; set => settings.Chain = value; }
+        public IModuleChainProvider ModuleProvider { get => settings.ChainProvider; set => settings.ChainProvider = value; }
 
         public void ProcessIdle()
         {
 
         }
-
     }
 }

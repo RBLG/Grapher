@@ -58,6 +58,6 @@
 
         #endregion
 
-        private Grapher.GuiElement.MainSettings settings;
+        public Grapher.GuiElement.MainSettings settings;
     }
 }

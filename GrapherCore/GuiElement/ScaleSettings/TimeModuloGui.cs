@@ -19,24 +19,30 @@ namespace Grapher.GuiElement.ScaleSettings
         {
             InitializeComponent();
             scale = nscale;
-            this.CheckBoxIsLooping.Checked = scale.IsLooping;
-            this.CheckBoxIsRandom.Checked = scale.IsRandom;
-            this.NumUdChunkSize.Value = (decimal)scale.Modulo;
+            CheckBoxIsLooping.Checked = scale.IsLooping;
+            CheckBoxIsRandom.Checked = scale.IsRandom;
+            NumUdChunkSize.Value = (decimal)scale.Modulo;
+            NumUdSeed.Value = (decimal)scale.Modulo;
         }
 
         private void CheckBoxIsRandom_CheckedChanged(object sender, EventArgs e)
         {
-            scale.IsRandom = this.CheckBoxIsRandom.Checked;
+            scale.IsRandom = CheckBoxIsRandom.Checked;
         }
 
         private void CheckBoxIsLooping_CheckedChanged(object sender, EventArgs e)
         {
-            scale.IsLooping = this.CheckBoxIsLooping.Checked;
+            scale.IsLooping = CheckBoxIsLooping.Checked;
         }
 
         private void NumUdChunkSize_ValueChanged(object sender, EventArgs e)
         {
             scale.Modulo = (double)NumUdChunkSize.Value;
+        }
+
+        private void NumUdSeed_ValueChanged(object sender, EventArgs e)
+        {
+            scale.Seed = (double)NumUdSeed.Value;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Grapher
             InputComboBox.ValueMember = "Factory";
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
-            InputComboBox.SelectedIndex = 0;
+            InputComboBox.SelectedIndex = AvailableModules.GetIndex(canvas3D1.module.Input.GetType());
             // ////
             inInit = false;
         }

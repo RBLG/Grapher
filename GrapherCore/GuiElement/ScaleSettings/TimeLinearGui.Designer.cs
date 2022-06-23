@@ -69,11 +69,11 @@
             // CheckBoxIsLooping
             // 
             this.CheckBoxIsLooping.AutoSize = true;
-            this.CheckBoxIsLooping.Location = new System.Drawing.Point(162, 3);
+            this.CheckBoxIsLooping.Location = new System.Drawing.Point(179, 3);
             this.CheckBoxIsLooping.Name = "CheckBoxIsLooping";
-            this.CheckBoxIsLooping.Size = new System.Drawing.Size(70, 19);
+            this.CheckBoxIsLooping.Size = new System.Drawing.Size(53, 19);
             this.CheckBoxIsLooping.TabIndex = 5;
-            this.CheckBoxIsLooping.Text = "Looping";
+            this.CheckBoxIsLooping.Text = "Loop";
             this.CheckBoxIsLooping.UseVisualStyleBackColor = true;
             this.CheckBoxIsLooping.CheckedChanged += new System.EventHandler(this.CheckBoxIsLooping_CheckedChanged);
             // 

@@ -32,13 +32,16 @@
             this.CheckBoxIsLooping = new System.Windows.Forms.CheckBox();
             this.LabelChunkSize = new System.Windows.Forms.Label();
             this.NumUdChunkSize = new System.Windows.Forms.NumericUpDown();
+            this.NumUdSeed = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.NumUdChunkSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumUdSeed)).BeginInit();
             this.SuspendLayout();
             // 
             // CheckBoxIsRandom
             // 
             this.CheckBoxIsRandom.AutoSize = true;
-            this.CheckBoxIsRandom.Location = new System.Drawing.Point(160, 25);
+            this.CheckBoxIsRandom.Location = new System.Drawing.Point(161, 3);
             this.CheckBoxIsRandom.Name = "CheckBoxIsRandom";
             this.CheckBoxIsRandom.Size = new System.Drawing.Size(71, 19);
             this.CheckBoxIsRandom.TabIndex = 0;
@@ -49,11 +52,11 @@
             // CheckBoxIsLooping
             // 
             this.CheckBoxIsLooping.AutoSize = true;
-            this.CheckBoxIsLooping.Location = new System.Drawing.Point(161, 3);
+            this.CheckBoxIsLooping.Location = new System.Drawing.Point(161, 28);
             this.CheckBoxIsLooping.Name = "CheckBoxIsLooping";
-            this.CheckBoxIsLooping.Size = new System.Drawing.Size(70, 19);
+            this.CheckBoxIsLooping.Size = new System.Drawing.Size(53, 19);
             this.CheckBoxIsLooping.TabIndex = 1;
-            this.CheckBoxIsLooping.Text = "Looping";
+            this.CheckBoxIsLooping.Text = "Loop";
             this.CheckBoxIsLooping.UseVisualStyleBackColor = true;
             this.CheckBoxIsLooping.CheckedChanged += new System.EventHandler(this.CheckBoxIsLooping_CheckedChanged);
             // 
@@ -62,9 +65,9 @@
             this.LabelChunkSize.AutoSize = true;
             this.LabelChunkSize.Location = new System.Drawing.Point(3, 3);
             this.LabelChunkSize.Name = "LabelChunkSize";
-            this.LabelChunkSize.Size = new System.Drawing.Size(67, 15);
+            this.LabelChunkSize.Size = new System.Drawing.Size(82, 15);
             this.LabelChunkSize.TabIndex = 3;
-            this.LabelChunkSize.Text = "Chunk size:";
+            this.LabelChunkSize.Text = "Chunk length:";
             // 
             // NumUdChunkSize
             // 
@@ -89,10 +92,29 @@
             0});
             this.NumUdChunkSize.ValueChanged += new System.EventHandler(this.NumUdChunkSize_ValueChanged);
             // 
+            // NumUdSeed
+            // 
+            this.NumUdSeed.Location = new System.Drawing.Point(93, 21);
+            this.NumUdSeed.Name = "NumUdSeed";
+            this.NumUdSeed.Size = new System.Drawing.Size(54, 23);
+            this.NumUdSeed.TabIndex = 5;
+            this.NumUdSeed.ValueChanged += new System.EventHandler(this.NumUdSeed_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(91, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 15);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Seed:";
+            // 
             // TimeModuloGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.NumUdSeed);
             this.Controls.Add(this.NumUdChunkSize);
             this.Controls.Add(this.LabelChunkSize);
             this.Controls.Add(this.CheckBoxIsLooping);
@@ -102,6 +124,7 @@
             this.Name = "TimeModuloGui";
             this.Size = new System.Drawing.Size(235, 58);
             ((System.ComponentModel.ISupportInitialize)(this.NumUdChunkSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumUdSeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -113,5 +136,7 @@
         private System.Windows.Forms.CheckBox CheckBoxIsLooping;
         private System.Windows.Forms.Label LabelChunkSize;
         private System.Windows.Forms.NumericUpDown NumUdChunkSize;
+        private System.Windows.Forms.NumericUpDown NumUdSeed;
+        private System.Windows.Forms.Label label1;
     }
 }

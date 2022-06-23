@@ -67,6 +67,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Location = new System.Drawing.Point(12, 0);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
@@ -100,6 +101,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Location = new System.Drawing.Point(12, 84);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -120,6 +122,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "MainSettings";
             this.Size = new System.Drawing.Size(478, 273);
+            this.Load += new System.EventHandler(this.MainSettings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Detuner)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

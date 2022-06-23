@@ -16,11 +16,11 @@ namespace Grapher.SoundProcessing
         public SharedStuff(double npitch, IModuleChainProvider nmod)
         {
             Pitch = npitch;
-            Module = nmod;
+            ModuleProvider = nmod;
         }
 
         public double Pitch { set; get; }
-        public IModuleChainProvider Module { set; get; }
+        public IModuleChainProvider ModuleProvider { set; get; }
 
 
 

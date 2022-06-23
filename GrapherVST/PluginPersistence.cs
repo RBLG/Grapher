@@ -8,8 +8,6 @@
     using System.IO;
     using System.Linq;
     using System.Text;
-    using System.Text.Json;
-    using System.Text.Json.Serialization;
 
     internal sealed class PluginPersistence : IVstPluginPersistence
     {

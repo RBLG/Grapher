@@ -17,20 +17,20 @@ namespace Grapher.Scale
 
         public double Scale(double notscaled)
         {
-            throw new NotImplementedException();
+            return 1; //it cannot work without base frequency, sooooooo
         }
         public double Unscale(double scaled)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public double ScaleTo01(double notscaled)
         {
-            throw new NotImplementedException();
+            return 1;
         }
         public double UnscaleFrom01(double scaled)
         {
-            throw new NotImplementedException();
+            return 1;
         }
 
         public double ScaleTo(double notscaled, double max)
@@ -39,11 +39,16 @@ namespace Grapher.Scale
         { return UnscaleFrom01(scaled / max); }
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
-        { return ScaleTo(wave.Frequency, size); }
+        {
+            return wave.Frequency / spectrum.Waves[0].Frequency;
+        }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {
-            wave.Frequency = UnscaleFrom01(mode.Process(ScaleTo01(wave.Frequency), tval));
+            double bpitch = spectrum.Waves[0].Frequency;
+            double val = wave.Frequency / bpitch;
+            val = mode.Process(val, tval);
+            wave.Frequency = val * bpitch;
         }
 
         public List<Graduations> GetMilestones()

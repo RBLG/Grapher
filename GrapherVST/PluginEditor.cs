@@ -5,6 +5,8 @@
     using Jacobi.Vst.Plugin.Framework;
     using Jacobi.Vst.Plugin.Framework.Common;
     using System;
+    using System.Threading.Tasks;
+    using System.Windows.Threading;
 
     /// <summary>
     /// Implements the custom UI editor for the plugin.
@@ -17,6 +19,7 @@
         public PluginEditor(ModuleProvider prov)
         {
             _moduleProvider = prov ?? throw new ArgumentNullException(nameof(prov));
+            _uiWrapper.SafeInstance.ModuleProvider = _moduleProvider;
         }
 
         #region IVstPluginEditor Members
@@ -39,6 +42,16 @@
         public void Open(IntPtr hWnd)
         {
             _uiWrapper.SafeInstance.ModuleProvider = _moduleProvider;
+            ///////////////////////////////////////////////////////////////////////
+            ///A VERY UGLY FIX TO GET THE LOADED ROOT MODULE TO SHOW CORRECTLY IN THE INPUTCOMBOBOX
+            var e = Dispatcher.CurrentDispatcher.BeginInvoke(
+            new Action(async () =>
+            {
+                await Task.Delay(1000);
+                _uiWrapper.SafeInstance.settings.MyRefresh();
+            })
+            );
+            ///////////////////////////////////////////////////////////////////////
             _uiWrapper.Open(hWnd);
         }
 

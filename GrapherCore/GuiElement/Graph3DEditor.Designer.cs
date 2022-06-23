@@ -115,6 +115,7 @@
             // 
             this.WidthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.WidthLabel.AutoSize = true;
+            this.WidthLabel.BackColor = System.Drawing.Color.Transparent;
             this.WidthLabel.Location = new System.Drawing.Point(742, 3);
             this.WidthLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.WidthLabel.Name = "WidthLabel";
@@ -126,6 +127,7 @@
             // 
             this.LengthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LengthLabel.AutoSize = true;
+            this.LengthLabel.BackColor = System.Drawing.Color.Transparent;
             this.LengthLabel.Location = new System.Drawing.Point(807, 3);
             this.LengthLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LengthLabel.Name = "LengthLabel";

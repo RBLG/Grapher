@@ -21,6 +21,7 @@ namespace Grapher.Modules
             MTable.Length = 1;
             Wscale = new HarmonicScale();
             base.Wscale = Wscale;
+            base.Lscale = new NoScale();
             //Lscale = null;
             //Input = null;
             MTable.Interpolation = Table.InterpolationType.None;
