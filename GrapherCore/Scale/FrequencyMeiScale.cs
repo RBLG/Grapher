@@ -40,6 +40,7 @@ namespace Grapher.Scale
         public Control GetControl() => new FrequencyMeiGui();
 
         public bool Continuous => true;
+        public bool IsLooping => false;
 
         public double ScaleTo01(double notscaled) /*            */ => (ToMei(notscaled) - Min) / range;
         public double UnscaleFrom01(double scaled) /*           */ => FromMei(scaled / range + Min);

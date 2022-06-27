@@ -1,4 +1,5 @@
-﻿using Grapher.Modes;
+﻿using Grapher.GuiElement.ScaleSettings;
+using Grapher.Modes;
 using Grapher.Modules;
 using Grapher.Scale.Related;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static Grapher.Spectrum;
 
 namespace Grapher.Scale
@@ -36,10 +38,8 @@ namespace Grapher.Scale
             throw new NotImplementedException();
         }
 
-        public System.Windows.Forms.Control GetControl()
-        {
-            return new GuiElement.ScaleSettings.TimeModuloGui(this);
-        }
+        public Control GetControl() => new TimeModuloGui(this);
+
 
         public double Scale(double notscaled) => (int)(notscaled / Modulo);
 

@@ -82,5 +82,6 @@ namespace Grapher.Scale
 
         public bool Continuous => false;
         public string Label => "midi notes";
+        public bool IsLooping => false;
     }
 }

@@ -40,8 +40,8 @@ namespace Grapher
             //after init so it is in the background
             Controls.Add(canvas3D1);
 
-            numWidth.Value = canvas3D1.module.MTable.Width;
-            numLength.Value = canvas3D1.module.MTable.Length;
+            numWidth.Value = canvas3D1.module.Table.Width;
+            numLength.Value = canvas3D1.module.Table.Length;
             InputComboBox.ValueMember = "Factory";
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
@@ -53,16 +53,16 @@ namespace Grapher
         private void NumWidth_ValueChanged(object sender, EventArgs e)
         {
             if (inInit) { return; }
-            canvas3D1.module.MTable.Width = (int)Math.Max(1, numWidth.Value);
-            numWidth.Value = canvas3D1.module.MTable.Width;
+            canvas3D1.module.Table.Width = (int)Math.Max(1, numWidth.Value);
+            numWidth.Value = canvas3D1.module.Table.Width;
             canvas3D1.Invalidate();
         }
 
         private void NumLength_ValueChanged(object sender, EventArgs e)
         {
             if (inInit) { return; }
-            canvas3D1.module.MTable.Length = (int)Math.Max(1, numLength.Value);
-            numLength.Value = canvas3D1.module.MTable.Length;
+            canvas3D1.module.Table.Length = (int)Math.Max(1, numLength.Value);
+            numLength.Value = canvas3D1.module.Table.Length;
             canvas3D1.Invalidate();
         }
 
@@ -112,8 +112,8 @@ namespace Grapher
 
         private void Graph3DEditor_Resize(object sender, EventArgs e)
         {
-            canvas3D1.module.MTable.Origin.Y = canvas3D1.Size.Height / 2;
-            canvas3D1.module.MTable.UpdateAll();
+            canvas3D1.module.Table.Origin.Y = canvas3D1.Size.Height / 2;
+            canvas3D1.module.Table.UpdateAll();
             canvas3D1.Invalidate();
         }
 

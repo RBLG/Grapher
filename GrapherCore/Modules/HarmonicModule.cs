@@ -15,22 +15,20 @@ namespace Grapher.Modules
     public class HarmonicModule : TableModule
     {
         //to reference specific stuff of the harmonic scale, not used rn tho
-        private new HarmonicScale Wscale { get; set; }
+        //private new HarmonicScale Wscale { get; set; }
         public HarmonicModule() : base()
         {
-            MTable.Length = 1;
+            Table.Length = 1;
             Wscale = new HarmonicScale();
-            base.Wscale = Wscale;
-            base.Lscale = new NoScale();
-            //Lscale = null;
-            //Input = null;
-            MTable.Interpolation = Table.InterpolationType.None;
+            //base.Wscale = Wscale;
+            //base.Lscale = new NoScale();
+            Table.Interpolation = Table.InterpolationType.None;
             Name = "Harmonic " + Name;
-            foreach (Table3DDot dot in MTable.dots[0])
+            foreach (Table3DDot dot in Table.dots[0])
             {
                 dot.Y = Table.MIN;
             }
-            MTable.dots[0][0].Y = Table.MAX;
+            Table.dots[0][0].Y = Table.MAX;
         }
 
         private readonly Spectrum wavstock = new();
@@ -45,9 +43,9 @@ namespace Grapher.Modules
             buffer.BasePitch = bpitch;
             buffer.NoteSeed = seed;
             int it = 0;
-            foreach (Table3DDot dot in MTable.dots[0])
+            foreach (Table3DDot dot in Table.dots[0])
             {
-                double wval = MTable.Get01ValueFrom0101(it / (double)MTable.Width, 0);
+                double wval = Table.Get01ValueFromWL(it, 0);
                 if (wval > 0)
                 {
                     Wave wav = wavstock.Waves[it];
@@ -77,7 +75,7 @@ namespace Grapher.Modules
         /// </summary>
         public void UpdateStock()
         {
-            int goal = MTable.Width;
+            int goal = Table.Width;
             int current = wavstock.Waves.Count;
             if (goal == current) { }
             else if (goal < current)

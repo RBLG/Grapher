@@ -56,6 +56,7 @@ namespace Grapher.Scale
         }
 
         public bool Continuous => true;
+        public bool IsLooping => false;
         public string Label { get; } = "f(Hz)";
     }
 }

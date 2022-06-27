@@ -15,6 +15,7 @@ namespace Grapher.Scale
         public string Label => "none";
 
         public bool Continuous => true;
+        public bool IsLooping => false;
 
         public Control GetControl() => new BlankScaleGui();
 

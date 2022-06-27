@@ -1,4 +1,6 @@
-﻿using Grapher.Scale;
+﻿using Grapher.Modes;
+using Grapher.Scale;
+using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,11 @@ namespace Grapher
         public static readonly int defwidth = 10;
         public static readonly int deflength = 30;
 
+        public IInputScale Wscale { get; set; } = new FrequencyExponantialScale();
+        public IInputScale Lscale { get; set; } = new TimeLinearScale();
+        public IOutputScale Hscale { get; set; } = new AmplitudeLinearScale();
+        public IMode Mode { get; set; } = new MultiplyMode();
+
         //moved from canvas3D
         public readonly Point3D xaxis = new(0.7, 0.2, 0);
         public readonly Point3D yaxis = new(0, -1, 0);
@@ -35,6 +42,7 @@ namespace Grapher
         private int count2;
 
         public InterpolationType Interpolation { get; set; }
+
         /// <summary>
         /// constructor for the deserializer
         /// </summary>
@@ -139,7 +147,6 @@ namespace Grapher
             }
             RefreshArrayble();
         }
-        
 
         private void RefreshArrayble()
         {
@@ -159,7 +166,6 @@ namespace Grapher
             }
         }
 
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double GetTableValue(int x, int y)
         {
@@ -170,7 +176,7 @@ namespace Grapher
         public void AddToArrayble(int x, int y, double value)
         {
             double nval = arrayble[x + y * count1] + value;
-            arrayble[x + y * count1] = Math.Max(Table.MIN, Math.Min(Table.MAX, nval));
+            arrayble[x + y * count1] = Math.Clamp(nval, MIN, MAX);
         }
 
         private Table3DDot CreateDot(int itx, int itz, int width, int length)
@@ -183,48 +189,62 @@ namespace Grapher
             return dot;
         }
 
-        public double Get01ValueFrom0101(double wval, double lval)
+        public void Apply(Spectrum.Wave wave, Spectrum spectrum)
         {
-            return Get01ValueFromWL(wval * Width, lval * Length);
+            double wval = (count2 == 1) ? 0 : Wscale.PickValueTo(wave, spectrum, count2);
+            double lval = (count1 == 1) ? 0 : Lscale.PickValueTo(wave, spectrum, count1);
+            double tval = Get01ValueFromWL(wval, lval);
+            Hscale.ProcessValue(wave, spectrum, Height, Mode, tval);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double Get01ValueFromWL(double wval, double lval)
         {
             return (GetOnMaxValueFromWL(wval, lval) - MIN) / MAX;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double GetOnMaxValueFromWL(double wval, double lval)
         {
             if (wval < 0 || Width <= wval || lval < 0 || Length <= lval)
             { return 0; }
-            //wval *= dots[0].Count - 1;
-            //lval *= dots.Count - 1;
 
             if (Interpolation == InterpolationType.None)
             { return GetNotInterpolatedValue(lval, wval); }
             else
-            { return GetLinearInterpolatedValue(lval, wval); }
+            { return GetLinearInterpolatedValue(wval, lval); }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double GetNotInterpolatedValue(double index1, double index2)
         {
             return GetTableValue((int)index1, (int)index2);
         }
 
-        private double GetLinearInterpolatedValue(double index1, double index2)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private double GetLinearInterpolatedValue(double wval, double lval)
         {
-            int col1 = (int)index2;
-            int col2 = (index2 == col1) ? col1 : col1 + 1; //faster (int)Math.Ceiling(index2);
+            int col1 = (int)wval;
+            int col2 = (wval == col1) ? col1 : col1 + 1; //faster (int)Math.Ceiling(index2);
             if (col2 >= count2)
-            { col2 = 0; }
+            {
+                if (Wscale.IsLooping)
+                { col2 = 0; }
+                else
+                { col2 = col1; }
+            }
 
-            int row1 = (int)index1;
-            int row2 = (index1 == row1) ? row1 : row1 + 1; //faster (int)Math.Ceiling(index1);
-            if (row2 >= count1)
-            { row2 = 0; }
-            double rmix = index1 - row1;//% 1;//faster %1 ?
+            int row1 = (int)lval;
+            int row2 = (lval == row1) ? row1 : row1 + 1; //faster (int)Math.Ceiling(index1);
+            double rmix = lval - row1;//% 1;//faster %1 ?
             double mrmix = 1 - rmix;
-
+            if (row2 >= count1)
+            {
+                if (Lscale.IsLooping)
+                { row2 = 0; }
+                else
+                { row2 = row1; }
+            }
 
             if (col1 == col2)//all this so it doesnt have to access much more if interpolation has no effect
             {
@@ -235,7 +255,7 @@ namespace Grapher
             }
             else
             {
-                double cmix = index2 - col1;//% 1;//also faster %1
+                double cmix = wval - col1;//% 1;//also faster %1
                 double mcmix = 1 - cmix;
                 if (row1 == row2)
                 { return GetTableValue(row1, col1) * mcmix + GetTableValue(row1, col2) * cmix; }

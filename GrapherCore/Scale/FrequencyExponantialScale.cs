@@ -49,7 +49,7 @@ namespace Grapher.Scale
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {
-            wave.Frequency = Unscale(mode.Process(Scale(wave.Frequency), tval));
+            wave.Frequency = UnscaleFrom01(mode.Process(ScaleTo01(wave.Frequency), tval));
         }
 
         public List<Graduations> GetMilestones()
@@ -61,6 +61,7 @@ namespace Grapher.Scale
 
         public bool Continuous => true;
         public string Label => "f(Hz)";
+        public bool IsLooping => false;
 
     }
 }

@@ -26,12 +26,14 @@ namespace Grapher.Scale.Related
         /// return if the scale accept values inbetween.<br/>
         /// TODO will control interpolation and generation
         /// </summary>
-        Boolean Continuous { get; }
+        bool Continuous { get; }
 
         /// <summary>
         /// return the Gui element that allow to manipulate the scale. 
         /// this element will be visible in the axis settings
         /// </summary>
         System.Windows.Forms.Control GetControl();
+
+        bool IsLooping { get; }
     }
 }

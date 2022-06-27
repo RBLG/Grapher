@@ -1,9 +1,11 @@
-﻿using Grapher.Scale.Related;
+﻿using Grapher.GuiElement.ScaleSettings;
+using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static Grapher.Spectrum;
 
 namespace Grapher.Scale
@@ -20,12 +22,11 @@ namespace Grapher.Scale
             throw new NotImplementedException();
         }
 
-        public System.Windows.Forms.Control GetControl()
-        {
-            return new GuiElement.ScaleSettings.PaddingGui();
-        }
+        public Control GetControl() => new PaddingGui();
+
 
         public bool Continuous => true;
+        public bool IsLooping => false;
 
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)

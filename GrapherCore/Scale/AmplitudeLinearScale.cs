@@ -25,6 +25,7 @@ namespace Grapher.Scale
         public Control GetControl() => new BlankScaleGui();
 
         public bool Continuous => true;
+        public bool IsLooping => false;
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
         { return wave.Amplitude * size; }

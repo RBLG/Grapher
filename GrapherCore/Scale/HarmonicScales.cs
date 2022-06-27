@@ -34,14 +34,12 @@ namespace Grapher.Scale
             throw new NotImplementedException();
         }
 
-        public Control GetControl()
-        {
-            return new BlankScaleGui();
-        }
+        public Control GetControl() => new BlankScaleGui();
 
         public string Label => "f(*base)";
 
-        public Boolean Continuous => false;
+        public bool Continuous => false;
+        public bool IsLooping => false;
 
     }
 }

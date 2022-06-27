@@ -14,15 +14,11 @@ namespace Grapher.Modules
     public class TableModule : IModule
     {
         public IModule Input { get; set; } = new DefaultPitchModule();
-        public Table MTable { get; set; } = new Table();//the grid handler
-        public IMode Mode { get; set; } = new MultiplyMode();
+        public Table Table { get; private set; } = new Table();//the grid handler
 
-        private IInputScale wscale = new FrequencyExponantialScale();
-        private IInputScale lscale = new TimeLinearScale();
-        private IOutputScale hscale = new AmplitudeLinearScale();
-        public IInputScale Wscale { get => wscale; set { wscale = value; UpdateUniqueScales(); } }
-        public IInputScale Lscale { get => lscale; set { lscale = value; UpdateUniqueScales(); } }
-        public IOutputScale Hscale { get => hscale; set { hscale = value; UpdateUniqueScales(); } }
+        public IInputScale Wscale { get => Table.Wscale; set { Table.Wscale = value; UpdateUniqueScales(); } }
+        public IInputScale Lscale { get => Table.Lscale; set { Table.Lscale = value; UpdateUniqueScales(); } }
+        public IOutputScale Hscale { get => Table.Hscale; set { Table.Hscale = value; UpdateUniqueScales(); } }
 
         public TableModule()
         {
@@ -34,14 +30,13 @@ namespace Grapher.Modules
             Spectrum buffer = Input.GetSpectrum(time, timeoff, bpitch, seed);
             foreach (Wave w in buffer.Waves)
             {
-                
                 //TODO implement the effect of IScale.IsContinuous
-                double wval = Wscale.PickValueTo(w, buffer, MTable.Width);
-                double lval = Lscale.PickValueTo(w, buffer, MTable.Length);
+                //double wval = Wscale.PickValueTo(w, buffer, Table.Width);
+                //double lval = Lscale.PickValueTo(w, buffer, Table.Length);
+                //double tval = Table.Get01ValueFromWL(wval, lval);
+                //Hscale.ProcessValue(w, buffer, Table.Height, Table.Mode, tval);
 
-                double tval = MTable.Get01ValueFromWL(wval, lval);
-
-                Hscale.ProcessValue(w, buffer, MTable.Height, Mode, tval);
+                Table.Apply(w, buffer);
             }
             return buffer;
         }
@@ -57,8 +52,8 @@ namespace Grapher.Modules
         /// </summary>
         private void UpdateUniqueScales()
         {
-            CandidateForUniqueScale(wscale);
-            CandidateForUniqueScale(lscale);
+            CandidateForUniqueScale(Table.Wscale);
+            CandidateForUniqueScale(Table.Lscale);
         }
 
         private void CandidateForUniqueScale(IScaleCore scale)
@@ -69,7 +64,7 @@ namespace Grapher.Modules
         }
 
         public virtual UserControl? GetControl()
-        { this.MTable.UpdateAll(); return new Graph3DEditor(this); }
+        { this.Table.UpdateAll(); return new Graph3DEditor(this); }
 
         public String Name { get; set; } = "Editor " + count++;
         private static int count = 0;

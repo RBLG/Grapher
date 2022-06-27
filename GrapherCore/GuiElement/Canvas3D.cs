@@ -92,7 +92,7 @@ namespace Grapher
                     //temporary till camera movement
                     dot.dot.ReverseAddY(offset * dot.strength);
                     //temporary till table3DDot are eliminated
-                    module.MTable.AddToArrayble(dot.pos.X, dot.pos.Y, -offset * dot.strength);
+                    module.Table.AddToArrayble(dot.pos.X, dot.pos.Y, -offset * dot.strength);
                 }
                 lastmousey = e.Y;
                 this.Invalidate();
@@ -117,7 +117,7 @@ namespace Grapher
                 //select the dots to move
                 double pres = 20;
                 int itx = 0;
-                foreach (List<Table3DDot> row in module.MTable.dots)
+                foreach (List<Table3DDot> row in module.Table.dots)
                 {
                     int ity = 0;
                     foreach (Table3DDot point in row)
@@ -143,18 +143,18 @@ namespace Grapher
         /// </summary>
         private double GetDistance(Table3DDot pt1, Point pt2)
         {
-            var ori = module.MTable.Origin;
-            if (module.MTable.Width != 1 && module.MTable.Length != 1)
+            var ori = module.Table.Origin;
+            if (module.Table.Width != 1 && module.Table.Length != 1)
             {
                 return GetDistanceSub(pt1.ScreenX, pt1.ScreenY, pt2);
             }
-            else if (module.MTable.Width != 1)
+            else if (module.Table.Width != 1)
             {
                 float pz = (float)ori.X + (float)pt1.Z * 1.5f;
                 float py = (float)ori.Y + 50 - (float)pt1.Y;
                 return GetDistanceSub(pz, py, pt2);
             }
-            else if (module.MTable.Length != 1)
+            else if (module.Table.Length != 1)
             {
                 float px = (float)ori.X + (float)pt1.X;
                 float py = (float)ori.Y + 50 - (float)pt1.Y;
@@ -168,7 +168,7 @@ namespace Grapher
         private void AddPointsInBrushRange(Table3DDot point)
         {
             int itx = 0;
-            foreach (List<Table3DDot> row2 in module.MTable.dots)
+            foreach (List<Table3DDot> row2 in module.Table.dots)
             {
                 int ity = 0;
                 foreach (Table3DDot point2 in row2)
@@ -190,15 +190,15 @@ namespace Grapher
             e.Graphics.FillRectangle(bg, e.ClipRectangle);
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            if (module.MTable.Width != 1 && module.MTable.Length != 1)//3D editor view
+            if (module.Table.Width != 1 && module.Table.Length != 1)//3D editor view
             {
                 Do3DPaint(e);
             }
-            else if (module.MTable.Width != 1)//2D typically with horizontal axis being time
+            else if (module.Table.Width != 1)//2D typically with horizontal axis being time
             {
                 DoWidth2DPaint(e);
             }
-            else if (module.MTable.Length != 1)//2D editor with horizontal axis being something of fixed width
+            else if (module.Table.Length != 1)//2D editor with horizontal axis being something of fixed width
             {
                 DoLength2DPaint(e);
             }
@@ -212,22 +212,22 @@ namespace Grapher
         private void Do3DPaint(PaintEventArgs e)
         {
             //result of moving then in table
-            var xaxis = module.MTable.xaxis;
-            var yaxis = module.MTable.yaxis;
-            var zaxis = module.MTable.zaxis;
+            var xaxis = module.Table.xaxis;
+            var yaxis = module.Table.yaxis;
+            var zaxis = module.Table.zaxis;
 
-            float ox = (float)module.MTable.Origin.X;
-            float oy = (float)module.MTable.Origin.Y;
+            float ox = (float)module.Table.Origin.X;
+            float oy = (float)module.Table.Origin.Y;
 
             //drawing axis
             float length = tablevisualwidth + oversize;
             e.Graphics.DrawLine(blue, ox, oy, ox + (float)zaxis.X * length, oy + (float)zaxis.Y * length);
             length = size + oversize;
             e.Graphics.DrawLine(green, ox, oy, ox + (float)yaxis.X * length, oy + (float)yaxis.Y * length);
-            length = lengthspacing * module.MTable.Length + oversize;
+            length = lengthspacing * module.Table.Length + oversize;
             e.Graphics.DrawLine(red, ox, oy, ox + (float)xaxis.X * length, oy + (float)xaxis.Y * length);
 
-            var points = module.MTable.dots;
+            var points = module.Table.dots;
             for (int itx = 0; itx < points.Count; itx++)
             {
                 for (int itz = 0; itz < points[itx].Count; itz++)
@@ -255,8 +255,8 @@ namespace Grapher
 
         private void DoWidth2DPaint(PaintEventArgs e)
         {
-            float ox = (float)module.MTable.Origin.X;
-            float oy = (float)module.MTable.Origin.Y + 50;
+            float ox = (float)module.Table.Origin.X;
+            float oy = (float)module.Table.Origin.Y + 50;
 
             //drawing axis
             float length = tablevisualwidth + oversize;
@@ -264,7 +264,7 @@ namespace Grapher
             length = size + oversize;
             e.Graphics.DrawLine(green, ox, oy, ox, oy - length);
 
-            var points = module.MTable.dots;
+            var points = module.Table.dots;
             for (int itx = 0; itx < points.Count; itx++)
             {
                 for (int itz = 0; itz < points[itx].Count; itz++)
@@ -296,16 +296,16 @@ namespace Grapher
 
         private void DoLength2DPaint(PaintEventArgs e)
         {
-            float ox = (float)module.MTable.Origin.X;
-            float oy = (float)module.MTable.Origin.Y + 50;
+            float ox = (float)module.Table.Origin.X;
+            float oy = (float)module.Table.Origin.Y + 50;
 
             //drawing axis
             float length = size + oversize;
             e.Graphics.DrawLine(green, ox, oy, ox, oy - length);
-            length = lengthspacing * module.MTable.Length + oversize;
+            length = lengthspacing * module.Table.Length + oversize;
             e.Graphics.DrawLine(red, ox, oy, ox + length, oy);
 
-            var points = module.MTable.dots;
+            var points = module.Table.dots;
             for (int itx = 0; itx < points.Count; itx++)
             {
                 for (int itz = 0; itz < points[itx].Count; itz++)
