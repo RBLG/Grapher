@@ -22,14 +22,16 @@ namespace Grapher.Scale
             throw new NotImplementedException();
         }
 
-        public Control GetControl() => new PhaseGui();
+        public double Offset { set; get; } = 0;
+
+        public Control GetControl() => new PhaseGui(this);
 
         public bool Continuous => true;
         public bool IsLooping => false;
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
         {
-            double val = spectrum.Time + wave.Phase;
+            double val = spectrum.Time + wave.Phase + Offset;
             double modulo = val - (int)val;
             return modulo * size;
         }
