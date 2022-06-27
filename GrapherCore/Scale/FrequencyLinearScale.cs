@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Grapher.Scale.Related;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using static Grapher.Spectrum;
 namespace Grapher.Scale
 {
     //scale where 10 has 10 less place on the table than 100
-    public class FrequencyLinearScale : IScale
+    public class FrequencyLinearScale : IInputScale, IOutputScale
     {
         public const double min = 20;
         public const double max = 20_000;
@@ -28,11 +29,6 @@ namespace Grapher.Scale
             };
         }
 
-        public double Scale(double notscaled)
-        { return notscaled; }
-        public double Unscale(double scaled)
-        { return scaled; }
-
         public double ScaleTo01(double notscaled)
         { return (notscaled - min) / range; }
         public double UnscaleFrom01(double scaled)
@@ -40,11 +36,9 @@ namespace Grapher.Scale
 
         public double ScaleTo(double notscaled, double max)
         { return ScaleTo01(notscaled) * max; }
-        public double UnscaleFrom(double scaled, double max)
-        { return UnscaleFrom01(scaled / max); }
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
-        { return ScaleTo(wave.Frequency, size); }
+        { return ScaleTo01(wave.Frequency) * size; }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {

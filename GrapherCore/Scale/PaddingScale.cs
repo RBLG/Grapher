@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Grapher.Scale.Related;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +8,10 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Scale
 {
-    public class PaddingScale : IScale
+    public class PaddingScale : IOutputScale, IInputScale
     {
-        public double Min => 0;
-        public double Max => 1;
+        public static double Min => 0;
+        public static double Max => 1;
 
         public string Label => "Padding";
 
@@ -26,20 +27,15 @@ namespace Grapher.Scale
 
         public bool Continuous => true;
 
-        public double Scale(double notscaled) /*                    */ => notscaled;
-        public double ScaleTo01(double notscaled) /*                */ => notscaled;
-        public double ScaleTo(double notscaled, double size) /*     */ => notscaled * size;
-
-        public double Unscale(double scaled) /*                     */ => scaled;
-        public double UnscaleFrom01(double scaled) /*               */ => scaled;
-        public double UnscaleFrom(double scaled, double size) /*    */ => scaled / size;
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
-        { return ScaleTo(wave.Padding, size); }
-       
+        {
+            return wave.Padding * size;
+        }
+
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {
-            wave.Padding = UnscaleFrom01(mode.Process(ScaleTo01(wave.Padding), tval));
+            wave.Padding = Math.Clamp(mode.Process(wave.Padding, tval), Min, Max);
         }
     }
 }

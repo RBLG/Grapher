@@ -1,4 +1,5 @@
 ﻿using Grapher.Modules;
+using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Grapher.Scale
     /// <summary>
     /// a more specific interface for properties specifically related to time scales.
     /// </summary>
-    public interface ITimeScale : IScale
+    public interface ITimeScale
     {
         EnvStatus GetEnvStatus(double time, double timeoff);
     }

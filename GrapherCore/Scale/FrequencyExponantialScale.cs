@@ -1,4 +1,5 @@
 ﻿using Grapher.GuiElement.ScaleSettings;
+using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Scale
 {
-    public class FrequencyExponantialScale : IScale
+    public class FrequencyExponantialScale : IInputScale, IOutputScale
     {
         public static readonly double min = Math.Log(FrequencyLinearScale.min + 1);
         public static readonly double max = Math.Log(FrequencyLinearScale.max + 1);
@@ -48,7 +49,7 @@ namespace Grapher.Scale
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {
-            wave.Frequency = UnscaleFrom01(mode.Process(ScaleTo01(wave.Frequency), tval));
+            wave.Frequency = Unscale(mode.Process(Scale(wave.Frequency), tval));
         }
 
         public List<Graduations> GetMilestones()
@@ -56,10 +57,7 @@ namespace Grapher.Scale
             return milestones;
         }
 
-        public Control GetControl()
-        {
-            return new FrequencyExponentialGui();
-        }
+        public Control GetControl() => new FrequencyExponentialGui();
 
         public bool Continuous => true;
         public string Label => "f(Hz)";

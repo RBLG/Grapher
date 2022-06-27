@@ -1,5 +1,6 @@
 ﻿using Grapher.Modes;
 using Grapher.Modules;
+using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,9 @@ namespace Grapher.Scale
     /// 123456<br/>
     /// for easy repeating patterns
     /// </summary>
-    public class TimeModuloScale : IScale
+    public class TimeModuloScale : IInputScale
     //not ITimeScale so it can be used with other time scale & havent impl how multiple time scale interact for TableModule time scale
     {
-        public double Min => 0;
-        public double Max { get; set; } = 10;
-
         public double Seed { get; set; } = 13; //customizable number to change the randomness of the random pattern
         public double Modulo { get; set; } = 50; //the size of a chunk (in ms)
 
@@ -43,34 +41,18 @@ namespace Grapher.Scale
             return new GuiElement.ScaleSettings.TimeModuloGui(this);
         }
 
-        public double Scale(double notscaled) /*                    */ => (int)(notscaled / Modulo);
-        public double ScaleTo01(double notscaled) /*                */ => Scale(notscaled) / Max;
-        public double ScaleTo(double notscaled, double size)
-        { //Max is suposed to = size
-            double rtn = Scale(notscaled);
-            if (IsLooping) { rtn %= size; }
-            return rtn;
-        }
-
-        public double Unscale(double scaled) /*                     */ => scaled * Modulo;
-        public double UnscaleFrom01(double scaled) /*               */ => Unscale(scaled * Max);
-        public double UnscaleFrom(double scaled, double size) /*    */ => Unscale(scaled);
+        public double Scale(double notscaled) => (int)(notscaled / Modulo);
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
         {
             double rtn = Scale(spectrum.Time);
-            if (IsLooping) { rtn %= size; }
-            // randomizing through modulo, shader noise style
-            if (IsRandom)
+            if (IsLooping)
+            { rtn %= size; }
+            if (IsRandom)// randomizing through modulo, shader noise style
             {
-                rtn = (Math.Sin((rtn * spectrum.NoteSeed) * 13) + 1) * (size * 100_000 - 1);
-                rtn %= size;
+                rtn = (Math.Sin(rtn * spectrum.NoteSeed * Seed * 13) + 1) * (size * 100_000 - 1) % size;
             }
             return rtn;
         }
-
-        public void ProcessValue(Wave wave, Spectrum spectrum, double size, IMode mode, double tval)
-        { return; }
-
     }
 }

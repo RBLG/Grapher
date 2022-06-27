@@ -1,16 +1,17 @@
 ﻿using Grapher.Modes;
 using Grapher.Modules;
+using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using static Grapher.Spectrum;
 
-namespace Grapher.Scale
+namespace Grapher.Scale.Related
 {
     /// <summary>
     /// handle conversion from default scales (linear frequency, milliseconds,etc) to table scale
     /// </summary>
-    public interface IScale
+    public interface IScaleOld //: IInputScale, IOutputScale
     {
         double Min { get; }
         double Max { get; }

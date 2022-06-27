@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
@@ -26,10 +26,19 @@ namespace Grapher
 
         //temp public
         public List<List<Table3DDot>> dots;
+
+        [JsonIgnore]
+        private double[] arrayble = Array.Empty<double>();
+        [JsonIgnore]
+        private int count1;
+        [JsonIgnore]
+        private int count2;
+
         public InterpolationType Interpolation { get; set; }
         /// <summary>
         /// constructor for the deserializer
         /// </summary>
+        [JsonConstructor]
         public Table(List<List<Table3DDot>> Dots, InterpolationType interpolation, int height)
         {
             dots = Dots;
@@ -41,6 +50,7 @@ namespace Grapher
                 d.RecalculateScreenXY();
             }
             ));
+            RefreshArrayble();
         }
 
         public Table()
@@ -56,6 +66,7 @@ namespace Grapher
                     row.Add(CreateDot(itx, itz, defwidth, deflength));
                 }
             }
+            RefreshArrayble();
         }
 
         public int Height { get; set; } = (int)MAX;
@@ -124,11 +135,42 @@ namespace Grapher
                     Table3DDot pt = dots[itx][itz];
                     pt.SetReferencial(() => Origin, () => xaxis, () => yaxis, () => zaxis);
                     pt.Z = itz * (Canvas3D.tablevisualwidth / Math.Max(2, dots[0].Count - 1)) + Canvas3D.oripadding;
-                    //pt.X = itx * (dots.Count / gui.tablevisualwidth) + gui.oripadding;
-                    //fix for the deserialization
-
                 }
             }
+            RefreshArrayble();
+        }
+        
+
+        private void RefreshArrayble()
+        {
+            count1 = dots.Count;
+            count2 = dots[0].Count;
+            arrayble = new double[dots.Count * dots[0].Count];
+            int itx = 0;
+            foreach (List<Table3DDot> row in dots)
+            {
+                int ity = 0;
+                foreach (Table3DDot dot in row)
+                {
+                    arrayble[itx + ity * count1] = dot.Y;
+                    ity++;
+                }
+                itx++;
+            }
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double GetTableValue(int x, int y)
+        {
+            //return dots[x][y].Y;
+            return arrayble[x + y * count1];
+        }
+
+        public void AddToArrayble(int x, int y, double value)
+        {
+            double nval = arrayble[x + y * count1] + value;
+            arrayble[x + y * count1] = Math.Max(Table.MIN, Math.Min(Table.MAX, nval));
         }
 
         private Table3DDot CreateDot(int itx, int itz, int width, int length)
@@ -166,41 +208,41 @@ namespace Grapher
 
         private double GetNotInterpolatedValue(double index1, double index2)
         {
-            return dots[(int)index1][(int)index2].Y;
+            return GetTableValue((int)index1, (int)index2);
         }
 
         private double GetLinearInterpolatedValue(double index1, double index2)
         {
             int col1 = (int)index2;
             int col2 = (index2 == col1) ? col1 : col1 + 1; //faster (int)Math.Ceiling(index2);
-            if (col2 >= dots[0].Count)
+            if (col2 >= count2)
             { col2 = 0; }
 
             int row1 = (int)index1;
             int row2 = (index1 == row1) ? row1 : row1 + 1; //faster (int)Math.Ceiling(index1);
-            if (row2 >= dots.Count)
+            if (row2 >= count1)
             { row2 = 0; }
-            double rmix = index1 % 1;
+            double rmix = index1 - row1;//% 1;//faster %1 ?
             double mrmix = 1 - rmix;
 
 
-            if (col1 == col2)//all this so it doesnt have to compute much more if interpolation has no effect
+            if (col1 == col2)//all this so it doesnt have to access much more if interpolation has no effect
             {
                 if (row1 == row2)
-                { return dots[row1][col1].Y; }
+                { return GetTableValue(row1, col1); }
                 else
-                { return dots[row1][col1].Y * mrmix + dots[row2][col1].Y * rmix; }
+                { return GetTableValue(row1, col1) * mrmix + GetTableValue(row2, col1) * rmix; }
             }
             else
             {
-                double cmix = index2 % 1;
+                double cmix = index2 - col1;//% 1;//also faster %1
                 double mcmix = 1 - cmix;
                 if (row1 == row2)
-                { return dots[row1][col1].Y * mcmix + dots[row1][col2].Y * cmix; }
+                { return GetTableValue(row1, col1) * mcmix + GetTableValue(row1, col2) * cmix; }
                 else
                 {
-                    double ri1 = dots[row1][col1].Y * mrmix + dots[row2][col1].Y * rmix;
-                    double ri2 = dots[row1][col2].Y * mrmix + dots[row2][col2].Y * rmix;
+                    double ri1 = GetTableValue(row1, col1) * mrmix + GetTableValue(row2, col1) * rmix;
+                    double ri2 = GetTableValue(row1, col2) * mrmix + GetTableValue(row2, col2) * rmix;
                     return ri1 * mcmix + ri2 * cmix;
                 }
             }

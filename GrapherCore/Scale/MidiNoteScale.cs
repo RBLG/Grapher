@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Grapher.Scale.Related;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using static Grapher.Spectrum;
 namespace Grapher.Scale
 {
     //not usable rn, just there to stock what i know so far about midi format
-    public class MidiNoteScale : IScale
+    public class MidiNoteScale : IInputScale
     {
         public enum Note
         {

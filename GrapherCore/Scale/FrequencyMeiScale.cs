@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Grapher.GuiElement.ScaleSettings;
+using Grapher.Scale.Related;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static Grapher.Spectrum;
 
 namespace Grapher.Scale
 {
-    public class FrequencyMeiScale : IScale
+    public class FrequencyMeiScale : IInputScale, IOutputScale
     {
         public static readonly double min = ToMei(FrequencyLinearScale.min + 1);
         public static readonly double max = ToMei(FrequencyLinearScale.max + 1);
@@ -34,26 +37,18 @@ namespace Grapher.Scale
             return milestones;
         }
 
-        public System.Windows.Forms.Control GetControl()
-        {
-            return new GuiElement.ScaleSettings.FrequencyMeiGui();
-        }
+        public Control GetControl() => new FrequencyMeiGui();
 
         public bool Continuous => true;
 
-        public double Scale(double notscaled) /*                */ => ToMei(notscaled);
-        public double ScaleTo01(double notscaled) /*            */ => (ToMei(notscaled) - min) / range;
-        public double ScaleTo(double notscaled, double max) /*  */ => ScaleTo01(notscaled) * max;
-
-        public double Unscale(double scaled) /*                 */ => FromMei(scaled);
-        public double UnscaleFrom01(double scaled) /*           */ => FromMei(scaled / range + min);
-        public double UnscaleFrom(double scaled, double max) /* */ => UnscaleFrom01(scaled / max);
+        public double ScaleTo01(double notscaled) /*            */ => (ToMei(notscaled) - Min) / range;
+        public double UnscaleFrom01(double scaled) /*           */ => FromMei(scaled / range + Min);
 
         private static double ToMei(double lfreq) /*            */ => 2595 * Math.Log10(1 + lfreq / 700);
         private static double FromMei(double lfreq) /*          */ => (Math.Pow(10, lfreq / 2595) + 1) / 700;
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
-        { return ScaleTo(wave.Frequency, size); }
+        { return ScaleTo01(wave.Frequency ) * size; }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {

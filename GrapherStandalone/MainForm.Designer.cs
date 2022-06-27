@@ -49,6 +49,11 @@
             // 
             // NoteUpDown
             // 
+            this.NoteUpDown.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.NoteUpDown.Location = new System.Drawing.Point(18, 251);
             this.NoteUpDown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.NoteUpDown.Maximum = new decimal(new int[] {

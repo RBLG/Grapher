@@ -1,5 +1,6 @@
 ﻿using Grapher.Modes;
 using Grapher.Scale;
+using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,12 @@ namespace Grapher.Modules
         public Table MTable { get; set; } = new Table();//the grid handler
         public IMode Mode { get; set; } = new MultiplyMode();
 
-        private IScale wscale = new FrequencyExponantialScale();
-        private IScale lscale = new TimeLinearScale();
-        private IScale hscale = new AmplitudeLinearScale();
-        public IScale Wscale { get => wscale; set { wscale = value; UpdateUniqueScales(); } }
-        public IScale Lscale { get => lscale; set { lscale = value; UpdateUniqueScales(); } }
-        public IScale Hscale { get => hscale; set { hscale = value; UpdateUniqueScales(); } }
+        private IInputScale wscale = new FrequencyExponantialScale();
+        private IInputScale lscale = new TimeLinearScale();
+        private IOutputScale hscale = new AmplitudeLinearScale();
+        public IInputScale Wscale { get => wscale; set { wscale = value; UpdateUniqueScales(); } }
+        public IInputScale Lscale { get => lscale; set { lscale = value; UpdateUniqueScales(); } }
+        public IOutputScale Hscale { get => hscale; set { hscale = value; UpdateUniqueScales(); } }
 
         public TableModule()
         {
@@ -60,7 +61,7 @@ namespace Grapher.Modules
             CandidateForUniqueScale(lscale);
         }
 
-        private void CandidateForUniqueScale(IScale scale)
+        private void CandidateForUniqueScale(IScaleCore scale)
         {
             if (scale is ITimeScale tscale)
             { timescale = tscale; }

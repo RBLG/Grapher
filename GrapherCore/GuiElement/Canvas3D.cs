@@ -57,7 +57,7 @@ namespace Grapher
             this.MouseDown += MyOnMouseDown;
             this.MouseMove += MyOnMouseMove;
             this.MouseUp += MyOnMouseUp;
-        }     
+        }
 
         /// <summary>
         /// a holder to remember what points are being moven during an interaction. will get reworked eventually
@@ -66,10 +66,12 @@ namespace Grapher
         {
             public Table3DDot dot;
             public double strength;
-            public MovingDot(Table3DDot ndot, double nstrength)
+            public Point pos;
+            public MovingDot(Table3DDot ndot, double nstrength, int x, int y)
             {
                 dot = ndot;
                 strength = nstrength;
+                pos = new(x, y);
             }
 
         }
@@ -89,6 +91,8 @@ namespace Grapher
                 {
                     //temporary till camera movement
                     dot.dot.ReverseAddY(offset * dot.strength);
+                    //temporary till table3DDot are eliminated
+                    module.MTable.AddToArrayble(dot.pos.X, dot.pos.Y, -offset * dot.strength);
                 }
                 lastmousey = e.Y;
                 this.Invalidate();
@@ -112,18 +116,22 @@ namespace Grapher
 
                 //select the dots to move
                 double pres = 20;
+                int itx = 0;
                 foreach (List<Table3DDot> row in module.MTable.dots)
                 {
+                    int ity = 0;
                     foreach (Table3DDot point in row)
                     {
                         double dist = GetDistance(point, e.Location);
                         if (dist < pres)
                         {
                             pres = dist;
-                            moving = new List<MovingDot>() { new MovingDot(point, 1) };
+                            moving = new List<MovingDot>() { new MovingDot(point, 1, itx, ity) };
                             lastmousey = e.Location.Y;
                         }
+                        ity++;
                     }
+                    itx++;
                 }
                 if (moving != null && BrushSize > 0)
                 { AddPointsInBrushRange(moving[0].dot); }
@@ -159,15 +167,19 @@ namespace Grapher
 
         private void AddPointsInBrushRange(Table3DDot point)
         {
+            int itx = 0;
             foreach (List<Table3DDot> row2 in module.MTable.dots)
             {
+                int ity = 0;
                 foreach (Table3DDot point2 in row2)
                 {
                     double dist2 = point.GetBrushDistanceTo(point2) / 20;
                     //Console.WriteLine(dist2);
                     if (dist2 < BrushSize && !point.Equals(point2))
-                    { moving!.Add(new MovingDot(point2, 1 - dist2 / BrushSize)); }
+                    { moving!.Add(new MovingDot(point2, 1 - dist2 / BrushSize, itx, ity)); }
+                    ity++;
                 }
+                itx++;
             }
         }
 

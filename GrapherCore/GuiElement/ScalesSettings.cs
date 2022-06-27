@@ -1,6 +1,7 @@
 ﻿using Grapher.Modes;
 using Grapher.Modules;
 using Grapher.Scale;
+using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,13 +21,13 @@ namespace Grapher.GuiElement
 
         public ScalesSettings(Graph3DEditor neditor)
         {
-            var scales = AvailableScales.scales;
+            var scales = AvailableInputScales.scales;
             Editor = neditor;
             InitializeComponent();
             WidthComboBox.ValueMember = "Factory";
             WidthComboBox.DisplayMember = "Name";
             WidthComboBox.Items.AddRange(scales.ToArray());
-            WidthComboBox.SelectedIndex = AvailableScales.GetIndex(WidthAxis.GetType());
+            WidthComboBox.SelectedIndex = AvailableInputScales.GetIndex(WidthAxis.GetType());
             WidthComboBox.DropDownHeight = scales.Count * 20;
             oldwidth = WidthComboBox.SelectedIndex;
             WidthSocket.Set(WidthAxis.GetControl());
@@ -34,16 +35,16 @@ namespace Grapher.GuiElement
             LengthComboBox.ValueMember = "Factory";
             LengthComboBox.DisplayMember = "Name";
             LengthComboBox.Items.AddRange(scales.ToArray());
-            LengthComboBox.SelectedIndex = AvailableScales.GetIndex(LengthAxis.GetType());
+            LengthComboBox.SelectedIndex = AvailableInputScales.GetIndex(LengthAxis.GetType());
             LengthComboBox.DropDownHeight = scales.Count * 20;
             oldlength = LengthComboBox.SelectedIndex;
             LengthSocket.Set(LengthAxis.GetControl());
 
             HeightComboBox.ValueMember = "Factory";
             HeightComboBox.DisplayMember = "Name";
-            HeightComboBox.Items.AddRange(scales.ToArray());
-            HeightComboBox.SelectedIndex = AvailableScales.GetIndex(HeightAxis.GetType());
-            HeightComboBox.DropDownHeight = scales.Count * 20;
+            HeightComboBox.Items.AddRange(AvailableOutputScales.scales.ToArray());
+            HeightComboBox.SelectedIndex = AvailableOutputScales.GetIndex(HeightAxis.GetType());
+            HeightComboBox.DropDownHeight = AvailableOutputScales.scales.Count * 20;
             oldheight = HeightComboBox.SelectedIndex;
             HeightSocket.Set(HeightAxis.GetControl());
 
@@ -59,9 +60,9 @@ namespace Grapher.GuiElement
         public Graph3DEditor Editor { get; set; }
         private TableModule Module { get => Editor.canvas3D1.module; }
 
-        private IScale WidthAxis { get => Module.Wscale; set => Module.Wscale = value; }
-        private IScale LengthAxis { get => Module.Lscale; set => Module.Lscale = value; }
-        private IScale HeightAxis { get => Module.Hscale; set => Module.Hscale = value; }
+        private IInputScale WidthAxis { get => Module.Wscale; set => Module.Wscale = value; }
+        private IInputScale LengthAxis { get => Module.Lscale; set => Module.Lscale = value; }
+        private IOutputScale HeightAxis { get => Module.Hscale; set => Module.Hscale = value; }
         private IMode Mode { get => Module.Mode; set => Module.Mode = value; }
 
 
@@ -71,7 +72,7 @@ namespace Grapher.GuiElement
         private void WidthComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (inInit) { return; } // avoid reseting stuff if in the constructor
-            var nwscale = AvailableScales.Get(WidthComboBox.SelectedIndex);
+            var nwscale = AvailableInputScales.Get(WidthComboBox.SelectedIndex);
             var nwa = nwscale.Factory();
             if (nwa == null) // if not selectable
             { WidthComboBox.SelectedIndex = oldwidth; }
@@ -89,7 +90,7 @@ namespace Grapher.GuiElement
         private void LengthComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (inInit) { return; }
-            var nlscale = AvailableScales.Get(LengthComboBox.SelectedIndex);
+            var nlscale = AvailableInputScales.Get(LengthComboBox.SelectedIndex);
             var nla = nlscale.Factory();
             if (nla == null)
             { LengthComboBox.SelectedIndex = oldlength; }
@@ -107,7 +108,7 @@ namespace Grapher.GuiElement
         private void HeightComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (inInit) { return; }
-            var nha = AvailableScales.Get(HeightComboBox.SelectedIndex).Factory();
+            var nha = AvailableOutputScales.Get(HeightComboBox.SelectedIndex).Factory();
             if (nha == null)
             { HeightComboBox.SelectedIndex = oldheight; }
             else if (oldheight != HeightComboBox.SelectedIndex)

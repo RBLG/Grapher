@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Grapher.Modules;
 using Grapher.Modes;
 using Grapher.Scale;
+using Grapher.Scale.Related;
 
 namespace GrapherVST
 {
@@ -18,7 +19,7 @@ namespace GrapherVST
     /// <typeparam name="TBase">the interface to handle</typeparam>
     public abstract class IHSConverter<TBase> : JsonConverter<TBase> where TBase : class
     {
-       
+
         protected string TypePropertyName => "Type";
 
         /// <summary>
@@ -148,7 +149,13 @@ namespace GrapherVST
 
         public static JsonSerializerOptions CreateOptions() => new()
         {
-            Converters = { new IModuleConverter(), new IScaleConverter(), new IModeConverter() },
+            Converters = {
+                new IModuleConverter(),
+                new IInputScaleConverter(),
+                new IOutputScaleConverter(),
+                new ITimeScaleConverter(),
+                new IModeConverter()
+            },
             IncludeFields = true,
             IgnoreReadOnlyProperties = true,
             IgnoreReadOnlyFields = true,
@@ -163,10 +170,23 @@ namespace GrapherVST
         public IModuleConverter() : base(typeof(Grapher.Modules.TableModule).Namespace!) { }
     }
 
-    public class IScaleConverter : IHSConverter<IScale>
+    public class IInputScaleConverter : IHSConverter<IInputScale>
     {
-        protected override string DataPropertyName => "IScale";
-        public IScaleConverter() : base(typeof(Grapher.Scale.PhaseScale).Namespace!) { }
+        protected override string DataPropertyName => "IInputScale";
+        public IInputScaleConverter() : base(typeof(Grapher.Scale.PhaseScale).Namespace!) { }
+    }
+
+    public class IOutputScaleConverter : IHSConverter<IOutputScale>
+    {
+        protected override string DataPropertyName => "IOutputScale";
+        public IOutputScaleConverter() : base(typeof(Grapher.Scale.PhaseScale).Namespace!) { }
+    }
+
+    //temporary till i find a better solution to envelloppe handling and ITimeScale can be removed
+    public class ITimeScaleConverter : IHSConverter<ITimeScale>
+    {
+        protected override string DataPropertyName => "ITimeScale";
+        public ITimeScaleConverter() : base(typeof(Grapher.Scale.PhaseScale).Namespace!) { }
     }
 
     public class IModeConverter : IHSConverter<IMode>
