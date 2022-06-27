@@ -27,7 +27,7 @@ namespace GrapherVST.SynthHandling
             public double seed;
             public int note;
             public double time = 0;
-            public double timeoff = Double.NaN;//NaN till the off event happen
+            public double timeoff = double.NaN;//NaN till the off event happen
         }
 
         //double interval = 1000d / SampleRate;//in millis
@@ -39,7 +39,7 @@ namespace GrapherVST.SynthHandling
 
         public ModuleProvider() { }
 
-        private IModule root = new DefaultPitchModule();
+        private IModule root = new TableModule();
 
         public IModule GetRootModule()
         { return root; }

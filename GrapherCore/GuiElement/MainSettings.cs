@@ -32,7 +32,7 @@ namespace Grapher.GuiElement
         /// <summary>
         /// old way that need rework
         /// </summary>
-        public readonly SharedStuff shared = new(440, new HollowModuleProvider(new DefaultPitchModule()));
+        public readonly SharedStuff shared = new(440, new HollowModuleProvider(new TableModule()));
 
         public IModuleChainProvider ChainProvider {
             get => shared.ModuleProvider;

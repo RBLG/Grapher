@@ -8,9 +8,11 @@ namespace Grapher.Modes
 {
     public static class AvailableModes
     {
-        private static readonly List<AvailableMode> list = new List<AvailableMode>()
+        private static readonly List<AvailableMode> list = new()
         {
-           new AvailableMode("Multiply (0-200%)",()=>new MultiplyMode(),typeof(MultiplyMode))
+           new AvailableMode("Multiply",()=>new MultiplyMode(),typeof(MultiplyMode)),
+           new AvailableMode("Add",()=>new AddMode(),typeof(AddMode)),
+           new AvailableMode("Set",()=>new SetMode(),typeof(SetMode))
         };
         public static readonly IReadOnlyCollection<AvailableMode> modes = list;
 
