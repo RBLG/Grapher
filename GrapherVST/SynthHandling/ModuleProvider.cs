@@ -69,7 +69,7 @@ namespace GrapherVST.SynthHandling
                     double sum2 = 0;
                     foreach (Wave w in spec.Waves)
                     {
-                        double val = w.Amplitude * Math.Sin(w.Frequency * (2 * Math.PI * evnt.time / 1000 + w.Phase));
+                        double val = w.Amplitude * Math.Sin(w.Frequency * (2 * Math.PI * (evnt.time / 1000 + w.Phase)));
                         sum += val * w.Padding;
                         sum2 += val * (1 - w.Padding);
                         w.Phase = 0.5;//dirty reset

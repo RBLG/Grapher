@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Grapher.Spectrum;
@@ -14,6 +15,8 @@ namespace Grapher.Modules
     public class TableModule : IModule
     {
         public IModule Input { get; set; } = new DefaultPitchModule();
+
+        [JsonInclude]
         public Table Table { get; private set; } = new Table();//the grid handler
 
         public IInputScale Wscale { get => Table.Wscale; set { Table.Wscale = value; UpdateUniqueScales(); } }

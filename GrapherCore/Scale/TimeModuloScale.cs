@@ -50,7 +50,7 @@ namespace Grapher.Scale
             { rtn %= size; }
             if (IsRandom)// randomizing through modulo, shader noise style
             {
-                rtn = (Math.Sin(rtn * spectrum.NoteSeed * Seed * 13) + 1) * (size * 100_000 - 1) % size;
+                rtn = (Math.Sin(rtn * spectrum.NoteSeed * Seed) + 1) * (size * 100_000 - 1) % size;
             }
             return rtn;
         }

@@ -27,17 +27,17 @@ namespace Grapher.Scale
         public Control GetControl() => new PhaseGui(this);
 
         public bool Continuous => true;
-        public bool IsLooping => false;
+        public bool IsLooping => true;
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
         {
-            double val = spectrum.Time + wave.Phase + Offset;
-            double modulo = val - (int)val;
-            return modulo * size;
+            double val = wave.Frequency * ( spectrum.Time / 1000 + wave.Phase);
+            val -= (int)val;//modulo
+            return val * size;
         }
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {
-            wave.Phase = mode.Process(wave.Phase, tval);
+            wave.Phase = mode.Process(wave.Phase + Offset, tval);
         }
     }
 }

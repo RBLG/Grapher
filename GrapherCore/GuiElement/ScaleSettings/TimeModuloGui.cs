@@ -22,7 +22,7 @@ namespace Grapher.GuiElement.ScaleSettings
             CheckBoxIsLooping.Checked = scale.IsLooping;
             CheckBoxIsRandom.Checked = scale.IsRandom;
             NumUdChunkSize.Value = (decimal)scale.Modulo;
-            NumUdSeed.Value = (decimal)scale.Modulo;
+            NumUdSeed.Value = (decimal)scale.Seed;
         }
 
         private void CheckBoxIsRandom_CheckedChanged(object sender, EventArgs e)

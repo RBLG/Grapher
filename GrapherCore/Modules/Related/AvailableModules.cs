@@ -22,7 +22,6 @@ namespace Grapher.Modules
         };
         public static readonly IReadOnlyCollection<AvailableModule> modules = list;
 
-
         public class AvailableModule
         {
             public String Name { get; private set; }

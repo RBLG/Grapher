@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Grapher
 {
-    // list of the different rows of values
+    // the grid/table of values
     public class Table
     {
         public static readonly double MAX = 100;
@@ -20,16 +20,16 @@ namespace Grapher
         public static readonly int defwidth = 10;
         public static readonly int deflength = 30;
 
+        public readonly Point3D xaxis = new(0.7, 0.2, 0);
+        public readonly Point3D yaxis = new(0, -1, 0);
+        public readonly Point3D zaxis = new(0.5, -0.3, 0);
+        public readonly Point3D Origin = new(10, 216, 0);
+
         public IInputScale Wscale { get; set; } = new FrequencyExponantialScale();
         public IInputScale Lscale { get; set; } = new TimeLinearScale();
         public IOutputScale Hscale { get; set; } = new AmplitudeLinearScale();
         public IMode Mode { get; set; } = new MultiplyMode();
 
-        //moved from canvas3D
-        public readonly Point3D xaxis = new(0.7, 0.2, 0);
-        public readonly Point3D yaxis = new(0, -1, 0);
-        public readonly Point3D zaxis = new(0.5, -0.3, 0);
-        public readonly Point3D Origin = new(10, 216, 0);
 
         //temp public
         public List<List<Table3DDot>> dots;
@@ -41,17 +41,27 @@ namespace Grapher
         [JsonIgnore]
         private int count2;
 
-        public InterpolationType Interpolation { get; set; }
+        //public InterpolationType Interpolation { get; set; }
 
         /// <summary>
         /// constructor for the deserializer
         /// </summary>
         [JsonConstructor]
-        public Table(List<List<Table3DDot>> Dots, InterpolationType interpolation, int height)
+        public Table(
+            List<List<Table3DDot>> Dots,
+            IInputScale wscale,
+            IInputScale lscale,
+            IOutputScale hscale,
+            IMode mode
+            //InterpolationType interpolation
+            )
         {
             dots = Dots;
-            Interpolation = interpolation;
-            Height = height;
+            Wscale = wscale;
+            Lscale = lscale;
+            Hscale = hscale;
+            Mode = mode;
+            //Interpolation = interpolation;
             dots.ForEach((r) => r.ForEach((d) =>
             {
                 d.SetReferencial(() => Origin, () => xaxis, () => yaxis, () => zaxis);
@@ -60,10 +70,9 @@ namespace Grapher
             ));
             RefreshArrayble();
         }
-
         public Table()
         {
-            Interpolation = InterpolationType.Linear;
+            //Interpolation = InterpolationType.Linear;
             dots = new(deflength);
             foreach (int itx in Enumerable.Range(0, deflength))
             {
@@ -77,6 +86,7 @@ namespace Grapher
             RefreshArrayble();
         }
 
+        [JsonIgnore]
         public int Height { get; set; } = (int)MAX;
 
         /// <summary>
@@ -209,17 +219,19 @@ namespace Grapher
             if (wval < 0 || Width <= wval || lval < 0 || Length <= lval)
             { return 0; }
 
-            if (Interpolation == InterpolationType.None)
-            { return GetNotInterpolatedValue(lval, wval); }
-            else
-            { return GetLinearInterpolatedValue(wval, lval); }
+            //if (Interpolation == InterpolationType.None)
+            //{ return GetNotInterpolatedValue(lval, wval); }
+            //else
+            //{
+            return GetLinearInterpolatedValue(wval, lval);
+            //}
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private double GetNotInterpolatedValue(double index1, double index2)
-        {
-            return GetTableValue((int)index1, (int)index2);
-        }
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //private double GetNotInterpolatedValue(double index1, double index2)
+        //{
+        //    return GetTableValue((int)index1, (int)index2);
+        //}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double GetLinearInterpolatedValue(double wval, double lval)
@@ -268,10 +280,6 @@ namespace Grapher
             }
 
         }
-
-        public enum InterpolationType
-        {
-            None, Linear
-        }
     }
+    //public enum InterpolationType { None, Linear }
 }

@@ -12,7 +12,5 @@ namespace Grapher.Modes
         {
             return value + tab * range - max;
         }
-
-
     }
 }

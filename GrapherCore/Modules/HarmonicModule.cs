@@ -22,7 +22,7 @@ namespace Grapher.Modules
             Wscale = new HarmonicScale();
             //base.Wscale = Wscale;
             //base.Lscale = new NoScale();
-            Table.Interpolation = Table.InterpolationType.None;
+            //Table.Interpolation = Table.InterpolationType.None;
             Name = "Harmonic " + Name;
             foreach (Table3DDot dot in Table.dots[0])
             {
