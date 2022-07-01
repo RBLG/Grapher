@@ -19,19 +19,6 @@ namespace Grapher.Scale
         public double Min => 0;
         public double Max { get; set; } = 1000; //represent the duration of the table (in millis)
 
-        public double Scale(double notscaled) => ScaleTo01(notscaled) * 1000;
-        public double ScaleTo01(double notscaled)
-        {
-            double rtn = notscaled / Max;
-            if (IsLooping) { rtn %= 1; }//loop //TODO optimize modulus
-            return rtn;
-        }
-
-        public double PickValueTo(Wave wave, Spectrum spectrum, double size)
-        {
-            return ScaleTo01(spectrum.Time) * size;
-        }
-
         public List<Graduations> GetMilestones()
         {
             throw new NotImplementedException();
@@ -44,10 +31,47 @@ namespace Grapher.Scale
         public bool Continuous => true;
 
         public bool IsLooping { get; set; } = true;
+        public double Hold { get; set; } = 500;
+
+        public double Scale(double notscaled) => ScaleTo01(notscaled) * 1000;
+        public double ScaleTo01(double notscaled)
+        {
+            double rtn = notscaled / Max;
+            if (IsLooping) { rtn %= 1; }//loop //TODO optimize modulus
+            return rtn;
+        }
+
+        public double PickValueTo(Wave wave, Spectrum spectrum, double size)
+        {
+            double rtn = spectrum.Time;
+            if (IsLooping)
+            {
+                rtn /= Max;
+                rtn -= (int)rtn;//%= 1;//another faster modulo
+            }
+            else
+            {
+                if (double.IsNaN(spectrum.TimeOff))
+                { rtn = Math.Min(rtn, Hold); }
+                else
+                { rtn = GetTrueTimeOff(spectrum.Time, spectrum.TimeOff); }
+                rtn /= Max;
+            }
+            return rtn * size;
+        }
 
         public EnvStatus GetEnvStatus(double time, double timeoff)
         {
-            return IsLooping ? EnvStatus.NotHandled : ((Scale(time) > Max) ? EnvStatus.Done : EnvStatus.Handled);
+            return IsLooping ?
+                EnvStatus.NotHandled :
+                ((!double.IsNaN(timeoff)) && GetTrueTimeOff(time, timeoff) > Max ?
+                    EnvStatus.Done :
+                    EnvStatus.Handled);
+        }
+
+        private double GetTrueTimeOff(double time, double timeoff)
+        {
+            return Math.Min(time, timeoff + Hold);
         }
     }
 }

@@ -19,18 +19,30 @@ namespace Grapher.GuiElement.ScaleSettings
         {
             InitializeComponent();
             scale = nscale;
-            this.CheckBoxIsLooping.Checked = scale.IsLooping;
-            this.LoopLength.Value = (decimal)scale.Max;
+            this.NumUdLength.Value = (decimal)scale.Max;
+            this.ComboBoxMode.SelectedIndex = scale.IsLooping ? 0 : 1;
+            this.NumUdHold.Value = (decimal)scale.Hold;
         }
 
-        private void CheckBoxIsLooping_CheckedChanged(object sender, EventArgs e)
-        {
-            scale.IsLooping = this.CheckBoxIsLooping.Checked;
-        }
+
 
         private void LoopLength_ValueChanged(object sender, EventArgs e)
         {
-            scale.Max = (double)LoopLength.Value;
+            scale.Max = (double)NumUdLength.Value;
+        }
+
+        private void ComboBoxMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            scale.IsLooping = ComboBoxMode.SelectedIndex == 0;
+            if (ComboBoxMode.SelectedIndex == 0)
+            { NumUdHold.Enabled = false; }
+            else
+            { NumUdHold.Enabled = true; }
+        }
+
+        private void NumUdHold_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
