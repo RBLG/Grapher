@@ -1,6 +1,4 @@
 ﻿using Grapher.GuiElement.ScaleSettings;
-using Grapher.Modes;
-using Grapher.Modules;
 using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
@@ -12,15 +10,7 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Scale
 {
-    /// <summary>
-    /// "trick" to turn a 123456123456123456 table on time into<br/>
-    /// 123456<br/>
-    /// 123456<br/>
-    /// 123456<br/>
-    /// for easy repeating patterns
-    /// </summary>
-    public class TimeModuloScale : IInputScale
-    //not ITimeScale so it can be used with other time scale & havent impl how multiple time scale interact for TableModule time scale
+    public class PhaseModuloScale : IInputScale
     {
         public double Seed { get; set; } = 13; //customizable number to change the randomness of the random pattern
         public double Modulo { get; set; } = 50; //the size of a chunk (in ms)
@@ -29,19 +19,16 @@ namespace Grapher.Scale
 
         public bool IsRandom { get; set; } = true;// if false, chunk will follow in order from the lowest Width value to the highest
 
-        public string Label => "t(%)";
+        public string Label => "p(%)";
 
         public bool Continuous => false;
 
         public List<Graduations> GetMilestones()
         {
-            return new()
-            {
-
-            };
+            throw new NotImplementedException();
         }
 
-        public Control GetControl() => new TimeModuloGui(this);
+        public Control GetControl() => new PhaseModuloGui(this);
 
 
         public double Scale(double notscaled) => (int)(notscaled / Modulo);
@@ -57,5 +44,7 @@ namespace Grapher.Scale
             }
             return rtn;
         }
+
+
     }
 }

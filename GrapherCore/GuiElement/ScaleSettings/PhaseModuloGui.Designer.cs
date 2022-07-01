@@ -1,6 +1,6 @@
 ﻿namespace Grapher.GuiElement.ScaleSettings
 {
-    partial class PaddingGui
+    partial class PhaseModuloGui
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -28,18 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // LinearTimeScaleGui
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.MaximumSize = new System.Drawing.Size(235, 58);
-            this.MinimumSize = new System.Drawing.Size(235, 58);
-            this.Name = "LinearTimeScaleGui";
-            this.Size = new System.Drawing.Size(235, 58);
-            this.ResumeLayout(false);
-
         }
 
         #endregion

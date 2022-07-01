@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Grapher.Scale;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,9 +11,9 @@ using System.Windows.Forms;
 
 namespace Grapher.GuiElement.ScaleSettings
 {
-    public partial class PaddingGui : UserControl
+    public partial class PhaseModuloGui : UserControl
     {
-        public PaddingGui()
+        public PhaseModuloGui(PhaseModuloScale scale)
         {
             InitializeComponent();
         }

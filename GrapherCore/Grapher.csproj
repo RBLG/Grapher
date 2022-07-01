@@ -44,10 +44,7 @@
     <Compile Update="GuiElement\ScaleSettings\FrequencyMeiGui.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="GuiElement\ScaleSettings\PhaseGui.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="GuiElement\ScaleSettings\PaddingGui.cs">
+    <Compile Update="GuiElement\ScaleSettings\PhaseInputGui.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="GuiElement\ScaleSettings\FrequencyLinearGui.cs">

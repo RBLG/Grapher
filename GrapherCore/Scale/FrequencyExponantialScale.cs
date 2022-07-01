@@ -18,17 +18,6 @@ namespace Grapher.Scale
         public double Min { get; } = min;
         public double Max { get; } = max;
 
-        private readonly List<Graduations> milestones;
-        public FrequencyExponantialScale()
-        {
-            milestones = new List<Graduations>() {
-            new Graduations("20", 0),
-            new Graduations("200", ScaleTo01(200)),
-            new Graduations("2000", ScaleTo01(2000)),
-            new Graduations("20 000", 1)
-            };
-        }
-
         public double Scale(double notscaled)//+1 so no positive value can give negative value (not that it matter)
         { return Math.Log(notscaled + 1); }
         public double Unscale(double scaled)
@@ -54,7 +43,12 @@ namespace Grapher.Scale
 
         public List<Graduations> GetMilestones()
         {
-            return milestones;
+            return new List<Graduations>() {
+            new Graduations("20", 0),
+            new Graduations("200", ScaleTo01(200)),
+            new Graduations("2000", ScaleTo01(2000)),
+            new Graduations("20 000", 1)
+            };
         }
 
         public Control GetControl() => new FrequencyExponentialGui();

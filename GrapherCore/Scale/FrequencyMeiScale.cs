@@ -16,17 +16,6 @@ namespace Grapher.Scale
         public static readonly double max = ToMei(FrequencyLinearScale.max + 1);
         public static readonly double range = max - min;
 
-        private readonly List<Graduations> milestones;
-        public FrequencyMeiScale()
-        {
-            milestones = new() {
-            new Graduations("20", 0),
-            new Graduations("200", ScaleTo01(200)),
-            new Graduations("2000", ScaleTo01(2000)),
-            new Graduations("20 000", 1)
-            };
-        }
-
         public double Min => min;
         public double Max => max;
 
@@ -34,7 +23,12 @@ namespace Grapher.Scale
 
         public List<Graduations> GetMilestones()
         {
-            return milestones;
+            return new() {
+            new Graduations("20", 0),
+            new Graduations("200", ScaleTo01(200)),
+            new Graduations("2000", ScaleTo01(2000)),
+            new Graduations("20 000", 1)
+            };
         }
 
         public Control GetControl() => new FrequencyMeiGui();
@@ -49,7 +43,7 @@ namespace Grapher.Scale
         private static double FromMei(double lfreq) /*          */ => (Math.Pow(10, lfreq / 2595) + 1) / 700;
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
-        { return ScaleTo01(wave.Frequency ) * size; }
+        { return ScaleTo01(wave.Frequency) * size; }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {

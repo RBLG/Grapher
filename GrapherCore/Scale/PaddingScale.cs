@@ -19,10 +19,14 @@ namespace Grapher.Scale
 
         public List<Graduations> GetMilestones()
         {
-            throw new NotImplementedException();
+            return new()
+            {
+                new Graduations("right",0),
+                new Graduations("left",1)
+            };
         }
 
-        public Control GetControl() => new PaddingGui();
+        public Control GetControl() => new BlankScaleGui();
 
 
         public bool Continuous => true;

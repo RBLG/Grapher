@@ -14,20 +14,20 @@ namespace Grapher.Scale
     {
         private static readonly List<AvailableInputScale> list = new()
         {
-           new AvailableInputScale("--Time:---------",()=>null,null,false,ScaleType.Time),
-           new AvailableInputScale(" Dynamic (T)",()=>new TimeLinearScale(),typeof(TimeLinearScale),true,ScaleType.Time),
-           new AvailableInputScale(" Modulo (T%)",()=>new TimeModuloScale(),typeof(TimeModuloScale),true,ScaleType.TimeModulo),
-           new AvailableInputScale("--Frequency:----",()=>null,null,false,ScaleType.Frequency),
-           new AvailableInputScale(" Exponantial (F)",()=>new FrequencyExponantialScale(),typeof(FrequencyExponantialScale),true,ScaleType.Frequency),
-           new AvailableInputScale(" Linear (F)",()=>new FrequencyLinearScale(),typeof(FrequencyLinearScale),true,ScaleType.Frequency),
-           new AvailableInputScale(" Mei (F)",()=>new FrequencyMeiScale(),typeof(FrequencyMeiScale),true,ScaleType.Frequency),
-           new AvailableInputScale(" Harmonics (F)",()=>new HarmonicScale(),typeof(HarmonicScale),true,ScaleType.Frequency),
-           new AvailableInputScale("--Amplitude:----",()=>null,null,false,ScaleType.Amplitude),
-           new AvailableInputScale(" Linear (A)",()=>new AmplitudeLinearScale(),typeof(AmplitudeLinearScale),true, ScaleType.Frequency),
-           //new AvailableScale(" Decibel (A)",()=>new DecibelAmplitudeScale(),typeof(DecibelAmplitudeScale),true ,ScaleType.Amplitude)
-           new AvailableInputScale("--Others:----",()=>null,null,false,ScaleType.Amplitude),
-           new AvailableInputScale(" Padding",()=>new PaddingScale(),typeof(PaddingScale),true, ScaleType.Padding),
-           new AvailableInputScale(" Phase",()=>new PhaseScale(),typeof(PhaseScale),true, ScaleType.Phase),
+           new AvailableInputScale("--Time:---------",/**/()=>null,/*                           */null,/*                               */false,ScaleType.None),
+           new AvailableInputScale(" Dynamic (T)",/*    */()=>new TimeLinearScale(),/*          */typeof(TimeLinearScale),/*            */true, ScaleType.Time),
+           new AvailableInputScale(" Modulo (T%)",/*    */()=>new TimeModuloScale(),/*          */typeof(TimeModuloScale),/*            */true, ScaleType.TimeModulo),
+           new AvailableInputScale("--Frequency:----",/**/()=>null,/*                           */null,/*                               */false,ScaleType.None),
+           new AvailableInputScale(" Exponantial (F)",/**/()=>new FrequencyExponantialScale(),/**/typeof(FrequencyExponantialScale),/*  */true, ScaleType.Frequency),
+           new AvailableInputScale(" Linear (F)",/*     */()=>new FrequencyLinearScale(),/*     */typeof(FrequencyLinearScale),/*       */true, ScaleType.Frequency),
+           new AvailableInputScale(" Mei (F)",/*        */()=>new FrequencyMeiScale(),/*        */typeof(FrequencyMeiScale),/*          */true, ScaleType.Frequency),
+           new AvailableInputScale(" Harmonics (F)",/*  */()=>new HarmonicScale(),/*            */typeof(HarmonicScale),/*              */true, ScaleType.Frequency),
+           new AvailableInputScale("--Amplitude:----",/**/()=>null,/*                           */null,/*                               */false,ScaleType.None),
+           new AvailableInputScale(" Linear (A)",/*     */()=>new AmplitudeLinearScale(),/*     */typeof(AmplitudeLinearScale),/*       */true, ScaleType.Amplitude),
+           //new AvailableScale(" Decibel (A)",/*       */()=>new DecibelAmplitudeScale(),/*    */typeof(DecibelAmplitudeScale),/*      */true ,ScaleType.Amplitude)
+           new AvailableInputScale("--Others:-------",/**/()=>null,/*                           */null,/*                               */false,ScaleType.None),
+           new AvailableInputScale(" Padding",/*        */()=>new PaddingScale(),/*             */typeof(PaddingScale),/*               */true, ScaleType.Padding),
+           new AvailableInputScale(" Phase",/*          */()=>new PhaseInputScale(),/*          */typeof(PhaseInputScale),/*            */true, ScaleType.Phase),
         };
         public static readonly IReadOnlyCollection<AvailableInputScale> scales = list;
 
@@ -52,7 +52,7 @@ namespace Grapher.Scale
 
         public enum ScaleType
         {
-            Time, TimeModulo, Frequency, Amplitude, Padding, Phase
+            Time, TimeModulo, Frequency, Amplitude, Padding, Phase, None
         }
 
         public static int GetIndex(Type type)

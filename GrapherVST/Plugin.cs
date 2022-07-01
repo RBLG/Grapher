@@ -18,7 +18,7 @@ namespace GrapherVST
             : base(
                     "Grapher Synth",
                     0x30313233,
-                    new VstProductInfo("Grapher synth", "github.com/RBLG/Grapher", 0001),
+                    new VstProductInfo("Grapher synth", "github.com/RBLG/Grapher", 03_00_00_00),
                     VstPluginCategory.Synth
                   )
         { }

@@ -11,14 +11,20 @@ using System.Windows.Forms;
 
 namespace Grapher.GuiElement.ScaleSettings
 {
-    public partial class PhaseGui : UserControl
+    public partial class PhaseOutputGui : UserControl
     {
-        private readonly PhaseScale scale;
-        public PhaseGui(PhaseScale nscale)
+        private readonly PhaseOutputScale scale;
+        public PhaseOutputGui(PhaseOutputScale nscale)
         {
             InitializeComponent();
             scale = nscale;
+            CheckBoxIsAbsolute.Checked = scale.IsAbsolute;
             NumUdOffset.Value = (decimal)scale.Offset;
+        }
+
+        private void CheckBoxIsAbsolute_CheckedChanged(object sender, EventArgs e)
+        {
+            scale.IsAbsolute = CheckBoxIsAbsolute.Checked;
         }
 
         private void NumUdOffset_ValueChanged(object sender, EventArgs e)

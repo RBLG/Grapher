@@ -173,20 +173,20 @@ namespace GrapherVST
     public class IInputScaleConverter : IHSConverter<IInputScale>
     {
         protected override string DataPropertyName => "IInputScale";
-        public IInputScaleConverter() : base(typeof(Grapher.Scale.PhaseScale).Namespace!) { }
+        public IInputScaleConverter() : base(typeof(Grapher.Scale.PhaseInputScale).Namespace!) { }
     }
 
     public class IOutputScaleConverter : IHSConverter<IOutputScale>
     {
         protected override string DataPropertyName => "IOutputScale";
-        public IOutputScaleConverter() : base(typeof(Grapher.Scale.PhaseScale).Namespace!) { }
+        public IOutputScaleConverter() : base(typeof(Grapher.Scale.PhaseInputScale).Namespace!) { }
     }
 
     //temporary till i find a better solution to envelloppe handling and ITimeScale can be removed
     public class ITimeScaleConverter : IHSConverter<ITimeScale>
     {
         protected override string DataPropertyName => "ITimeScale";
-        public ITimeScaleConverter() : base(typeof(Grapher.Scale.PhaseScale).Namespace!) { }
+        public ITimeScaleConverter() : base(typeof(Grapher.Scale.PhaseInputScale).Namespace!) { }
     }
 
     public class IModeConverter : IHSConverter<IMode>
