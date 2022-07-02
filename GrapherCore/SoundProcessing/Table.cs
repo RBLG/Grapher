@@ -28,7 +28,7 @@ namespace Grapher
         public IInputScale Wscale { get; set; } = new FrequencyExponantialScale();
         public IInputScale Lscale { get; set; } = new TimeLinearScale();
         public IOutputScale Hscale { get; set; } = new AmplitudeLinearScale();
-        public IMode Mode { get; set; } = new MultiplyMode();
+        public IMode Mode { get; set; } = new SetMode();
 
 
         //temp public
@@ -80,7 +80,7 @@ namespace Grapher
                 dots.Add(row);
                 foreach (int itz in Enumerable.Range(0, defwidth))
                 {
-                    row.Add(CreateDot(itx, itz, defwidth, deflength));
+                    row.Add(CreateDot(itx, itz, defwidth, deflength, defval));
                 }
             }
             RefreshArrayble();
@@ -108,7 +108,7 @@ namespace Grapher
                     int itx = 0;
                     foreach (List<Table3DDot> list in dots)
                     {
-                        list.Add(CreateDot(itx, list.Count, dots.Count, list.Count + 1));
+                        list.Add(CreateDot(itx, list.Count, dots.Count, list.Count + 1, dots[itx][list.Count - 1].Y));
                         itx++;
                     }
                     UpdateAll();
@@ -135,7 +135,7 @@ namespace Grapher
                         List<Table3DDot> list = new();
                         foreach (int itz in Enumerable.Range(0, dots[0].Count))
                         {
-                            list.Add(CreateDot(trueitx, itz, trueitx + 1, dots[0].Count));
+                            list.Add(CreateDot(trueitx, itz, trueitx + 1, dots[0].Count, dots[trueitx - 1][itz].Y));
                         }
                         dots.Add(list);
                     }
@@ -189,11 +189,11 @@ namespace Grapher
             arrayble[x + y * count1] = Math.Clamp(nval, MIN, MAX);
         }
 
-        private Table3DDot CreateDot(int itx, int itz, int width, int length)
+        private Table3DDot CreateDot(int itx, int itz, int width, int length, double yval)
         {
             double vz = itz * (Canvas3D.tablevisualwidth / Math.Max(2, width - 1)) + Canvas3D.oripadding;
             double vx = itx * Canvas3D.lengthspacing + Canvas3D.oripadding;
-            double vy = defval;
+            double vy = yval;
             var dot = new Table3DDot(vx, vy, vz);
             dot.SetReferencial(() => Origin, () => xaxis, () => yaxis, () => zaxis);
             return dot;
