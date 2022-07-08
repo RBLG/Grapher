@@ -41,13 +41,13 @@ namespace Grapher.Scale
             wave.Frequency = UnscaleFrom01(mode.Process(ScaleTo01(wave.Frequency), tval));
         }
 
-        public List<Graduations> GetMilestones()
+        public List<Graduation> GetMilestones()
         {
-            return new List<Graduations>() {
-            new Graduations("20", 0),
-            new Graduations("200", ScaleTo01(200)),
-            new Graduations("2000", ScaleTo01(2000)),
-            new Graduations("20 000", 1)
+            return new List<Graduation>() {
+            new Graduation("20", 0),
+            new Graduation("200", ScaleTo01(200)),
+            new Graduation("2000", ScaleTo01(2000)),
+            new Graduation("20 000", 1)
             };
         }
 
@@ -56,6 +56,8 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public string Label => "f(Hz)";
         public bool IsLooping => false;
+
+        public bool IsCumulative => false;
 
     }
 }

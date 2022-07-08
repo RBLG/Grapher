@@ -1,4 +1,5 @@
-﻿using Grapher.Modules;
+﻿using Grapher.Misc;
+using Grapher.Modules;
 using Grapher.Scale;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,15 @@ namespace Grapher
     public class Canvas3D : Control
     {
 
-        protected SolidBrush bg = new(Color.DarkBlue);//Color.FromArgb(255, 0, 91, 150)
+        protected SolidBrush bg = new(Theme.Editor_3d_background);
         protected Pen red = new(Color.Red);
         protected Pen blue = new(Color.LightBlue);
         protected Pen green = new(Color.Green);
         protected SolidBrush wave1 = new(Color.Yellow);
         protected Pen wave1border = new(Color.DarkGoldenrod);
-        protected Pen net1 = new(Color.LightGray);
-        protected Pen net2 = new(Color.Blue);
-        protected Pen wave2 = new(Color.Purple);
+        protected Pen net = new(Theme.Editor_3d_gridlines);
+        protected Pen netoff = new(Theme.Editor_3d_gridlines_off);
+        //protected Pen wave2 = new(Color.Purple);
 
         protected int slider = 0;//unused yet, to slide the length of the grid
         public static readonly float size = 100;//size of width and height (i think?)
@@ -233,21 +234,30 @@ namespace Grapher
                 for (int itz = 0; itz < points[itx].Count; itz++)
                 {
                     Table3DDot point = points[itx][itz];
-                    //drawing width vertices
-                    if (itz != points[0].Count - 1 && module.Wscale.Continuous)
+                    if ((!module.Table.Wscale.Continuous) && (!module.Lscale.Continuous))
                     {
-                        Table3DDot last = points[itx][itz + 1];
-                        e.Graphics.DrawLine(net2, point.ScreenX, point.ScreenY, last.ScreenX, last.ScreenY);
+                        //drawing the point
+                        e.Graphics.FillEllipse(wave1, point.ScreenX - halfdot, point.ScreenY - halfdot, dotsize, dotsize);
+                        //e.Graphics.DrawEllipse(wave1border, point.ScreenX - halfdot, point.ScreenY - halfdot, dotsize, dotsize);
                     }
-                    //drawing length vertices
-                    if (itx != points.Count - 1 && module.Lscale.Continuous)
+                    else
                     {
-                        Table3DDot last = points[itx + 1][itz];
-                        e.Graphics.DrawLine(net1, point.ScreenX, point.ScreenY, last.ScreenX, last.ScreenY);
+                        //drawing width vertices
+                        if (itz != 0 && module.Wscale.Continuous)
+                        {
+                            Table3DDot last = points[itx][itz - 1];
+                            e.Graphics.DrawLine(net, point.ScreenX, point.ScreenY, last.ScreenX, last.ScreenY);
+                        }
+                        //drawing length vertices
+                        if (itx != points.Count - 1 && module.Lscale.Continuous)
+                        {
+                            Table3DDot last = points[itx + 1][itz];
+                            e.Graphics.DrawLine(net, point.ScreenX, point.ScreenY, last.ScreenX, last.ScreenY);
+                        }
                     }
-                    //drawing the point
-                    e.Graphics.FillEllipse(wave1, point.ScreenX - halfdot, point.ScreenY - halfdot, dotsize, dotsize);
-                    e.Graphics.DrawEllipse(wave1border, point.ScreenX - halfdot, point.ScreenY - halfdot, dotsize, dotsize);
+
+
+
                 }
             }
         }
@@ -273,23 +283,30 @@ namespace Grapher
                     float px = ox + (float)point.Z * 1.5f;
                     float py = oy - (float)point.Y;
 
-
-                    if (module is HarmonicModule)//quick hack to get stylish harmonic editor render
+                    bool ishar = module is HarmonicModule;
+                    if (ishar)//quick hack to get stylish harmonic editor render
                     {
-                        e.Graphics.DrawLine(net1, px, py, px, oy);
+                        e.Graphics.DrawLine(net, px, py, px, oy);
+                    }
+
+                    if (ishar || ((!module.Table.Wscale.Continuous) && (!module.Lscale.Continuous)))
+                    {
+                        //drawing the point
+                        e.Graphics.FillEllipse(wave1, px - halfdot, py - halfdot, dotsize, dotsize);
+                        //e.Graphics.DrawEllipse(wave1border, px - halfdot, py - halfdot, dotsize, dotsize);
                     }
                     else
-                    {//drawing width vertices
-                        if (itz != points[0].Count - 1 && module.Wscale.Continuous)
+                    {
+                        //drawing width vertices
+                        if (!ishar && itz != points[0].Count - 1 && module.Wscale.Continuous)
                         {
                             Table3DDot last = points[itx][itz + 1];
-                            e.Graphics.DrawLine(net1, px, py, ox + (float)last.Z * 1.5f, oy - (float)last.Y);
+                            e.Graphics.DrawLine(net, px, py, ox + (float)last.Z * 1.5f, oy - (float)last.Y);
                         }
                     }
 
-                    //drawing the point
-                    e.Graphics.FillEllipse(wave1, px - halfdot, py - halfdot, dotsize, dotsize);
-                    e.Graphics.DrawEllipse(wave1border, px - halfdot, py - halfdot, dotsize, dotsize);
+
+
                 }
             }
         }
@@ -314,15 +331,22 @@ namespace Grapher
                     float px = ox + (float)point.X;
                     float py = oy - (float)point.Y;
 
-                    //drawing length vertices
-                    if (itx != points.Count - 1 && module.Lscale.Continuous)
+                    if ((!module.Table.Wscale.Continuous) && (!module.Lscale.Continuous))
                     {
-                        Table3DDot last = points[itx + 1][itz];
-                        e.Graphics.DrawLine(net1, px, py, ox + (float)last.X, oy - (float)last.Y);
+                        //drawing the point
+                        e.Graphics.FillEllipse(wave1, px - halfdot, py - halfdot, dotsize, dotsize);
+                        //e.Graphics.DrawEllipse(wave1border, px - halfdot, py - halfdot, dotsize, dotsize);
                     }
-                    //drawing the point
-                    e.Graphics.FillEllipse(wave1, px - halfdot, py - halfdot, dotsize, dotsize);
-                    e.Graphics.DrawEllipse(wave1border, px - halfdot, py - halfdot, dotsize, dotsize);
+                    else
+                    {
+                        //drawing length vertices
+                        if (itx != points.Count - 1 && module.Lscale.Continuous)
+                        {
+                            Table3DDot last = points[itx + 1][itz];
+                            e.Graphics.DrawLine(net, px, py, ox + (float)last.X, oy - (float)last.Y);
+                        }
+                    }
+
                 }
             }
         }

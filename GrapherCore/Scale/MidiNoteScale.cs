@@ -9,7 +9,7 @@ using static Grapher.Spectrum;
 namespace Grapher.Scale
 {
     //not usable rn, just there to stock what i know so far about midi format
-    public class MidiNoteScale : IInputScale
+    public class MidiNoteScale : IInputScale, IOutputScale
     {
         public enum Note
         {
@@ -35,14 +35,24 @@ namespace Grapher.Scale
 
         public MidiNoteScale() : this(STANDARD_PITCH) { }
 
+        public double ToMidi(double freq)
+        {
+            return Math.Log(2, freq / BaseFrequency) * 12 + 69;
+        }
+
+        public double ToFrequency(double midi)
+        {
+            return BaseFrequency * Math.Pow(2, (midi - 69) / 12d);
+        }
+
 
         public double Scale(double notscaled)
         {
-            return Math.Log(2, notscaled / BaseFrequency) * 12 + 69;
+            return ToMidi(notscaled);
         }
-        public double Unscale(double scaled)//?
+        public double Unscale(double scaled)
         {
-            return BaseFrequency * Math.Pow(2, ((scaled - 69) / 12d));
+            return ToFrequency(scaled);
         }
 
         public double ScaleTo01(double notscaled)
@@ -70,7 +80,7 @@ namespace Grapher.Scale
             wave.Frequency = UnscaleFrom01(mode.Process(ScaleTo01(wave.Frequency), tval));
         }
 
-        public List<Graduations> GetMilestones()
+        public List<Graduation> GetMilestones()
         {
             throw new NotImplementedException();
         }
@@ -81,7 +91,9 @@ namespace Grapher.Scale
         }
 
         public bool Continuous => false;
-        public string Label => "midi notes";
+        public string Label => "note";
         public bool IsLooping => false;
+
+        public bool IsCumulative => false;
     }
 }

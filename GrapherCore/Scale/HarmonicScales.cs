@@ -29,7 +29,7 @@ namespace Grapher.Scale
             wave.Frequency = val * bpitch;
         }
 
-        public List<Graduations> GetMilestones()
+        public List<Graduation> GetMilestones()
         {
             throw new NotImplementedException();
         }
@@ -40,6 +40,8 @@ namespace Grapher.Scale
 
         public bool Continuous => false;
         public bool IsLooping => false;
+
+        public bool IsCumulative => false;
 
     }
 }

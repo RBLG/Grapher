@@ -17,9 +17,11 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public bool IsLooping => false;
 
+        public bool IsCumulative => false;
+
         public Control GetControl() => new BlankScaleGui();
 
-        public List<Graduations> GetMilestones()
+        public List<Graduation> GetMilestones()
         {
             return new();
         }

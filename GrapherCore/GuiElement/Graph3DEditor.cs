@@ -29,8 +29,8 @@ namespace Grapher
             canvas3D1 = new Grapher.Canvas3D(nmodule)
             {
                 BrushSize = 0D,
-                Location = new System.Drawing.Point(94, 21),
-                Size = new System.Drawing.Size(777, 451),
+                Location = new System.Drawing.Point(254, 21),
+                Size = new System.Drawing.Size(618, 451),
                 Name = "canvas3D1",
                 TabIndex = 25,
                 Text = "canvas3D1",
@@ -46,6 +46,8 @@ namespace Grapher
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
             InputComboBox.SelectedIndex = AvailableModules.GetIndex(canvas3D1.module.Input.GetType());
+
+            scalesSettingsControl1.ActualConstructor(this);
             // ////
             inInit = false;
         }
@@ -69,18 +71,6 @@ namespace Grapher
         private void BrushSizeX_Scroll(object sender, EventArgs e)
         { canvas3D1.BrushSize = brushSize.Value / 1000d; }
 
-        public ScalesSettings? ssets = null;
-
-        private void AxisSettingsButton_Click(object sender, EventArgs e)
-        {
-            if (ssets == null || ssets.IsDisposed)
-            {
-                ssets = new ScalesSettings(this);
-                ssets.Show();
-            }
-            else
-            { ssets.Dispose(); }
-        }
 
         private ModuleForm? inputform = null;
 
@@ -116,7 +106,6 @@ namespace Grapher
             canvas3D1.module.Table.UpdateAll();
             canvas3D1.Invalidate();
         }
-
 
     }
 }

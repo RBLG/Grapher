@@ -66,7 +66,8 @@ namespace Grapher.Modules
             control.EditInputButton.Visible = false;
             control.numLength.Visible = false;
             control.LengthLabel.Visible = false;
-            control.AxisSettingsButton.Visible = false;
+            //control.AxisSettingsButton.Visible = false;
+            control.ToolTabs.TabPages.RemoveAt(1);
             return control;
         }
 

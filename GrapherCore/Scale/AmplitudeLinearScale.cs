@@ -17,7 +17,7 @@ namespace Grapher.Scale
 
         public string Label { get; } = "a(??)";
 
-        public List<Graduations> GetMilestones()
+        public List<Graduation> GetMilestones()
         {
             throw new NotImplementedException();
         }
@@ -26,6 +26,8 @@ namespace Grapher.Scale
 
         public bool Continuous => true;
         public bool IsLooping => false;
+
+        public bool IsCumulative => false;
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
         { return wave.Amplitude * size; }

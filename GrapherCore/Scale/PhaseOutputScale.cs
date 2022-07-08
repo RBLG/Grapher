@@ -17,13 +17,13 @@ namespace Grapher.Scale
 
         public string Label => "Phase";
 
-        public List<Graduations> GetMilestones()
+        public List<Graduation> GetMilestones()
         {
             return new()
             {
-                new Graduations("0%", 0),
-                new Graduations("50%", 0.5),
-                new Graduations("100%", 1)
+                new Graduation("0%", 0),
+                new Graduation("50%", 0.5),
+                new Graduation("100%", 1)
             };
         }
 
@@ -31,6 +31,8 @@ namespace Grapher.Scale
 
         public bool Continuous => true;
         public bool IsLooping => true;
+
+        public bool IsCumulative => false;
 
         public bool IsAbsolute { get; set; } = true;
         public double Offset { get; set; } = 0;

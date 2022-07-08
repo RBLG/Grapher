@@ -21,13 +21,13 @@ namespace Grapher.Scale
 
         public string Label => "f(Hz)";
 
-        public List<Graduations> GetMilestones()
+        public List<Graduation> GetMilestones()
         {
             return new() {
-            new Graduations("20", 0),
-            new Graduations("200", ScaleTo01(200)),
-            new Graduations("2000", ScaleTo01(2000)),
-            new Graduations("20 000", 1)
+            new Graduation("20", 0),
+            new Graduation("200", ScaleTo01(200)),
+            new Graduation("2000", ScaleTo01(2000)),
+            new Graduation("20 000", 1)
             };
         }
 
@@ -35,6 +35,8 @@ namespace Grapher.Scale
 
         public bool Continuous => true;
         public bool IsLooping => false;
+
+        public bool IsCumulative => false;
 
         public double ScaleTo01(double notscaled) /*            */ => (ToMei(notscaled) - Min) / range;
         public double UnscaleFrom01(double scaled) /*           */ => FromMei(scaled / range + Min);

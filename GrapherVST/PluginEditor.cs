@@ -6,6 +6,7 @@
     using Jacobi.Vst.Plugin.Framework.Common;
     using System;
     using System.Threading.Tasks;
+    using System.Windows.Forms;
     using System.Windows.Threading;
 
     /// <summary>
@@ -18,6 +19,10 @@
 
         public PluginEditor(ModuleProvider prov)
         {
+            Application.EnableVisualStyles();
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.SetCompatibleTextRenderingDefault(false);
+
             _moduleProvider = prov ?? throw new ArgumentNullException(nameof(prov));
             _uiWrapper.SafeInstance.ModuleProvider = _moduleProvider;
         }
@@ -52,6 +57,7 @@
             })
             );
             ///////////////////////////////////////////////////////////////////////
+            
             _uiWrapper.Open(hWnd);
         }
 

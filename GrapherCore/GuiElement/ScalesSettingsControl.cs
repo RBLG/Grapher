@@ -14,16 +14,32 @@ using System.Windows.Forms;
 
 namespace Grapher.GuiElement
 {
-    public partial class ScalesSettings : Form
+    public partial class ScalesSettingsControl : UserControl
     {
-        // to settup controls values in the constructor without triggering events
-        private readonly Boolean inInit = true; // readonly is unecessary but its supress a msg
 
-        public ScalesSettings(Graph3DEditor neditor)
+        // to settup controls values in the constructor without triggering events
+        private Boolean inInit = true; // readonly is unecessary but its supress a msg
+
+        public ScalesSettingsControl()
+        {
+            InitializeComponent();
+        }
+        public ScalesSettingsControl(Graph3DEditor neditor)
+        {
+            Editor = neditor;
+            InitializeComponent();
+            ActualConstructor(neditor);
+        }
+
+        /// <summary>
+        /// no idea how to pass the editor in the real constructor
+        /// without breaking the windows form visual editor stuff, so its here. 
+        /// calling this is mandatory
+        /// </summary>
+        public void ActualConstructor(Graph3DEditor neditor)
         {
             var scales = AvailableInputScales.scales;
             Editor = neditor;
-            InitializeComponent();
             WidthComboBox.ValueMember = "Factory";
             WidthComboBox.DisplayMember = "Name";
             WidthComboBox.Items.AddRange(scales.ToArray());
@@ -57,8 +73,10 @@ namespace Grapher.GuiElement
             ModeSocket.Set(Mode.GetControl());
             inInit = false;
         }
-        public Graph3DEditor Editor { get; set; }
-        private TableModule Module { get => Editor.canvas3D1.module; }
+
+        //nullable till i know better
+        public Graph3DEditor? Editor { get; set; }
+        private TableModule Module { get => (Editor ?? throw new NullReferenceException("null Editor in use")).canvas3D1.module; }
 
         private IInputScale WidthAxis { get => Module.Wscale; set => Module.Wscale = value; }
         private IInputScale LengthAxis { get => Module.Lscale; set => Module.Lscale = value; }
@@ -135,7 +153,5 @@ namespace Grapher.GuiElement
                 ModeSocket.Set(nma.GetControl());
             }
         }
-
-
     }
 }

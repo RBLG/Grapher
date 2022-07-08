@@ -54,7 +54,6 @@ namespace Grapher.GuiElement
             if (inputform == null || inputform.IsDisposed)
             {
                 inputform = new(control, root.Name);
-                //here: if is 3Deditor, set it input to harmonics editor, maybe
                 inputform.Show();
             }
             else

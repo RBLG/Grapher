@@ -38,21 +38,25 @@
             this.LengthLabel = new System.Windows.Forms.Label();
             this.numWidth = new System.Windows.Forms.NumericUpDown();
             this.numLength = new System.Windows.Forms.NumericUpDown();
-            this.AxisSettingsButton = new System.Windows.Forms.Button();
             this.EditInputButton = new System.Windows.Forms.Button();
             this.InputLabel = new System.Windows.Forms.Label();
-            this.BrushGroupBox = new System.Windows.Forms.GroupBox();
+            this.ToolTabs = new System.Windows.Forms.TabControl();
+            this.Tab1Brush = new System.Windows.Forms.TabPage();
+            this.Tab2Scales = new System.Windows.Forms.TabPage();
+            this.scalesSettingsControl1 = new Grapher.GuiElement.ScalesSettingsControl();
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).BeginInit();
-            this.BrushGroupBox.SuspendLayout();
+            this.ToolTabs.SuspendLayout();
+            this.Tab1Brush.SuspendLayout();
+            this.Tab2Scales.SuspendLayout();
             this.SuspendLayout();
             // 
             // InputComboBox
             // 
             this.InputComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.InputComboBox.FormattingEnabled = true;
-            this.InputComboBox.Location = new System.Drawing.Point(98, 23);
+            this.InputComboBox.Location = new System.Drawing.Point(258, 23);
             this.InputComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.InputComboBox.Name = "InputComboBox";
             this.InputComboBox.Size = new System.Drawing.Size(87, 23);
@@ -63,11 +67,11 @@
             // 
             this.brushSize.AutoSize = false;
             this.brushSize.BackColor = System.Drawing.SystemColors.Control;
-            this.brushSize.Location = new System.Drawing.Point(7, 22);
+            this.brushSize.Location = new System.Drawing.Point(8, 16);
             this.brushSize.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.brushSize.Maximum = 10000;
             this.brushSize.Name = "brushSize";
-            this.brushSize.Size = new System.Drawing.Size(76, 29);
+            this.brushSize.Size = new System.Drawing.Size(229, 29);
             this.brushSize.TabIndex = 6;
             this.brushSize.TickStyle = System.Windows.Forms.TickStyle.None;
             this.brushSize.Scroll += new System.EventHandler(this.BrushSizeX_Scroll);
@@ -78,7 +82,7 @@
             this.checkBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("checkBox1.BackgroundImage")));
             this.checkBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(7, 58);
+            this.checkBox1.Location = new System.Drawing.Point(42, 125);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(26, 25);
@@ -91,7 +95,7 @@
             this.checkBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("checkBox2.BackgroundImage")));
             this.checkBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.checkBox2.Enabled = false;
-            this.checkBox2.Location = new System.Drawing.Point(40, 58);
+            this.checkBox2.Location = new System.Drawing.Point(76, 125);
             this.checkBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(26, 25);
@@ -104,7 +108,7 @@
             this.checkBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("checkBox3.BackgroundImage")));
             this.checkBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.checkBox3.Enabled = false;
-            this.checkBox3.Location = new System.Drawing.Point(7, 90);
+            this.checkBox3.Location = new System.Drawing.Point(8, 125);
             this.checkBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(26, 25);
@@ -172,23 +176,13 @@
             0});
             this.numLength.ValueChanged += new System.EventHandler(this.NumLength_ValueChanged);
             // 
-            // AxisSettingsButton
-            // 
-            this.AxisSettingsButton.Location = new System.Drawing.Point(4, 3);
-            this.AxisSettingsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.AxisSettingsButton.Name = "AxisSettingsButton";
-            this.AxisSettingsButton.Size = new System.Drawing.Size(88, 27);
-            this.AxisSettingsButton.TabIndex = 21;
-            this.AxisSettingsButton.Text = "Axis Settings";
-            this.AxisSettingsButton.UseVisualStyleBackColor = true;
-            this.AxisSettingsButton.Click += new System.EventHandler(this.AxisSettingsButton_Click);
-            // 
             // EditInputButton
             // 
             this.EditInputButton.BackColor = System.Drawing.Color.Transparent;
             this.EditInputButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("EditInputButton.BackgroundImage")));
             this.EditInputButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.EditInputButton.Location = new System.Drawing.Point(192, 23);
+            this.EditInputButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EditInputButton.Location = new System.Drawing.Point(352, 23);
             this.EditInputButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.EditInputButton.Name = "EditInputButton";
             this.EditInputButton.Size = new System.Drawing.Size(26, 24);
@@ -199,39 +193,72 @@
             // InputLabel
             // 
             this.InputLabel.AutoSize = true;
-            this.InputLabel.Location = new System.Drawing.Point(98, 3);
+            this.InputLabel.Location = new System.Drawing.Point(258, 3);
             this.InputLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.InputLabel.Name = "InputLabel";
             this.InputLabel.Size = new System.Drawing.Size(35, 15);
             this.InputLabel.TabIndex = 23;
             this.InputLabel.Text = "input";
             // 
-            // BrushGroupBox
+            // ToolTabs
             // 
-            this.BrushGroupBox.Controls.Add(this.brushSize);
-            this.BrushGroupBox.Controls.Add(this.checkBox1);
-            this.BrushGroupBox.Controls.Add(this.checkBox2);
-            this.BrushGroupBox.Controls.Add(this.checkBox3);
-            this.BrushGroupBox.Location = new System.Drawing.Point(4, 37);
-            this.BrushGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.BrushGroupBox.Name = "BrushGroupBox";
-            this.BrushGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.BrushGroupBox.Size = new System.Drawing.Size(88, 435);
-            this.BrushGroupBox.TabIndex = 24;
-            this.BrushGroupBox.TabStop = false;
-            this.BrushGroupBox.Text = "Brush :";
+            this.ToolTabs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.ToolTabs.Controls.Add(this.Tab1Brush);
+            this.ToolTabs.Controls.Add(this.Tab2Scales);
+            this.ToolTabs.Location = new System.Drawing.Point(4, 3);
+            this.ToolTabs.Margin = new System.Windows.Forms.Padding(0);
+            this.ToolTabs.Name = "ToolTabs";
+            this.ToolTabs.SelectedIndex = 0;
+            this.ToolTabs.Size = new System.Drawing.Size(249, 469);
+            this.ToolTabs.TabIndex = 0;
+            // 
+            // Tab1Brush
+            // 
+            this.Tab1Brush.BackColor = System.Drawing.SystemColors.Control;
+            this.Tab1Brush.Controls.Add(this.brushSize);
+            this.Tab1Brush.Controls.Add(this.checkBox3);
+            this.Tab1Brush.Controls.Add(this.checkBox1);
+            this.Tab1Brush.Controls.Add(this.checkBox2);
+            this.Tab1Brush.Location = new System.Drawing.Point(4, 24);
+            this.Tab1Brush.Margin = new System.Windows.Forms.Padding(0);
+            this.Tab1Brush.Name = "Tab1Brush";
+            this.Tab1Brush.Size = new System.Drawing.Size(241, 441);
+            this.Tab1Brush.TabIndex = 0;
+            this.Tab1Brush.Text = "Brush";
+            // 
+            // Tab2Scales
+            // 
+            this.Tab2Scales.BackColor = System.Drawing.SystemColors.Control;
+            this.Tab2Scales.Controls.Add(this.scalesSettingsControl1);
+            this.Tab2Scales.Location = new System.Drawing.Point(4, 24);
+            this.Tab2Scales.Margin = new System.Windows.Forms.Padding(0);
+            this.Tab2Scales.Name = "Tab2Scales";
+            this.Tab2Scales.Size = new System.Drawing.Size(241, 441);
+            this.Tab2Scales.TabIndex = 1;
+            this.Tab2Scales.Text = "Axis";
+            // 
+            // scalesSettingsControl1
+            // 
+            this.scalesSettingsControl1.BackColor = System.Drawing.Color.Transparent;
+            this.scalesSettingsControl1.Editor = null;
+            this.scalesSettingsControl1.Location = new System.Drawing.Point(0, 0);
+            this.scalesSettingsControl1.MaximumSize = new System.Drawing.Size(241, 380);
+            this.scalesSettingsControl1.MinimumSize = new System.Drawing.Size(241, 380);
+            this.scalesSettingsControl1.Name = "scalesSettingsControl1";
+            this.scalesSettingsControl1.Size = new System.Drawing.Size(241, 380);
+            this.scalesSettingsControl1.TabIndex = 0;
             // 
             // Graph3DEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ToolTabs);
             this.Controls.Add(this.InputComboBox);
             this.Controls.Add(this.EditInputButton);
             this.Controls.Add(this.numLength);
             this.Controls.Add(this.numWidth);
-            this.Controls.Add(this.BrushGroupBox);
             this.Controls.Add(this.InputLabel);
-            this.Controls.Add(this.AxisSettingsButton);
             this.Controls.Add(this.LengthLabel);
             this.Controls.Add(this.WidthLabel);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -241,7 +268,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).EndInit();
-            this.BrushGroupBox.ResumeLayout(false);
+            this.ToolTabs.ResumeLayout(false);
+            this.Tab1Brush.ResumeLayout(false);
+            this.Tab2Scales.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,12 +284,13 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.NumericUpDown numWidth;
         public System.Windows.Forms.NumericUpDown numLength;
-        public System.Windows.Forms.Button AxisSettingsButton;
         public System.Windows.Forms.Button EditInputButton;
-        //private Canvas3D canvas3D2;
-        private System.Windows.Forms.GroupBox BrushGroupBox;
         public System.Windows.Forms.Label WidthLabel;
         public System.Windows.Forms.Label LengthLabel;
         public System.Windows.Forms.Label InputLabel;
+        private System.Windows.Forms.TabPage Tab1Brush;
+        private System.Windows.Forms.TabPage Tab2Scales;
+        private GuiElement.ScalesSettingsControl scalesSettingsControl1;
+        public System.Windows.Forms.TabControl ToolTabs;
     }
 }

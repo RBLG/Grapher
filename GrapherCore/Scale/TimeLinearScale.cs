@@ -19,7 +19,7 @@ namespace Grapher.Scale
         public double Min => 0;
         public double Max { get; set; } = 1000; //represent the duration of the table (in millis)
 
-        public List<Graduations> GetMilestones()
+        public List<Graduation> GetMilestones()
         {
             throw new NotImplementedException();
         }
@@ -31,6 +31,8 @@ namespace Grapher.Scale
         public bool Continuous => true;
 
         public bool IsLooping { get; set; } = true;
+        public bool IsCumulative => false;
+
         public double Hold { get; set; } = 500;
 
         public double Scale(double notscaled) => ScaleTo01(notscaled) * 1000;

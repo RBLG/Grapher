@@ -23,7 +23,9 @@ namespace Grapher.Scale
 
         public bool Continuous => false;
 
-        public List<Graduations> GetMilestones()
+        public bool IsCumulative => false;
+
+        public List<Graduation> GetMilestones()
         {
             throw new NotImplementedException();
         }

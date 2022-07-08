@@ -17,12 +17,12 @@ namespace Grapher.Scale
 
         public string Label => "Padding";
 
-        public List<Graduations> GetMilestones()
+        public List<Graduation> GetMilestones()
         {
             return new()
             {
-                new Graduations("right",0),
-                new Graduations("left",1)
+                new Graduation("right",0),
+                new Graduation("left",1)
             };
         }
 
@@ -31,6 +31,8 @@ namespace Grapher.Scale
 
         public bool Continuous => true;
         public bool IsLooping => false;
+
+        public bool IsCumulative => false;
 
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
