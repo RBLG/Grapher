@@ -264,7 +264,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Graph3DEditor";
             this.Size = new System.Drawing.Size(875, 475);
-            this.Resize += new System.EventHandler(this.Graph3DEditor_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).EndInit();

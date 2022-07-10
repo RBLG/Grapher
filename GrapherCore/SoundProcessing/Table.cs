@@ -189,7 +189,7 @@ namespace Grapher
             arrayble[x + y * count1] = Math.Clamp(nval, MIN, MAX);
         }
 
-        private Table3DDot CreateDot(int itx, int itz, int width, int length, double yval)
+        public Table3DDot CreateDot(int itx, int itz, int width, int length, double yval)
         {
             double vz = itz * (Canvas3D.tablevisualwidth / Math.Max(2, width - 1)) + Canvas3D.oripadding;
             double vx = itx * Canvas3D.lengthspacing + Canvas3D.oripadding;

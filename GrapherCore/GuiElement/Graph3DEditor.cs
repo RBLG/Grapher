@@ -57,6 +57,7 @@ namespace Grapher
             if (inInit) { return; }
             canvas3D1.module.Table.Width = (int)Math.Max(1, numWidth.Value);
             numWidth.Value = canvas3D1.module.Table.Width;
+            canvas3D1.Custom_Resize(sender, e);
             canvas3D1.Invalidate();
         }
 
@@ -65,6 +66,7 @@ namespace Grapher
             if (inInit) { return; }
             canvas3D1.module.Table.Length = (int)Math.Max(1, numLength.Value);
             numLength.Value = canvas3D1.module.Table.Length;
+            canvas3D1.Custom_Resize(sender, e);
             canvas3D1.Invalidate();
         }
 
@@ -100,12 +102,6 @@ namespace Grapher
             canvas3D1.Input = item.Factory();
         }
 
-        private void Graph3DEditor_Resize(object sender, EventArgs e)
-        {
-            canvas3D1.module.Table.Origin.Y = canvas3D1.Size.Height / 2;
-            canvas3D1.module.Table.UpdateAll();
-            canvas3D1.Invalidate();
-        }
 
     }
 }

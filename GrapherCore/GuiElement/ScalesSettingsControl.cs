@@ -99,6 +99,8 @@ namespace Grapher.GuiElement
                 oldwidth = WidthComboBox.SelectedIndex;
                 WidthAxis = nwa;
                 WidthSocket.Set(nwa.GetControl());
+
+                Editor!.canvas3D1.Invalidate();
             }
         }
 
@@ -117,6 +119,8 @@ namespace Grapher.GuiElement
                 oldlength = LengthComboBox.SelectedIndex;
                 LengthAxis = nla;
                 LengthSocket.Set(nla.GetControl());
+
+                Editor!.canvas3D1.Invalidate();
             }
         }
 

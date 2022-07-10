@@ -58,6 +58,11 @@ namespace Grapher
             this.MouseDown += MyOnMouseDown;
             this.MouseMove += MyOnMouseMove;
             this.MouseUp += MyOnMouseUp;
+            this.MouseWheel += MyOnMouseWheel;
+
+            this.Resize += Custom_Resize;
+
+            RecalculateFigureSize();
         }
 
         /// <summary>
@@ -220,6 +225,7 @@ namespace Grapher
             float ox = (float)module.Table.Origin.X;
             float oy = (float)module.Table.Origin.Y;
 
+
             //drawing axis
             float length = tablevisualwidth + oversize;
             e.Graphics.DrawLine(blue, ox, oy, ox + (float)zaxis.X * length, oy + (float)zaxis.Y * length);
@@ -255,11 +261,12 @@ namespace Grapher
                             e.Graphics.DrawLine(net, point.ScreenX, point.ScreenY, last.ScreenX, last.ScreenY);
                         }
                     }
-
-
-
                 }
             }
+
+            //e.Graphics.DrawEllipse(netoff, (float)figmin.X, (float)figmin.Y, dotsize, dotsize);
+            //e.Graphics.DrawEllipse(netoff, (float)figmid.X, (float)figmid.Y, dotsize, dotsize);
+            //e.Graphics.DrawEllipse(netoff, (float)figmax.X, (float)figmax.Y, dotsize, dotsize);
         }
 
 
@@ -355,6 +362,111 @@ namespace Grapher
         {
             Do3DPaint(e);
         }
+
+        public void MyOnMouseWheel(object? sender, MouseEventArgs e)
+        {
+            int delta = e.Delta / WHEEL_DELTA;
+
+
+            if (delta == 0) { }
+            else if (delta < 0)
+            {
+                ds *= (float)Math.Pow(0.91f, -delta);
+            }
+            else
+            {
+                ds *= (float)Math.Pow(1.1f, delta);
+            }
+            module.Table.UpdateAll();
+            this.Invalidate();
+        }
+
+
+        public void Custom_Resize(object? sender, EventArgs e)
+        {
+            //module.Table.Origin.Y = Size.Height / 2;
+            //module.Table.UpdateAll();
+            RecalculateFigureSize();
+            module.Table.Origin.Y = (Size.Height / 2) - ori2corner.Y;
+            module.Table.UpdateAll();
+            //RecalculateFigureSize();
+            Invalidate();
+        }
+
+        private void RecalculateFigureSize() //does not work because it is impacted by the current height of the corners
+                                             //not the actual min/max values. to fix
+        {
+            double wmin = double.MaxValue, wmax = double.MinValue;
+            double hmin = double.MaxValue, hmax = double.MinValue;
+
+            var table = module.Table;
+            Table3DDot oridot = new(0, 0, 0);
+            oridot.SetReferencial(() => table.Origin, () => table.xaxis, () => table.yaxis, () => table.zaxis);
+            oridot.RecalculateScreenXY();
+
+            //three loops that iterate 2 time only but it improve clarity
+            //it iterate through each corner of the table
+            foreach (int xval in new int[] { 0, module.Table.Width - 1 })
+            {
+                foreach (int yval in new int[] { 0, module.Table.Length - 1 })
+                {
+                    foreach (double hval in new double[] { Table.MIN, Table.MAX })
+                    {
+                        wmin = RecalSub(xval, yval, hval, wmin, true, true);
+                        wmax = RecalSub(xval, yval, hval, wmax, false, true);
+                        hmin = RecalSub(xval, yval, hval, hmin, true, false);
+                        hmax = RecalSub(xval, yval, hval, hmax, false, false);
+                    }
+
+
+                }
+            }
+
+            figurewidth = wmax - wmin;
+            figureheight = hmax - hmin;
+
+            ori2corner.X = wmin + figurewidth / 2 - oridot.ScreenX;
+            ori2corner.Y = hmin + figureheight / 2 - oridot.ScreenY;
+
+
+            //figmin = new(wmin, hmin);
+            //figmid = new((wmin + wmax) / 2, (hmin + hmax) / 2);
+            //figmax = new(wmax, hmax);
+
+
+        }
+
+        //private Point2D figmin = new();
+        //private Point2D figmid = new();
+        //private Point2D figmax = new();
+
+        /// <summary>
+        /// quick generic to avoid too much repeat above
+        /// </summary>
+        private double RecalSub(int tabx, int taby, double tabh, double cval, bool ismin, bool iswidth)
+        {
+            var table = module.Table;
+            //Table3DDot dot2 = new(tabx, tabh, taby);
+            //dot2.SetReferencial(() => table.Origin, () => table.xaxis, () => table.yaxis, () => table.zaxis);
+            var dot2 = module.Table.CreateDot(taby, tabx, module.Table.Width, module.Table.Length, tabh);
+            dot2.RecalculateScreenXY();
+            double val = iswidth ? dot2.ScreenX : dot2.ScreenY;
+            return ismin ? Math.Min(cval, val) : Math.Max(cval, val); ;
+        }
+
+        //size of whats drawn
+        private float ds = 1; //mean draw scale //how everything is drawn has to be reworked first
+
+        public readonly float basewidth = 618;
+        public readonly float baseheight = 451;
+
+        private double figurewidth = 0;
+        private double figureheight = 0;
+
+        private readonly Point2D ori2corner = new();
+
+        //windows constant
+        public static readonly int WHEEL_DELTA = 120;
 
     }
 }
