@@ -34,6 +34,7 @@
             this.NumUdChunkSize = new System.Windows.Forms.NumericUpDown();
             this.NumUdSeed = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.CheckBoxIsPhased = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.NumUdChunkSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumUdSeed)).BeginInit();
             this.SuspendLayout();
@@ -41,6 +42,7 @@
             // CheckBoxIsRandom
             // 
             this.CheckBoxIsRandom.AutoSize = true;
+            this.CheckBoxIsRandom.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.CheckBoxIsRandom.Location = new System.Drawing.Point(161, 3);
             this.CheckBoxIsRandom.Name = "CheckBoxIsRandom";
             this.CheckBoxIsRandom.Size = new System.Drawing.Size(71, 19);
@@ -52,7 +54,8 @@
             // CheckBoxIsLooping
             // 
             this.CheckBoxIsLooping.AutoSize = true;
-            this.CheckBoxIsLooping.Location = new System.Drawing.Point(161, 28);
+            this.CheckBoxIsLooping.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CheckBoxIsLooping.Location = new System.Drawing.Point(179, 22);
             this.CheckBoxIsLooping.Name = "CheckBoxIsLooping";
             this.CheckBoxIsLooping.Size = new System.Drawing.Size(53, 19);
             this.CheckBoxIsLooping.TabIndex = 1;
@@ -95,9 +98,19 @@
             // NumUdSeed
             // 
             this.NumUdSeed.Location = new System.Drawing.Point(93, 21);
+            this.NumUdSeed.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.NumUdSeed.Name = "NumUdSeed";
             this.NumUdSeed.Size = new System.Drawing.Size(54, 23);
             this.NumUdSeed.TabIndex = 5;
+            this.NumUdSeed.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.NumUdSeed.ValueChanged += new System.EventHandler(this.NumUdSeed_ValueChanged);
             // 
             // label1
@@ -109,10 +122,23 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Seed:";
             // 
+            // checkBox1
+            // 
+            this.CheckBoxIsPhased.AutoSize = true;
+            this.CheckBoxIsPhased.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CheckBoxIsPhased.Location = new System.Drawing.Point(168, 39);
+            this.CheckBoxIsPhased.Name = "checkBox1";
+            this.CheckBoxIsPhased.Size = new System.Drawing.Size(64, 19);
+            this.CheckBoxIsPhased.TabIndex = 7;
+            this.CheckBoxIsPhased.Text = "Phased";
+            this.CheckBoxIsPhased.UseVisualStyleBackColor = true;
+            this.CheckBoxIsPhased.CheckedChanged += new System.EventHandler(this.CheckBoxIsPhased_CheckedChanged);
+            // 
             // TimeModuloGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.CheckBoxIsPhased);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.NumUdSeed);
             this.Controls.Add(this.NumUdChunkSize);
@@ -138,5 +164,6 @@
         private System.Windows.Forms.NumericUpDown NumUdChunkSize;
         private System.Windows.Forms.NumericUpDown NumUdSeed;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox CheckBoxIsPhased;
     }
 }

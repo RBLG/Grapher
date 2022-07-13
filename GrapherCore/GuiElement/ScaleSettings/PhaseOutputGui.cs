@@ -29,7 +29,7 @@ namespace Grapher.GuiElement.ScaleSettings
 
         private void NumUdOffset_ValueChanged(object sender, EventArgs e)
         {
-            scale.Offset = (double)NumUdOffset.Value;
+            scale.Offset = (double)NumUdOffset.Value / 100;
         }
     }
 }

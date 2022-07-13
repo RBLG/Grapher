@@ -40,19 +40,31 @@ namespace Grapher.Scale
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {
             if (IsAbsolute)
-            { GetRevert(wave, spectrum, mode.Process(GetAbsPhase(wave, spectrum), tval)); }
+            {
+                //double val = GetAbsPhase(wave, spectrum);
+                //double postval = mode.Process(val, tval);
+                //wave.Phase += postval - val + Offset / 100;
+
+                //TODO improve by removing the need to recalculate globalphase 2 time
+                wave.Phase = GetRevert(wave, spectrum, mode.Process(GetAbsPhase(wave, spectrum), tval)) + Offset;
+            }
             else
             { wave.Phase = mode.Process(wave.Phase, tval); }
         }
 
-        private static double GetAbsPhase(Spectrum.Wave wave, Spectrum spectrum)
+        public static double GetAbsPhase(Spectrum.Wave wave, Spectrum spectrum)
         {
-            return wave.Frequency * (spectrum.Time / 1000 + wave.Phase);
+            return wave.Phase + GetGlobalPhase(wave, spectrum);
         }
 
-        private static void GetRevert(Spectrum.Wave wave, Spectrum spectrum, double val)
+        public static double GetRevert(Spectrum.Wave wave, Spectrum spectrum, double val)
         {
-            wave.Phase = (val / wave.Frequency) - (spectrum.Time / 1000);
+            return val - GetGlobalPhase(wave, spectrum);
+        }
+
+        public static double GetGlobalPhase(Spectrum.Wave wave, Spectrum spectrum)
+        {
+            return  spectrum.Time / 1000 * wave.Frequency;
         }
     }
 }

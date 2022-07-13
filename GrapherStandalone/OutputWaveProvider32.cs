@@ -31,7 +31,7 @@ namespace Grapher
                 float sum = 0;
                 foreach (Wave w in spec.Waves)
                 {
-                    float val = (float)(w.Amplitude * Math.Sin(w.Frequency * (2 * Math.PI * time / 1000d + w.Phase)));
+                    float val = (float)(w.Amplitude * Math.Sin(2 * Math.PI * (w.Frequency * time / 1000d + w.Phase)));
                     sum += val;
                     w.Phase = 0.5;//dirty reset
                     //w.Padding = 0.5; //useless since there's no padding in the standalone version so far

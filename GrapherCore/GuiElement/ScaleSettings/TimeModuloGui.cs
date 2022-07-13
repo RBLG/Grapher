@@ -21,6 +21,7 @@ namespace Grapher.GuiElement.ScaleSettings
             scale = nscale;
             CheckBoxIsLooping.Checked = scale.IsLooping;
             CheckBoxIsRandom.Checked = scale.IsRandom;
+            CheckBoxIsPhased.Checked = scale.IsPhased;
             NumUdChunkSize.Value = (decimal)scale.Modulo;
             NumUdSeed.Value = (decimal)scale.Seed;
         }
@@ -43,6 +44,11 @@ namespace Grapher.GuiElement.ScaleSettings
         private void NumUdSeed_ValueChanged(object sender, EventArgs e)
         {
             scale.Seed = (double)NumUdSeed.Value;
+        }
+
+        private void CheckBoxIsPhased_CheckedChanged(object sender, EventArgs e)
+        {
+            scale.IsPhased = CheckBoxIsPhased.Checked;
         }
     }
 }

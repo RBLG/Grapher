@@ -42,7 +42,7 @@ namespace Grapher.GuiElement.ScaleSettings
 
         private void NumUdHold_ValueChanged(object sender, EventArgs e)
         {
-
+            scale.Hold = (double)NumUdHold.Value;
         }
     }
 }

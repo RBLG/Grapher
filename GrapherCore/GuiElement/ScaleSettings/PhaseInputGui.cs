@@ -20,7 +20,7 @@ namespace Grapher.GuiElement.ScaleSettings
             scale = nscale;
             CheckBoxIsAbsolute.Checked = scale.IsAbsolute;
             NumUdDetune.Value = (decimal)scale.Detune;
-            NumUdAmount.Value = (decimal)scale.Multiplier;
+            NumUdAmount.Value = 1/(decimal)scale.Multiplier;
 
         }
 

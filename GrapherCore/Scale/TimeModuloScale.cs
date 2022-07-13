@@ -29,6 +29,8 @@ namespace Grapher.Scale
 
         public bool IsRandom { get; set; } = true;// if false, chunk will follow in order from the lowest Width value to the highest
 
+        public bool IsPhased { get; set; } = false;//if true, it will wait that phase is 0 to swap
+
         public string Label => "t(%)";
 
         public bool Continuous => false;
@@ -50,12 +52,18 @@ namespace Grapher.Scale
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
         {
-            double rtn = Scale(spectrum.Time);
+            double rtn = spectrum.Time;
+            if (IsPhased) //clip time to the last end of phase cycle
+            {
+                rtn = (int)(wave.Frequency * rtn / 1000 + wave.Phase);
+                rtn = (rtn - wave.Phase) / wave.Frequency * 1000;
+            }
+            rtn = Scale(rtn);//get the number of the current chunk
             if (IsLooping)
             { rtn %= size; }
             if (IsRandom)// randomizing through modulo, shader noise style
             {
-                rtn = (Math.Sin(rtn * spectrum.NoteSeed * Seed) + 1) * (size * 100_000 - 1) % size;
+                rtn = (Math.Sin(rtn * spectrum.NoteSeed / Seed) + 1) * (size * 100_000 - 1) % size;
             }
             return rtn;
         }

@@ -28,6 +28,7 @@ namespace Grapher.Scale
            new AvailableInputScale("--Others:-------",/**/()=>null,/*                           */null,/*                               */false,ScaleType.None),
            new AvailableInputScale(" Padding",/*        */()=>new PaddingScale(),/*             */typeof(PaddingScale),/*               */true, ScaleType.Padding),
            new AvailableInputScale(" Phase",/*          */()=>new PhaseInputScale(),/*          */typeof(PhaseInputScale),/*            */true, ScaleType.Phase),
+           new AvailableInputScale(" Phase Modulo(P%)",/**/()=>new PhaseModuloScale(),/*         */typeof(PhaseModuloScale),/*            */true, ScaleType.PhaseModulo),
         };
         public static readonly IReadOnlyCollection<AvailableInputScale> scales = list;
 
@@ -52,7 +53,7 @@ namespace Grapher.Scale
 
         public enum ScaleType
         {
-            Time, TimeModulo, Frequency, Amplitude, Padding, Phase, None
+            Time, TimeModulo, Frequency, Amplitude, Padding, Phase, None,PhaseModulo
         }
 
         public static int GetIndex(Type type)
