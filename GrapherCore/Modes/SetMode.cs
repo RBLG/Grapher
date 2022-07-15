@@ -12,7 +12,7 @@ namespace Grapher.Modes
     {
         public double Max { get => max; set { max = value; range = max * 2; } }
 
-        protected double range;
+        protected double range = 2;
         protected double max = 1;
 
         public Control GetControl() => new ModeSetGui(this);

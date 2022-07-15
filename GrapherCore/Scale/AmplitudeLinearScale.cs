@@ -12,8 +12,8 @@ namespace Grapher.Scale
 {
     internal class AmplitudeLinearScale : IInputScale, IOutputScale
     {
-        public double Max => 1;
-        public double Min => 0;
+        //public double Max => 1;
+        //public double Min => 0;
 
         public string Label { get; } = "a(??)";
 

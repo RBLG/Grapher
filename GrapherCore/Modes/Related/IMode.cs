@@ -10,7 +10,7 @@ namespace Grapher.Modes
 {
     public interface IMode
     {
-        double Process(double value,double tab);
+        double Process(double value, double tab);
         Control GetControl();
     }
 }

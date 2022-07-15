@@ -12,7 +12,8 @@ namespace Grapher.Modes
         {
            new AvailableMode("Multiply",()=>new MultiplyMode(),typeof(MultiplyMode)),
            new AvailableMode("Add",()=>new AddMode(),typeof(AddMode)),
-           new AvailableMode("Set",()=>new SetMode(),typeof(SetMode))
+           new AvailableMode("Set",()=>new SetMode(),typeof(SetMode)),
+           new AvailableMode("Noisify",()=>new NoisifyMode(),typeof(NoisifyMode))
         };
         public static readonly IReadOnlyCollection<AvailableMode> modes = list;
 
