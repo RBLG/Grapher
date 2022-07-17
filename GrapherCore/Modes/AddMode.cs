@@ -10,7 +10,7 @@ namespace Grapher.Modes
     {
         public override double Process(double value, double tab)
         {
-            return value + tab * range - max;
+            return value + base.Process(value, tab);
         }
     }
 }
