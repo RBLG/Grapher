@@ -6,11 +6,14 @@ a grid based synthesizer
 
 ### How to install:
 
-work in progress, so far you have to:
+you can either:
 - clone the repo
 - open GrapherVST/GrapherVST.sln with Visual Studio
-- build GrapherVST
-- you can now use it by opening GrapherVST/bin/x64/Debug/net5.0-windows/deploy/GrapherVST.dll
+- build GrapherVST as Release
+- use it by opening GrapherVST/bin/x64/Release/net5.0-windows/deploy/GrapherVST.dll with your daw
+or:
+- download the release zip
+- use it by opening GrapherVST.dll with your daw
 
 ### How to use:
 Grapher is composed of multiple modules. you can chain modules by using the Input setting
@@ -29,10 +32,11 @@ Here's some modules:
 
 ![example of filter-envelloppe settup](https://github.com/RBLG/Grapher/blob/master/Doc/imgs/highpassfilter_and_envelloppe.PNG)
   
+- you can do phase modulation by using the phase axis as Height
+
+- you can make your synth sound full by using the padding scale as Height, time as Length and a rapidly changing pattern
   
 ### In Construction:
-- detune
-- note hold
+- main detune
 - release automation
-- optimization
-- maybe more stuff
+- other features
