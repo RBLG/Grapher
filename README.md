@@ -11,6 +11,7 @@ you can either:
 - open GrapherVST/GrapherVST.sln with Visual Studio
 - build GrapherVST as Release
 - use it by opening GrapherVST/bin/x64/Release/net5.0-windows/deploy/GrapherVST.dll with your daw
+
 or:
 - download the release zip
 - use it by opening GrapherVST.dll with your daw
