@@ -13,7 +13,7 @@ namespace Grapher
     /// </summary>
     public class Spectrum
     {
-        public List<Wave> Waves { get; private set; } = new();
+        public List<Wave> Waves { get; set; } = new();
 
         public double Time { get; set; }//time since the the beginning of the note event
         public double TimeOff { get; set; }//time since the end of the note event
@@ -23,6 +23,24 @@ namespace Grapher
 
         public Spectrum() { }
 
+        public void Reset(
+            double time,
+            double timeoff,
+            double bpitch,
+            double nseed
+            )
+        {
+            Time = time;
+            TimeOff = timeoff;
+            BasePitch = bpitch;
+            NoteSeed = nseed;
+            foreach (Wave wave in Waves)
+            {
+                wave.Time = time;
+            }
+        }
+
+
         public class Wave
         {
             public WaveType Type { get; private set; }
@@ -31,6 +49,12 @@ namespace Grapher
             public double Amplitude { get; set; } //see LinearAmplitudeScale
             public double Phase { get; set; } = 0.5; //see PhaseScale
             public double Padding { get; set; } = 0.5; //see PadddingScale
+            public double Time { get; set; }//TODO
+
+            //values not changed by modules
+            //sourcetime in spectrum
+            public double SourceFrequency { get; set; }
+
             public Wave(WaveType ntype, double nfreq, double namp)
             {
                 Type = ntype;

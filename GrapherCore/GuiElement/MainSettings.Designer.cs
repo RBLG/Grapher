@@ -35,13 +35,16 @@
             this.EditInputButton = new System.Windows.Forms.Button();
             this.InputComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Detuner)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // Detuner
             // 
             this.Detuner.AutoSize = false;
-            this.Detuner.Location = new System.Drawing.Point(4, 103);
+            this.Detuner.Location = new System.Drawing.Point(3, 63);
             this.Detuner.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Detuner.Maximum = 100;
             this.Detuner.Minimum = -100;
@@ -102,17 +105,35 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(12, 84);
+            this.label1.Location = new System.Drawing.Point(4, 45);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 15);
+            this.label1.Size = new System.Drawing.Size(48, 15);
             this.label1.TabIndex = 27;
-            this.label1.Text = "detune";
+            this.label1.Text = "Detune:";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(3, 118);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(77, 23);
+            this.numericUpDown1.TabIndex = 28;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 100);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 15);
+            this.label2.TabIndex = 29;
+            this.label2.Text = "Release delay:";
             // 
             // MainSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.groupBox1);
@@ -124,6 +145,7 @@
             this.Size = new System.Drawing.Size(478, 273);
             this.Load += new System.EventHandler(this.MainSettings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Detuner)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -137,5 +159,7 @@
         private System.Windows.Forms.Button EditInputButton;
         private System.Windows.Forms.ComboBox InputComboBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -16,6 +16,8 @@ namespace Grapher.Modules
            new AvailableModule("Pitch",()=>new DefaultPitchModule(),typeof(DefaultPitchModule)),
            new AvailableModule("3D Editor",()=>new TableModule(), typeof(TableModule)),
            new AvailableModule("Harmo Editor",()=>new HarmonicModule(),typeof(HarmonicModule)),
+           new AvailableModule("Set Editor",()=>new SettuperModule(),typeof(SettuperModule)),
+           
            //new AvailableModule("LH Editor",()=>{var r=new TableModule(); r.MTable.Width=1;return r; },typeof(TableModule)),
            //new AvailableModule("WH Editor",()=>{var r=new TableModule(); r.MTable.Length=1;return r; }, typeof(TableModule)),
            //new AvailableModule("Fake",()=>new MockInput())

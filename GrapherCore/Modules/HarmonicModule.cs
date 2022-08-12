@@ -20,9 +20,6 @@ namespace Grapher.Modules
         {
             Table.Length = 1;
             Wscale = new HarmonicScale();
-            //base.Wscale = Wscale;
-            //base.Lscale = new NoScale();
-            //Table.Interpolation = Table.InterpolationType.None;
             Name = "Harmonic " + Name;
             foreach (Table3DDot dot in Table.dots[0])
             {
@@ -38,10 +35,11 @@ namespace Grapher.Modules
         {
             UpdateStock();
             buffer.Waves.Clear();
-            buffer.Time = time;
-            buffer.TimeOff = timeoff;
-            buffer.BasePitch = bpitch;
-            buffer.NoteSeed = seed;
+            //buffer.SourceTime = time;
+            //buffer.TimeOff = timeoff;
+            //buffer.BasePitch = bpitch;
+            //buffer.NoteSeed = seed;
+            buffer.Reset(time, timeoff, bpitch, seed);
             int it = 0;
             foreach (Table3DDot dot in Table.dots[0])
             {

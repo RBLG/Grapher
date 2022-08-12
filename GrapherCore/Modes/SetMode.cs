@@ -10,6 +10,7 @@ namespace Grapher.Modes
 {
     public class SetMode : IMode
     {
+        public double Min { get; set; }
         public double Max {
             get => max;
             set {

@@ -11,6 +11,8 @@ namespace Grapher.Modes
     {
         public double Intensity { get; set; } = 1;
 
+        public double Center { get; set; } = 0.5; //change the point where the 0 singularity happen
+
         public Control GetControl()
         {
             return new GuiElement.ScaleSettings.ModeMultiplyGui(this);
@@ -18,8 +20,8 @@ namespace Grapher.Modes
 
         public double Process(double value, double tab)
         {
-            tab = (tab - 0.5) * Intensity + 0.5;
-            return value * tab * 2;//*2 so that 0,5 make stuff unchanged
+            tab = (tab - Center) * Intensity + Center;
+            return value * tab * 2;
         }
     }
 }
