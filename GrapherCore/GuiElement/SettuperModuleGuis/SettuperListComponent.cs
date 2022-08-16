@@ -17,7 +17,7 @@ namespace Grapher.GuiElement.SettuperModuleGuis
 
         public SettupedMainWave wave;
         protected Action<SettuperListComponent> deleter;
-        protected Action<int> updater;
+        protected Action<int> updater; //forgot how to do a lambda without parameter or return
 
         public SettuperListComponent() : this(new(), (s) => { }, (e) => { }) { }
 
