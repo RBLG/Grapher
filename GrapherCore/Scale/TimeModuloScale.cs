@@ -35,7 +35,25 @@ namespace Grapher.Scale
 
         public bool Continuous => false;
 
-        public bool IsCumulative => false;
+        public int GetCumulativeStackNumber(Wave wave, Spectrum spectrum, double size)
+        {
+            if (IsRandom || !IsLooping)
+            {
+                return 0;
+            }
+            else
+            {
+                double rtn = spectrum.Time;
+                if (IsPhased) //clip time to the last end of phase cycle
+                {
+                    rtn = (int)(wave.Frequency * rtn / 1000 + wave.Phase);
+                    rtn = (rtn - wave.Phase) / wave.Frequency * 1000;
+                }
+                rtn = Scale(rtn);//get the number of the current chunk
+                rtn /= size;
+                return (int)rtn;
+            }
+        }
 
         public List<Graduation> GetMilestones()
         {

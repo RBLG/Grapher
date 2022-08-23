@@ -14,5 +14,10 @@ namespace Grapher.Scale.Related
         /// pick, scale and return the value corresponding to this scale
         /// </summary>
         double PickValueTo(Wave wave, Spectrum spectrum, double size);
+
+        /// <summary>
+        /// if the scale is looping, return how much it looped, otherwise return 0
+        /// </summary>
+        int GetCumulativeStackNumber(Wave wave, Spectrum spectrum, double size);
     }
 }

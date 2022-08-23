@@ -23,6 +23,10 @@ namespace Grapher.Modules
         public IInputScale Lscale { get => Table.Lscale; set { Table.Lscale = value; UpdateUniqueScales(); } }
         public IOutputScale Hscale { get => Table.Hscale; set { Table.Hscale = value; UpdateUniqueScales(); } }
 
+        //4th dim scale
+        //public IInputScale Fscale { get => Table.Fscale; set { Table.Fscale = value; UpdateUniqueScales(); } }
+
+
         public TableModule()
         {
             UpdateUniqueScales();

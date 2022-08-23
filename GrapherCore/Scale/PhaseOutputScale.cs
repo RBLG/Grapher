@@ -32,7 +32,10 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public bool IsLooping => true;
 
-        public bool IsCumulative => false;
+        public bool GetCumulativeStackNumber()
+        {
+            return false;
+        }
 
         public bool IsAbsolute { get; set; } = true;
         public double Offset { get; set; } = 0;

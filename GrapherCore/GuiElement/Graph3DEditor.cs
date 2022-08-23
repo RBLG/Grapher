@@ -46,6 +46,8 @@ namespace Grapher
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
             InputComboBox.SelectedIndex = AvailableModules.GetIndex(canvas3D1.module.Input.GetType());
+            CheckboxCumulWidth.Checked = canvas3D1.module.Table.IsWCumulative;
+            CheckboxCumulLength.Checked = canvas3D1.module.Table.IsLCumulative;
 
             scalesSettingsControl1.ActualConstructor(this);
             // ////
@@ -102,6 +104,14 @@ namespace Grapher
             canvas3D1.Input = item.Factory();
         }
 
+        private void CheckboxCumulWidth_CheckedChanged(object sender, EventArgs e)
+        {
+            canvas3D1.module.Table.IsWCumulative = CheckboxCumulWidth.Checked;
+        }
 
+        private void CheckboxCumulLength_CheckedChanged(object sender, EventArgs e)
+        {
+            canvas3D1.module.Table.IsLCumulative = CheckboxCumulLength.Checked;
+        }
     }
 }

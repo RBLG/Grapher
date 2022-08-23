@@ -30,6 +30,11 @@ namespace Grapher
         public IOutputScale Hscale { get; set; } = new AmplitudeLinearScale();
         public IMode Mode { get; set; } = new SetMode();
 
+        public bool IsWCumulative { get => isWCumul; set { isWCumul = value; RefreshArrayble(); } }
+        public bool IsLCumulative { get => isLCumul; set { isLCumul = value; RefreshArrayble(); } }
+
+        protected bool isWCumul = false;
+        protected bool isLCumul = false;
 
         //temp public
         public List<List<Table3DDot>> dots;
@@ -52,7 +57,9 @@ namespace Grapher
             IInputScale wscale,
             IInputScale lscale,
             IOutputScale hscale,
-            IMode mode
+            IMode mode,
+            bool iswcumul,
+            bool islcumul
             //InterpolationType interpolation
             )
         {
@@ -61,6 +68,8 @@ namespace Grapher
             Lscale = lscale;
             Hscale = hscale;
             Mode = mode;
+            isWCumul = iswcumul;
+            isLCumul = islcumul;
             //Interpolation = interpolation;
             dots.ForEach((r) => r.ForEach((d) =>
             {
@@ -144,6 +153,9 @@ namespace Grapher
             }
         }
 
+        /// <summary>
+        /// update visual and internal array of the table
+        /// </summary>
         public void UpdateAll()
         {
             foreach (int itx in Enumerable.Range(0, dots.Count))
@@ -158,6 +170,9 @@ namespace Grapher
             RefreshArrayble();
         }
 
+        /// <summary>
+        /// update internal array of the table
+        /// </summary>
         private void RefreshArrayble()
         {
             count1 = dots.Count;
@@ -169,6 +184,18 @@ namespace Grapher
                 int ity = 0;
                 foreach (Table3DDot dot in row)
                 {
+                    int stw = isWCumul ? 0 : itx;
+                    int stl = isLCumul ? 0 : itx;
+
+                    double sum = 0;
+
+                    for (int itx2 = stw; itx2 <= itx; itx2++)
+                    {
+                        for (int ity2 = stl; ity2 <= ity; ity2++)
+                        {
+                            sum = dots[itx2][ity2].Y;
+                        }
+                    }
                     arrayble[itx + ity * count1] = dot.Y;
                     ity++;
                 }
@@ -203,7 +230,21 @@ namespace Grapher
         {
             double wval = (count2 == 1) ? 0 : Wscale.PickValueTo(wave, spectrum, count2);
             double lval = (count1 == 1) ? 0 : Lscale.PickValueTo(wave, spectrum, count1);
-            double tval = Get01ValueFromWL(wval, lval);
+            double tval = GetOnMaxValueFromWL(wval, lval);
+
+            if (isWCumul)
+            {
+                double maxval = (GetLinearInterpolatedValue(wval, count1 - 1) - MIN) / MAX;
+                tval += maxval * Wscale.GetCumulativeStackNumber(wave, spectrum, count2);
+            }
+            if (isLCumul)
+            {
+                double maxval = (GetLinearInterpolatedValue(count2 - 1, lval) - MIN) / MAX;
+                tval += maxval * Lscale.GetCumulativeStackNumber(wave, spectrum, count1);
+            }
+
+            tval -= MIN;
+            tval /= MAX;
             Hscale.ProcessValue(wave, spectrum, Height, Mode, tval);
         }
 
@@ -219,19 +260,9 @@ namespace Grapher
             if (wval < 0 || Width <= wval || lval < 0 || Length <= lval)
             { return 0; }
 
-            //if (Interpolation == InterpolationType.None)
-            //{ return GetNotInterpolatedValue(lval, wval); }
-            //else
-            //{
-            return GetLinearInterpolatedValue(wval, lval);
-            //}
+            double rtn = GetLinearInterpolatedValue(wval, lval);
+            return rtn;
         }
-
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //private double GetNotInterpolatedValue(double index1, double index2)
-        //{
-        //    return GetTableValue((int)index1, (int)index2);
-        //}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double GetLinearInterpolatedValue(double wval, double lval)
@@ -252,6 +283,7 @@ namespace Grapher
             double mrmix = 1 - rmix;
             if (row2 >= count1)
             {
+                //cumul for a quickfix so that it doesnt create a weird artifact from max to 0
                 if (Lscale.IsLooping)
                 { row2 = 0; }
                 else

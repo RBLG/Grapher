@@ -22,7 +22,21 @@ namespace Grapher.Scale
 
         public bool Continuous => false;
 
-        public bool IsCumulative => false;
+        public int GetCumulativeStackNumber(Wave wave, Spectrum spectrum, double size)
+        {
+            if (IsRandom || !IsLooping)
+            {
+                return 0;
+            }
+            else
+            {
+                double rtn = PhaseInputScale.GetAbsPhase(wave, spectrum, Detune, 1);
+                rtn = (int)(rtn / CycleCount);
+                rtn /= size;
+                return (int)rtn;
+            }
+        }
+
         public double Detune { get; set; } = 0;
 
         public List<Graduation> GetMilestones()

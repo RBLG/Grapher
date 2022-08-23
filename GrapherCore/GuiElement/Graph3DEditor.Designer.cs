@@ -44,12 +44,17 @@
             this.Tab1Brush = new System.Windows.Forms.TabPage();
             this.Tab2Scales = new System.Windows.Forms.TabPage();
             this.scalesSettingsControl1 = new Grapher.GuiElement.ScalesSettingsControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.CheckboxCumulLength = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.CheckboxCumulWidth = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).BeginInit();
             this.ToolTabs.SuspendLayout();
             this.Tab1Brush.SuspendLayout();
             this.Tab2Scales.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // InputComboBox
@@ -206,6 +211,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.ToolTabs.Controls.Add(this.Tab1Brush);
             this.ToolTabs.Controls.Add(this.Tab2Scales);
+            this.ToolTabs.Controls.Add(this.tabPage1);
             this.ToolTabs.Location = new System.Drawing.Point(4, 3);
             this.ToolTabs.Margin = new System.Windows.Forms.Padding(0);
             this.ToolTabs.Name = "ToolTabs";
@@ -249,6 +255,52 @@
             this.scalesSettingsControl1.Size = new System.Drawing.Size(241, 380);
             this.scalesSettingsControl1.TabIndex = 0;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.CheckboxCumulLength);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.CheckboxCumulWidth);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(241, 441);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Misc";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // CheckboxCumulLength
+            // 
+            this.CheckboxCumulLength.AutoSize = true;
+            this.CheckboxCumulLength.Location = new System.Drawing.Point(15, 48);
+            this.CheckboxCumulLength.Name = "CheckboxCumulLength";
+            this.CheckboxCumulLength.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.CheckboxCumulLength.Size = new System.Drawing.Size(63, 19);
+            this.CheckboxCumulLength.TabIndex = 2;
+            this.CheckboxCumulLength.Text = "Length";
+            this.CheckboxCumulLength.UseVisualStyleBackColor = true;
+            this.CheckboxCumulLength.CheckedChanged += new System.EventHandler(this.CheckboxCumulLength_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(107, 15);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Cumulative values:";
+            // 
+            // CheckboxCumulWidth
+            // 
+            this.CheckboxCumulWidth.AutoSize = true;
+            this.CheckboxCumulWidth.Location = new System.Drawing.Point(20, 23);
+            this.CheckboxCumulWidth.Name = "CheckboxCumulWidth";
+            this.CheckboxCumulWidth.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.CheckboxCumulWidth.Size = new System.Drawing.Size(58, 19);
+            this.CheckboxCumulWidth.TabIndex = 0;
+            this.CheckboxCumulWidth.Text = "Width";
+            this.CheckboxCumulWidth.UseVisualStyleBackColor = true;
+            this.CheckboxCumulWidth.CheckedChanged += new System.EventHandler(this.CheckboxCumulWidth_CheckedChanged);
+            // 
             // Graph3DEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -270,6 +322,8 @@
             this.ToolTabs.ResumeLayout(false);
             this.Tab1Brush.ResumeLayout(false);
             this.Tab2Scales.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,5 +345,9 @@
         private System.Windows.Forms.TabPage Tab2Scales;
         private GuiElement.ScalesSettingsControl scalesSettingsControl1;
         public System.Windows.Forms.TabControl ToolTabs;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.CheckBox CheckboxCumulLength;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox CheckboxCumulWidth;
     }
 }

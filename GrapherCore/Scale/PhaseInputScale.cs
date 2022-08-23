@@ -32,7 +32,17 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public bool IsLooping => true;
 
-        public bool IsCumulative => false;
+        public int GetCumulativeStackNumber(Wave wave, Spectrum spectrum, double size)
+        {
+            if (IsAbsolute)
+            {
+                return (int)GetAbsPhase(wave, spectrum);
+            }
+            else
+            {
+                return (int)wave.Phase;
+            }
+        }
 
         public bool IsAbsolute { get; set; } = true;
         public double Multiplier { get; set; } = 1;// 1/Mult; for speed

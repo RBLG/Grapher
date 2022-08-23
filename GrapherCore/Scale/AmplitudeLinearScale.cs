@@ -27,7 +27,10 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public bool IsLooping => false;
 
-        public bool IsCumulative => false;
+        public int GetCumulativeStackNumber(Wave wave, Spectrum spectrum, double size)
+        {
+            return 0;
+        }
 
         public double PickValueTo(Wave wave, Spectrum spectrum, double size)
         { return wave.Amplitude * size; }

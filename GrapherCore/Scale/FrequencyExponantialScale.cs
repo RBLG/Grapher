@@ -57,7 +57,9 @@ namespace Grapher.Scale
         public string Label => "f(Hz)";
         public bool IsLooping => false;
 
-        public bool IsCumulative => false;
-
+        public int GetCumulativeStackNumber(Wave wave, Spectrum spectrum, double size)
+        {
+            return 0;
+        }
     }
 }
