@@ -27,10 +27,11 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public bool IsLooping => false;
 
-        public bool IsCumulative => false;
-
-        public double PickValueTo(Wave wave, Spectrum spectrum, double size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
         { return wave.Amplitude * size; }
+
+        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
+        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {

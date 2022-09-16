@@ -22,7 +22,6 @@ namespace Grapher.Scale
 
         public bool Continuous => false;
 
-        public bool IsCumulative => false;
         public double Detune { get; set; } = 0;
 
         public List<Graduation> GetMilestones()
@@ -35,7 +34,7 @@ namespace Grapher.Scale
 
         public double Scale(double notscaled) => (int)(notscaled / CycleCount);
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, double size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
         {
             double rtn;
             rtn = PhaseInputScale.GetAbsPhase(wave, spectrum, Detune, 1);
@@ -48,6 +47,9 @@ namespace Grapher.Scale
             }
             return rtn;
         }
+
+        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
+        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
 
     }

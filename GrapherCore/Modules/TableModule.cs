@@ -33,7 +33,7 @@ namespace Grapher.Modules
             Spectrum buffer = Input.GetSpectrum(time, timeoff, bpitch, seed);
             foreach (Wave w in buffer.Waves)
             {
-                Table.Apply(w, buffer);
+                Table.Apply2(w, buffer);
             }
             return buffer;
         }

@@ -36,7 +36,6 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public bool IsLooping => false;
 
-        public bool IsCumulative => false;
 
         public double ScaleTo01(double notscaled) /*            */ => (ToMei(notscaled) - Min) / range;
         public double UnscaleFrom01(double scaled) /*           */ => FromMei(scaled / range + Min);
@@ -44,8 +43,11 @@ namespace Grapher.Scale
         private static double ToMei(double lfreq) /*            */ => 2595 * Math.Log10(1 + lfreq / 700);
         private static double FromMei(double lfreq) /*          */ => (Math.Pow(10, lfreq / 2595) + 1) / 700;
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, double size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
         { return ScaleTo01(wave.Frequency) * size; }
+
+        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
+        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {

@@ -33,8 +33,11 @@ namespace Grapher.Scale
         public double UnscaleFrom(double scaled, double size)
         { return UnscaleFrom01(scaled / size); }
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, double size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
         { return ScaleTo(wave.Frequency, size); }
+
+        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
+        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {
@@ -57,7 +60,6 @@ namespace Grapher.Scale
         public string Label => "f(Hz)";
         public bool IsLooping => false;
 
-        public bool IsCumulative => false;
 
     }
 }

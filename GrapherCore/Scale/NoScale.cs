@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Grapher.Spectrum;
 
 namespace Grapher.Scale
 {
@@ -17,7 +18,6 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public bool IsLooping => false;
 
-        public bool IsCumulative => false;
 
         public Control GetControl() => new BlankScaleGui();
 
@@ -26,9 +26,12 @@ namespace Grapher.Scale
             return new();
         }
 
-        public double PickValueTo(Spectrum.Wave wave, Spectrum spectrum, double size) => 0;
+        public double PickValueTo(Wave wave, Spectrum spectrum, int size) => 0;
 
-        public void ProcessValue(Spectrum.Wave wave, Spectrum spectrum, double size, IMode mode, double tval)
+        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
+        { return (0, 0, 0); }
+
+        public void ProcessValue(Wave wave, Spectrum spectrum, double size, IMode mode, double tval)
         { return; }
 
 

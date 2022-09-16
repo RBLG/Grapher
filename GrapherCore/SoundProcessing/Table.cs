@@ -203,19 +203,26 @@ namespace Grapher
         {
             double wval = (count2 == 1) ? 0 : Wscale.PickValueTo(wave, spectrum, count2);
             double lval = (count1 == 1) ? 0 : Lscale.PickValueTo(wave, spectrum, count1);
-            double tval = Get01ValueFromWL(wval, lval);
+            double tval = GetValueFromWL(wval, lval);
+            if (!double.IsNaN(tval))
+            { Hscale.ProcessValue(wave, spectrum, Height, Mode, tval); }
+        }
+
+        public void Apply2(Spectrum.Wave wave, Spectrum spectrum)
+        {
+            int w1, w2, l1, l2;
+            double wmix, lmix;
+
+            (w1, w2, wmix) = Wscale.PickValueTo2(wave, spectrum, count2);
+            (l1, l2, lmix) = Lscale.PickValueTo2(wave, spectrum, count1);
+
+            double tval = GetValueFromQuadIndex(w1, w2, wmix, l1, l2, lmix);
             if (!double.IsNaN(tval))
             { Hscale.ProcessValue(wave, spectrum, Height, Mode, tval); }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double Get01ValueFromWL(double wval, double lval)
-        {
-            return (GetOnMaxValueFromWL(wval, lval) - MIN) / MAX;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double GetOnMaxValueFromWL(double wval, double lval)
+        public double GetValueFromWL(double wval, double lval)
         {
             if (wval < 0 || Width <= wval || lval < 0 || Length <= lval)
             { return double.NaN; }
@@ -223,7 +230,7 @@ namespace Grapher
             //if (Interpolation == InterpolationType.None)
             //{ return GetNotInterpolatedValue(lval, wval); }
             //else{
-            return GetLinearInterpolatedValue(wval, lval);
+            return (GetContinuousLinearInterpolatedValue(wval, lval) - MIN) / MAX;
             //}
         }
 
@@ -231,8 +238,11 @@ namespace Grapher
         //private double GetNotInterpolatedValue(double index1, double index2)
         //{return GetTableValue((int)index1, (int)index2);}
 
+        /// <summary>
+        /// does interpolation between 2 and 2 continuous values
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private double GetLinearInterpolatedValue(double wval, double lval)
+        private double GetContinuousLinearInterpolatedValue(double wval, double lval)
         {
             int col1 = (int)wval;
             int col2 = (wval == col1) ? col1 : col1 + 1; //faster (int)Math.Ceiling(index2);
@@ -243,11 +253,10 @@ namespace Grapher
                 else
                 { col2 = col1; }
             }
+            double cmix = wval - col1;//% 1;//also faster %1
 
             int row1 = (int)lval;
             int row2 = (lval == row1) ? row1 : row1 + 1; //faster (int)Math.Ceiling(index1);
-            double rmix = lval - row1;//% 1;//faster %1 ?
-            double mrmix = 1 - rmix;
             if (row2 >= count1)
             {
                 if (Lscale.IsLooping)
@@ -255,29 +264,77 @@ namespace Grapher
                 else
                 { row2 = row1; }
             }
+            double rmix = lval - row1;//% 1;//faster %1 ?
 
-            if (col1 == col2)//all this so it doesnt have to access much more if interpolation has no effect
+            return GetLinearInterpolatedValue(row1, row2, rmix, col1, col2, cmix);
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static (int, int, double) PrepareInterpolation(double val, int count, bool islooping)
+        {
+            int index1 = (int)val;
+            int indew2 = (val == index1) ? index1 : index1 + 1; //faster (int)Math.Ceiling(index2);
+            if (indew2 >= count)
             {
-                if (row1 == row2)
-                { return GetTableValue(row1, col1); }
+                if (islooping)
+                { indew2 = 0; }
                 else
-                { return GetTableValue(row1, col1) * mrmix + GetTableValue(row2, col1) * rmix; }
+                { indew2 = index1; }
+            }
+            double mix = val - index1;//% 1;//also faster %1
+
+            return (index1, indew2, mix);
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double GetValueFromQuadIndex(int w1, int w2, double wmix, int l1, int l2, double lmix)
+        {
+            if (w1 < 0 || Width <= w1 || l1 < 0 || Length <= l1 ||
+                w2 < 0 || Width <= w2 || l2 < 0 || Length <= l2)
+            { return double.NaN; }
+
+            return (GetLinearInterpolatedValue(w1, w2, wmix, l1, l2, lmix) - MIN) / MAX;
+        }
+
+        /// <summary>
+        /// does interpolation between 2 and 2 non continuous table values
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double GetLinearInterpolatedValue(int w1, int w2, double wmix, int l1, int l2, double lmix)
+        {
+            double mwmix = 1 - wmix;
+            double mlmix = 1 - lmix;
+
+            if (w1 == w2)//avoiding unecessary table access (are those ifs faster than array access?)
+            {
+                if (l1 == l2)
+                { return GetTableValue(l1, w1); }
+                else
+                { return GetTableValue(l1, w1) * mlmix + GetTableValue(l2, w1) * lmix; }
             }
             else
             {
-                double cmix = wval - col1;//% 1;//also faster %1
-                double mcmix = 1 - cmix;
-                if (row1 == row2)
-                { return GetTableValue(row1, col1) * mcmix + GetTableValue(row1, col2) * cmix; }
+                if (l1 == l2)
+                { return GetTableValue(l1, w1) * mwmix + GetTableValue(l1, w2) * wmix; }
                 else
                 {
-                    double ri1 = GetTableValue(row1, col1) * mrmix + GetTableValue(row2, col1) * rmix;
-                    double ri2 = GetTableValue(row1, col2) * mrmix + GetTableValue(row2, col2) * rmix;
-                    return ri1 * mcmix + ri2 * cmix;
+                    double ri1 = GetTableValue(l1, w1) * mlmix + GetTableValue(l2, w1) * lmix;
+                    double ri2 = GetTableValue(l1, w2) * mlmix + GetTableValue(l2, w2) * lmix;
+                    return ri1 * mwmix + ri2 * wmix;
                 }
             }
-
         }
+
     }
     //public enum InterpolationType { None, Linear }
+
+
+
+
 }

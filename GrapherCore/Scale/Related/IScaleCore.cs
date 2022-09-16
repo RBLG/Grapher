@@ -41,9 +41,5 @@ namespace Grapher.Scale.Related
         /// </summary>
         bool IsLooping { get; }
 
-        /// <summary>
-        /// if the array is built each value independent of other or it the last values are added
-        /// </summary>
-        bool IsCumulative { get; }
     }
 }

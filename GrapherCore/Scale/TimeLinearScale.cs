@@ -31,7 +31,6 @@ namespace Grapher.Scale
         public bool Continuous => true;
 
         public bool IsLooping { get; set; } = true;
-        public bool IsCumulative => false;
 
         public double Hold { get; set; } = 500;
 
@@ -43,7 +42,7 @@ namespace Grapher.Scale
             return rtn;
         }
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, double size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
         {
             double rtn = spectrum.Time;
             if (IsLooping)
@@ -61,6 +60,9 @@ namespace Grapher.Scale
             }
             return rtn * size;
         }
+
+        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
+        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
         public EnvStatus GetEnvStatus(double time, double timeoff)
         {

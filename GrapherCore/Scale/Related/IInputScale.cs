@@ -13,6 +13,11 @@ namespace Grapher.Scale.Related
         /// <summary>
         /// pick, scale and return the value corresponding to this scale
         /// </summary>
-        double PickValueTo(Wave wave, Spectrum spectrum, double size);
+        double PickValueTo(Wave wave, Spectrum spectrum, int size);
+
+        /// <summary>
+        /// same but allow 2 and 2 non continuous interpolation
+        /// </summary>
+        (int,int,double) PickValueTo2(Wave wave, Spectrum spectrum, int size);
     }
 }

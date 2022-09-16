@@ -16,10 +16,13 @@ namespace Grapher.Scale
         //public double Max => 1;
         //public double Min => 0;
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, double size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
         {
             return (wave.Frequency / spectrum.Waves[0].Frequency) - 1;
         }
+
+        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
+        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {
@@ -41,7 +44,6 @@ namespace Grapher.Scale
         public bool Continuous => false;
         public bool IsLooping => false;
 
-        public bool IsCumulative => false;
 
     }
 }

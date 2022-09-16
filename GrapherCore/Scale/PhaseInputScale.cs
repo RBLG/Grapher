@@ -32,13 +32,11 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public bool IsLooping => true;
 
-        public bool IsCumulative => false;
-
         public bool IsAbsolute { get; set; } = true;
         public double Multiplier { get; set; } = 1;// 1/Mult; for speed
         public double Detune { get; set; } = 0;
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, double size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
         {
             if (IsAbsolute)
             {
@@ -49,6 +47,9 @@ namespace Grapher.Scale
             else
             { return wave.Phase; }
         }
+
+        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
+        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
         private double GetAbsPhase(Wave wave, Spectrum spectrum)
         {

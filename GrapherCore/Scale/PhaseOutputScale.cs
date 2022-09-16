@@ -32,8 +32,6 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public bool IsLooping => true;
 
-        public bool IsCumulative => false;
-
         public bool IsAbsolute { get; set; } = true;
         public double Offset { get; set; } = 0;
 
@@ -64,7 +62,7 @@ namespace Grapher.Scale
 
         public static double GetGlobalPhase(Spectrum.Wave wave, Spectrum spectrum)
         {
-            return  spectrum.Time / 1000 * wave.Frequency;
+            return spectrum.Time / 1000 * wave.Frequency;
         }
     }
 }

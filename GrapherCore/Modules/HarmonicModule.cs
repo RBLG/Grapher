@@ -44,7 +44,7 @@ namespace Grapher.Modules
             int it = 0;
             foreach (Table3DDot dot in Table.dots[0])
             {
-                double wval = Table.Get01ValueFromWL(it, 0);
+                double wval = Table.GetValueFromWL(it, 0);
                 if (wval > 0)
                 {
                     Wave wav = wavstock.Waves[it];
