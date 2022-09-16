@@ -204,7 +204,8 @@ namespace Grapher
             double wval = (count2 == 1) ? 0 : Wscale.PickValueTo(wave, spectrum, count2);
             double lval = (count1 == 1) ? 0 : Lscale.PickValueTo(wave, spectrum, count1);
             double tval = Get01ValueFromWL(wval, lval);
-            Hscale.ProcessValue(wave, spectrum, Height, Mode, tval);
+            if (!double.IsNaN(tval))
+            { Hscale.ProcessValue(wave, spectrum, Height, Mode, tval); }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -217,21 +218,18 @@ namespace Grapher
         public double GetOnMaxValueFromWL(double wval, double lval)
         {
             if (wval < 0 || Width <= wval || lval < 0 || Length <= lval)
-            { return 0; }
+            { return double.NaN; }
 
             //if (Interpolation == InterpolationType.None)
             //{ return GetNotInterpolatedValue(lval, wval); }
-            //else
-            //{
+            //else{
             return GetLinearInterpolatedValue(wval, lval);
             //}
         }
 
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         //private double GetNotInterpolatedValue(double index1, double index2)
-        //{
-        //    return GetTableValue((int)index1, (int)index2);
-        //}
+        //{return GetTableValue((int)index1, (int)index2);}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double GetLinearInterpolatedValue(double wval, double lval)

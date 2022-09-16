@@ -17,16 +17,16 @@ namespace Grapher.GuiElement
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
             //doesnt work, it give the wrong one as it does it before load take place
-            InputComboBox.SelectedIndex = AvailableModules.GetIndex(ChainProvider.GetRootModule().GetType());
+            InputComboBox.SelectedIndex = AvailableModules.GetIndex(ChainProvider.RootModule.GetType());
             inInit = false;
         }
 
         public class HollowModuleProvider : IModuleChainProvider
         {
-            private IModule root;
-            public HollowModuleProvider(IModule module) { root = module; }
-            public IModule GetRootModule() => root;
-            public void SetRootModule(IModule module) { root = module; }
+            public HollowModuleProvider(IModule module) { RootModule = module; }
+            public IModule RootModule { get; set; }
+            public double TimeOffDelay { get; set; } = 0;
+            public double Detune { get; set; } = 0;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Grapher.GuiElement
         private void EditInputButton_Click(object sender, EventArgs e)
         {
             //MyRefresh();//it work but its too late
-            var root = ChainProvider.GetRootModule();
+            var root = ChainProvider.RootModule;
             var control = root.GetControl();
             if (control == null)
             { return; }
@@ -68,20 +68,26 @@ namespace Grapher.GuiElement
             { return; }
             if (inputform != null && !inputform.IsDisposed)
             { inputform.Dispose(); }
-            ChainProvider.SetRootModule(item.Factory());
-        }
-
-        public void MainSettings_Load(object sender, EventArgs e)
-        {
-            //MyRefresh();//doesnt work
+            ChainProvider.RootModule = item.Factory();
         }
 
         public void MyRefresh()
         {
             inInit = true;
-            InputComboBox.SelectedIndex = AvailableModules.GetIndex(ChainProvider.GetRootModule().GetType());
+            InputComboBox.SelectedIndex = AvailableModules.GetIndex(ChainProvider.RootModule.GetType());
+            ReleaseDelayUd.Value = (decimal)ChainProvider.TimeOffDelay;
+            ChainProvider.Detune = Detuner.Value;
             inInit = false;
-            //throw new Exception("type: " + ChainProvider.GetRootModule().GetType());
+        }
+
+        private void ReleaseDelayUd_ValueChanged(object sender, EventArgs e)
+        {
+            ChainProvider.TimeOffDelay = (double)ReleaseDelayUd.Value;
+        }
+
+        private void Detuner_Scroll(object sender, EventArgs e)
+        {
+            ChainProvider.Detune = Detuner.Value;
         }
     }
 }

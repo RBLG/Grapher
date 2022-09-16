@@ -49,7 +49,5 @@ namespace Grapher.Modules
         public void SetInput(IModule input)
         { return; }
 
-        public EnvStatus IsOver(double time, double timeoff)
-        { return EnvStatus.NotHandled; }
     }
 }

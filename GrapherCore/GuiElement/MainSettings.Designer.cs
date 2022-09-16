@@ -35,10 +35,10 @@
             this.EditInputButton = new System.Windows.Forms.Button();
             this.InputComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.ReleaseDelayUd = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Detuner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReleaseDelayUd)).BeginInit();
             this.SuspendLayout();
             // 
             // Detuner
@@ -52,6 +52,7 @@
             this.Detuner.Size = new System.Drawing.Size(120, 27);
             this.Detuner.TabIndex = 0;
             this.Detuner.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.Detuner.Scroll += new System.EventHandler(this.Detuner_Scroll);
             // 
             // groupBox1
             // 
@@ -112,28 +113,29 @@
             this.label1.TabIndex = 27;
             this.label1.Text = "Detune:";
             // 
-            // numericUpDown1
+            // ReleaseDelayUd
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(3, 118);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(77, 23);
-            this.numericUpDown1.TabIndex = 28;
+            this.ReleaseDelayUd.Location = new System.Drawing.Point(3, 118);
+            this.ReleaseDelayUd.Name = "ReleaseDelayUd";
+            this.ReleaseDelayUd.Size = new System.Drawing.Size(77, 23);
+            this.ReleaseDelayUd.TabIndex = 28;
+            this.ReleaseDelayUd.ValueChanged += new System.EventHandler(this.ReleaseDelayUd_ValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(3, 100);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 15);
+            this.label2.Size = new System.Drawing.Size(107, 15);
             this.label2.TabIndex = 29;
-            this.label2.Text = "Release delay:";
+            this.label2.Text = "Release delay (ms):";
             // 
             // MainSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.ReleaseDelayUd);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.groupBox1);
@@ -143,9 +145,8 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "MainSettings";
             this.Size = new System.Drawing.Size(478, 273);
-            this.Load += new System.EventHandler(this.MainSettings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Detuner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReleaseDelayUd)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -159,7 +160,7 @@
         private System.Windows.Forms.Button EditInputButton;
         private System.Windows.Forms.ComboBox InputComboBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown ReleaseDelayUd;
         private System.Windows.Forms.Label label2;
     }
 }

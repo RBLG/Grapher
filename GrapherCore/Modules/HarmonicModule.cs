@@ -26,6 +26,7 @@ namespace Grapher.Modules
                 dot.Y = Table.MIN;
             }
             Table.dots[0][0].Y = Table.MAX;
+            Table.UpdateAll();
         }
 
         private readonly Spectrum wavstock = new();
@@ -89,9 +90,5 @@ namespace Grapher.Modules
         public override void SetInput(IModule modude)
         { return; }
 
-        public override EnvStatus IsOver(double time, double timeoff)
-        {
-            return EnvStatus.NotHandled;
-        }
     }
 }

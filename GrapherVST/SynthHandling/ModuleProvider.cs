@@ -11,7 +11,7 @@ using static Grapher.Spectrum;
 
 namespace GrapherVST.SynthHandling
 {
-    internal class ModuleProvider : IModuleChainProvider
+    public class ModuleProvider : IModuleChainProvider
     {
         private readonly List<MyMidiEvent> events = new();
 
@@ -24,9 +24,16 @@ namespace GrapherVST.SynthHandling
                 count++;
                 seed = count;
             }
+            /// <summary> per note seed to increase randomness effects </summary>
             public double seed;
+
+            /// <summary> midi note </summary>
             public int note;
+
+            /// <summary> time since key press </summary>
             public double time = 0;
+
+            /// <summary> time since key release </summary>
             public double timeoff = double.NaN;//NaN till the off event happen
         }
 
@@ -41,12 +48,11 @@ namespace GrapherVST.SynthHandling
 
         private IModule root = new TableModule();
 
-        public IModule GetRootModule()
-        { return root; }
+        public IModule RootModule { get => root; set => root = value; }
 
-        public void SetRootModule(IModule module)
-        { root = module; }
+        public double TimeOffDelay { get; set; } = 0;
 
+        public double Detune { get; set; } = 0;
 
         public bool IsPlaying { get { return events.Count != 0; } private set { } }
 
@@ -55,8 +61,7 @@ namespace GrapherVST.SynthHandling
             for (int i = events.Count - 1; i >= 0; i--)
             {
                 var evnt = events[i];
-                var isover = root.IsOver(evnt.time, evnt.timeoff);
-                if ((isover == EnvStatus.NotHandled && !Double.IsNaN(evnt.timeoff)) || isover.HasFlag(EnvStatus.Done))
+                if (!double.IsNaN(evnt.timeoff) && evnt.timeoff > TimeOffDelay)
                 {
                     events.RemoveAt(i);
                     continue;

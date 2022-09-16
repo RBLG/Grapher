@@ -32,14 +32,14 @@
             var reader = new BinaryReader(stream, _encoding);
 
             IModule nroot = Cereal.Deserialize<IModule>(reader.ReadString());
-            _moduleProvider.SetRootModule(nroot);
+            _moduleProvider.RootModule = nroot;
         }
 
         public void WritePrograms(Stream stream, VstProgramCollection programs)
         {
             var writer = new BinaryWriter(stream, _encoding);
 
-            IModule root = _moduleProvider.GetRootModule();
+            IModule root = _moduleProvider.RootModule;
             string str = Cereal.Serialize<IModule>(root);
             //to fix this stupid behavior that add double curly brackets
             str = str.Replace("{{", "{");

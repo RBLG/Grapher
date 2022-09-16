@@ -109,11 +109,6 @@ namespace Grapher.Modules
             return spectrum;
         }
 
-        public EnvStatus IsOver(double time, double timeoff)
-        {
-            return EnvStatus.NotHandled;
-        }
-
         public void SetInput(IModule input) { }
     }
 

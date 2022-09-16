@@ -42,10 +42,5 @@ namespace Grapher.Modules
         /// </summary>
         void SetInput(IModule input);
 
-
-        /// <summary>
-        ///  return if the module and it inputs handle envelloppes
-        /// </summary>
-        EnvStatus IsOver(double time, double timeoff);
     }
 }

@@ -22,7 +22,7 @@ namespace Grapher
 
         public override int Read(float[] buffer, int offset, int sampleCount)
         {
-            var mod = shared.ModuleProvider.GetRootModule();
+            var mod = shared.ModuleProvider.RootModule;
             int sampleRate = WaveFormat.SampleRate;
             double interval = 1000d / sampleRate;//in millis
             for (int n = 0; n < sampleCount; n++)
