@@ -49,7 +49,28 @@ namespace Grapher.Scale
         }
 
         public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
-        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
+        {
+            double phase = PhaseInputScale.GetAbsPhase(wave, spectrum, Detune, 1);
+            int val1 = (int)(phase / CycleCount);
+            int val2 = val1 + 1;
+            double mix = phase / CycleCount - val1;
+
+            val1 = ComputeIndex(spectrum, size, val1);
+            val2 = ComputeIndex(spectrum, size, val2);
+
+            return (val1, val2, mix);
+        }
+
+        public int ComputeIndex(Spectrum spectrum, int size, double rtn)
+        {
+            if (IsLooping)
+            { rtn %= size; }
+            if (IsRandom)
+            {
+                rtn = (Math.Sin(rtn * spectrum.NoteSeed / Seed) + 1) * (size * 100_000 - 1) % size;
+            }
+            return (int)rtn;
+        }
 
 
     }
