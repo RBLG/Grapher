@@ -27,7 +27,7 @@ namespace Grapher
             double interval = 1000d / sampleRate;//in millis
             for (int n = 0; n < sampleCount; n++)
             {
-                Spectrum spec = mod.GetSpectrum(time, -1, shared.Pitch, (int)(time / 3_000d));
+                Spectrum spec = mod.GetSpectrum(time, -1, shared.Pitch, 432);
                 float sum = 0;
                 foreach (Wave w in spec.Waves)
                 {

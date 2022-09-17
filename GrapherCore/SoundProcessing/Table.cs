@@ -212,9 +212,13 @@ namespace Grapher
         {
             int w1, w2, l1, l2;
             double wmix, lmix;
+            if (count2 == 1) { wmix = w1 = w2 = 0; }
+            else
+            { (w1, w2, wmix) = Wscale.PickValueTo2(wave, spectrum, count2); }
 
-            (w1, w2, wmix) = Wscale.PickValueTo2(wave, spectrum, count2);
-            (l1, l2, lmix) = Lscale.PickValueTo2(wave, spectrum, count1);
+            if (count1 == 1) { lmix = l1 = l2 = 0; }
+            else
+            { (l1, l2, lmix) = Lscale.PickValueTo2(wave, spectrum, count1); }
 
             double tval = GetValueFromQuadIndex(w1, w2, wmix, l1, l2, lmix);
             if (!double.IsNaN(tval))
@@ -277,18 +281,16 @@ namespace Grapher
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static (int, int, double) PrepareInterpolation(double val, int count, bool islooping)
         {
-            int index1 = (int)val;
-            int indew2 = (val == index1) ? index1 : index1 + 1; //faster (int)Math.Ceiling(index2);
-            if (indew2 >= count)
+            //i1 and i2 are the two index to interpolate between, mix is where between both the value is
+            int i1 = (int)val;
+            int i2 = (val == i1) ? i1 : i1 + 1; //faster (int)Math.Ceiling(index2);
+            if (i2 >= count)
             {
-                if (islooping)
-                { indew2 = 0; }
-                else
-                { indew2 = index1; }
+                i2 = islooping ? 0 : i1;
             }
-            double mix = val - index1;//% 1;//also faster %1
+            double mix = val - i1;//% 1;//also faster %1
 
-            return (index1, indew2, mix);
+            return (i1, i2, mix);
         }
 
 

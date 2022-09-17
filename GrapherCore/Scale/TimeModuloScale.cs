@@ -68,6 +68,27 @@ namespace Grapher.Scale
         }
 
         public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
-        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
+        {
+            int val1 = (int)(spectrum.Time / Modulo);
+            int val2 = val1 + 1;
+            double mix = spectrum.Time / Modulo - val1;
+
+            val1 = ComputeIndex(wave, spectrum, size, val1);
+            val2 = ComputeIndex(wave, spectrum, size, val2);
+
+            return (val1, val2, mix);
+        }
+
+
+        public int ComputeIndex(Wave wave, Spectrum spectrum, int size, double rtn)
+        {
+            if (IsLooping)
+            { rtn %= size; }
+            if (IsRandom)// randomizing through modulo, shader noise style
+            {
+                rtn = (Math.Sin(rtn * spectrum.NoteSeed / Seed) + 1) * (size * 100_000 - 1) % size;
+            }
+            return (int)rtn;
+        }
     }
 }
