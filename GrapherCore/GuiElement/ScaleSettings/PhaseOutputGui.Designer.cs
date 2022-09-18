@@ -45,9 +45,10 @@
             // 
             // NumUdOffset
             // 
+            this.NumUdOffset.DecimalPlaces = 2;
             this.NumUdOffset.Location = new System.Drawing.Point(3, 18);
             this.NumUdOffset.Maximum = new decimal(new int[] {
-            99,
+            1,
             0,
             0,
             0});

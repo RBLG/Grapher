@@ -62,7 +62,9 @@ namespace Grapher.Scale
             { rtn %= size; }
             if (IsRandom)// randomizing through modulo, shader noise style
             {
-                rtn = (Math.Sin(rtn * spectrum.NoteSeed / Seed) + 1) * (size * 100_000 - 1) % size;
+                double seed = (Seed == 0) ? spectrum.NoteSeed : Seed;
+
+                rtn = (Math.Sin(rtn * seed * 13.531) + 1) * (size * 100_000 - 1) % size;
             }
             return rtn;
         }
@@ -73,20 +75,22 @@ namespace Grapher.Scale
             int val2 = val1 + 1;
             double mix = spectrum.Time / Modulo - val1;
 
-            val1 = ComputeIndex(wave, spectrum, size, val1);
-            val2 = ComputeIndex(wave, spectrum, size, val2);
+            val1 = ComputeIndex(spectrum, size, val1);
+            val2 = ComputeIndex(spectrum, size, val2);
 
             return (val1, val2, mix);
         }
 
 
-        public int ComputeIndex(Wave wave, Spectrum spectrum, int size, double rtn)
+        public int ComputeIndex(Spectrum spectrum, int size, double rtn)
         {
             if (IsLooping)
             { rtn %= size; }
             if (IsRandom)// randomizing through modulo, shader noise style
             {
-                rtn = (Math.Sin(rtn * spectrum.NoteSeed / Seed) + 1) * (size * 100_000 - 1) % size;
+                double seed = (Seed == 0) ? spectrum.NoteSeed : Seed;
+
+                rtn = (Math.Sin(rtn * seed * 13.531) + 1) * (size * 100_000 - 1) % size;
             }
             return (int)rtn;
         }

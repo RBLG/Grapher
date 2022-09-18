@@ -43,7 +43,9 @@ namespace Grapher.Scale
             { rtn %= size; }
             if (IsRandom)
             {
-                rtn = (Math.Sin(rtn * spectrum.NoteSeed / Seed) + 1) * (size * 100_000 - 1) % size;
+                double seed = (Seed == 0) ? spectrum.NoteSeed : Seed;
+
+                rtn = (Math.Sin(rtn * seed * 13.531) + 1) * (size * 100_000 - 1) % size;
             }
             return rtn;
         }
@@ -67,7 +69,10 @@ namespace Grapher.Scale
             { rtn %= size; }
             if (IsRandom)
             {
-                rtn = (Math.Sin(rtn * spectrum.NoteSeed / Seed) + 1) * (size * 100_000 - 1) % size;
+
+                double seed = (Seed == 0) ? spectrum.NoteSeed : Seed;
+
+                rtn = (Math.Sin(rtn * seed * 13.531) + 1) * (size * 100_000 - 1) % size;
             }
             return (int)rtn;
         }

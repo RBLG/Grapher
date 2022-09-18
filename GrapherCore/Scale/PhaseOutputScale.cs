@@ -33,7 +33,7 @@ namespace Grapher.Scale
         public bool IsLooping => true;
 
         public bool IsAbsolute { get; set; } = true;
-        public double Offset { get; set; } = 0;
+        public double Offset { get; set; } = 0.25;
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {

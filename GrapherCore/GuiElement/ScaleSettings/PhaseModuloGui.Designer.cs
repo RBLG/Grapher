@@ -43,6 +43,7 @@
             // 
             // NumUdCount
             // 
+            this.NumUdCount.DecimalPlaces = 1;
             this.NumUdCount.Location = new System.Drawing.Point(3, 21);
             this.NumUdCount.Maximum = new decimal(new int[] {
             1000,
@@ -55,7 +56,7 @@
             0,
             0});
             this.NumUdCount.Name = "NumUdCount";
-            this.NumUdCount.Size = new System.Drawing.Size(42, 23);
+            this.NumUdCount.Size = new System.Drawing.Size(56, 23);
             this.NumUdCount.TabIndex = 18;
             this.NumUdCount.Value = new decimal(new int[] {
             1,
@@ -67,7 +68,7 @@
             // OffsetLabel
             // 
             this.OffsetLabel.AutoSize = true;
-            this.OffsetLabel.Location = new System.Drawing.Point(3, 3);
+            this.OffsetLabel.Location = new System.Drawing.Point(0, 3);
             this.OffsetLabel.Name = "OffsetLabel";
             this.OffsetLabel.Size = new System.Drawing.Size(43, 15);
             this.OffsetLabel.TabIndex = 17;
@@ -76,7 +77,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(52, 3);
+            this.label1.Location = new System.Drawing.Point(65, 3);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 15);
             this.label1.TabIndex = 16;
@@ -84,26 +85,27 @@
             // 
             // NumUdDetune
             // 
-            this.NumUdDetune.Location = new System.Drawing.Point(52, 21);
+            this.NumUdDetune.DecimalPlaces = 1;
+            this.NumUdDetune.Location = new System.Drawing.Point(65, 21);
             this.NumUdDetune.Maximum = new decimal(new int[] {
-            20000,
+            2000,
             0,
             0,
             0});
             this.NumUdDetune.Minimum = new decimal(new int[] {
-            20000,
+            2000,
             0,
             0,
             -2147483648});
             this.NumUdDetune.Name = "NumUdDetune";
-            this.NumUdDetune.Size = new System.Drawing.Size(47, 23);
+            this.NumUdDetune.Size = new System.Drawing.Size(54, 23);
             this.NumUdDetune.TabIndex = 15;
             this.NumUdDetune.ValueChanged += new System.EventHandler(this.NumUdDetune_ValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(106, 3);
+            this.label2.Location = new System.Drawing.Point(120, 3);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 15);
             this.label2.TabIndex = 22;
@@ -111,9 +113,10 @@
             // 
             // NumUdSeed
             // 
-            this.NumUdSeed.Location = new System.Drawing.Point(105, 21);
-            this.NumUdSeed.Minimum = new decimal(new int[] {
-            1,
+            this.NumUdSeed.DecimalPlaces = 1;
+            this.NumUdSeed.Location = new System.Drawing.Point(125, 21);
+            this.NumUdSeed.Maximum = new decimal(new int[] {
+            1000,
             0,
             0,
             0});

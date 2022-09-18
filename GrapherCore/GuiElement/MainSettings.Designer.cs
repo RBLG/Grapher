@@ -116,6 +116,11 @@
             // ReleaseDelayUd
             // 
             this.ReleaseDelayUd.Location = new System.Drawing.Point(3, 118);
+            this.ReleaseDelayUd.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.ReleaseDelayUd.Name = "ReleaseDelayUd";
             this.ReleaseDelayUd.Size = new System.Drawing.Size(77, 23);
             this.ReleaseDelayUd.TabIndex = 28;
