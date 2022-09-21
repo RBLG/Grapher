@@ -13,6 +13,6 @@ namespace Grapher.Scale
     /// </summary>
     public interface ITimeScale
     {
-        EnvStatus GetEnvStatus(double time, double timeoff);
+        
     }
 }

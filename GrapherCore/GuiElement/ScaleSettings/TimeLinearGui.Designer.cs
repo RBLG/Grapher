@@ -38,7 +38,8 @@
             // 
             // NumUdLength
             // 
-            this.NumUdLength.Location = new System.Drawing.Point(3, 21);
+            this.NumUdLength.DecimalPlaces = 1;
+            this.NumUdLength.Location = new System.Drawing.Point(3, 28);
             this.NumUdLength.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -50,7 +51,7 @@
             0,
             0});
             this.NumUdLength.Name = "NumUdLength";
-            this.NumUdLength.Size = new System.Drawing.Size(68, 23);
+            this.NumUdLength.Size = new System.Drawing.Size(83, 23);
             this.NumUdLength.TabIndex = 7;
             this.NumUdLength.Value = new decimal(new int[] {
             1,
@@ -62,14 +63,15 @@
             // LabelChunkSize
             // 
             this.LabelChunkSize.AutoSize = true;
-            this.LabelChunkSize.Location = new System.Drawing.Point(3, 3);
+            this.LabelChunkSize.Location = new System.Drawing.Point(3, 6);
             this.LabelChunkSize.Name = "LabelChunkSize";
-            this.LabelChunkSize.Size = new System.Drawing.Size(47, 15);
+            this.LabelChunkSize.Size = new System.Drawing.Size(83, 15);
             this.LabelChunkSize.TabIndex = 6;
-            this.LabelChunkSize.Text = "Length:";
+            this.LabelChunkSize.Text = "Duration (ms):";
             // 
             // NumUdHold
             // 
+            this.NumUdHold.DecimalPlaces = 2;
             this.NumUdHold.Location = new System.Drawing.Point(164, 28);
             this.NumUdHold.Maximum = new decimal(new int[] {
             100000,

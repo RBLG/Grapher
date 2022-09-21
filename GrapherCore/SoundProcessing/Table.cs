@@ -13,7 +13,7 @@ namespace Grapher
     // the grid/table of values
     public class Table
     {
-        public static readonly double MAX = 100;
+        public static readonly double MAX = 100; //rework to have value between 0 and 1
         public static readonly double MIN = 0;
         public static readonly double defval = 50;
 
@@ -237,6 +237,8 @@ namespace Grapher
             return (GetContinuousLinearInterpolatedValue(wval, lval) - MIN) / MAX;
             //}
         }
+
+        //will impl interpolation type choice in the future
 
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         //private double GetNotInterpolatedValue(double index1, double index2)

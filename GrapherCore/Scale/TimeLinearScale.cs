@@ -16,8 +16,8 @@ namespace Grapher.Scale
     /// </summary>
     public class TimeLinearScale : IInputScale, ITimeScale
     {
-        public double Min => 0;
-        public double Max { get; set; } = 1000; //represent the duration of the table (in millis)
+        public double Duration { get; set; } = 1000; //duration of the table (in millis)
+        public double Hold { get; set; } = 500; //if not looping, time where it wait the release event
 
         public List<Graduation> GetMilestones()
         {
@@ -32,22 +32,13 @@ namespace Grapher.Scale
 
         public bool IsLooping { get; set; } = true;
 
-        public double Hold { get; set; } = 500;
-
-        public double Scale(double notscaled) => ScaleTo01(notscaled) * 1000;
-        public double ScaleTo01(double notscaled)
-        {
-            double rtn = notscaled / Max;
-            if (IsLooping) { rtn %= 1; }//loop //TODO optimize modulus
-            return rtn;
-        }
 
         public double PickValueTo(Wave wave, Spectrum spectrum, int size)
         {
             double rtn = spectrum.Time;
             if (IsLooping)
             {
-                rtn /= Max;
+                rtn /= Duration;
                 rtn -= (int)rtn;//%= 1;//another faster modulo
             }
             else
@@ -55,27 +46,20 @@ namespace Grapher.Scale
                 if (double.IsNaN(spectrum.TimeOff))
                 { rtn = Math.Min(rtn, Hold); }
                 else
-                { rtn = GetTrueTimeOff(spectrum.Time, spectrum.TimeOff); }
-                rtn /= Max;
+                {
+                    //if release event happenned before time reached the hold, use time instead of timeoff
+                    rtn = Math.Min(spectrum.Time, Hold + spectrum.TimeOff);
+                    rtn = Math.Min(rtn, Duration - 1); //
+                }
+                rtn /= Duration;
             }
             return rtn * size;
         }
 
         public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
-        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
-
-        public EnvStatus GetEnvStatus(double time, double timeoff)
         {
-            return IsLooping ?
-                EnvStatus.NotHandled :
-                ((!double.IsNaN(timeoff)) && GetTrueTimeOff(time, timeoff) > Max ?
-                    EnvStatus.Done :
-                    EnvStatus.Handled);
+            return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping);
         }
 
-        private double GetTrueTimeOff(double time, double timeoff)
-        {
-            return Math.Min(time, timeoff + Hold);
-        }
     }
 }

@@ -25,7 +25,7 @@ namespace Grapher.GuiElement
         {
             public HollowModuleProvider(IModule module) { RootModule = module; }
             public IModule RootModule { get; set; }
-            public double TimeOffDelay { get; set; } = 0;
+            public double TimeOffDelay { get; set; } = 500;
             public double Detune { get; set; } = 0;
         }
 

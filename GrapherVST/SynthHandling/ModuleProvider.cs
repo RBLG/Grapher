@@ -50,7 +50,7 @@ namespace GrapherVST.SynthHandling
 
         public IModule RootModule { get => root; set => root = value; }
 
-        public double TimeOffDelay { get; set; } = 0;
+        public double TimeOffDelay { get; set; } = 500;
 
         public double Detune { get; set; } = 0;
 

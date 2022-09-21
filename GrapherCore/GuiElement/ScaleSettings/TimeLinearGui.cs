@@ -19,7 +19,7 @@ namespace Grapher.GuiElement.ScaleSettings
         {
             InitializeComponent();
             scale = nscale;
-            this.NumUdLength.Value = (decimal)scale.Max;
+            this.NumUdLength.Value = (decimal)scale.Duration;
             this.ComboBoxMode.SelectedIndex = scale.IsLooping ? 0 : 1;
             this.NumUdHold.Value = (decimal)scale.Hold;
         }
@@ -28,7 +28,7 @@ namespace Grapher.GuiElement.ScaleSettings
 
         private void LoopLength_ValueChanged(object sender, EventArgs e)
         {
-            scale.Max = (double)NumUdLength.Value;
+            scale.Duration = (double)NumUdLength.Value;
         }
 
         private void ComboBoxMode_SelectedIndexChanged(object sender, EventArgs e)

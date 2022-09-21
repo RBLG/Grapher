@@ -66,7 +66,4 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="naudio.winforms" Version="2.1.0" />
-  </ItemGroup>
 </Project>
