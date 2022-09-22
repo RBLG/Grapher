@@ -1,8 +1,44 @@
 # Grapher
 
-a grid based synthesizer
+A grid based synthesizer 
 
 ![screenshot of the 3D editor](https://github.com/RBLG/Grapher/blob/master/Doc/imgs/screenshot.PNG)
+
+### Description:
+Grapher is centered around the (Table/Grid/3D? name pending) editor. it is a table of values, similar to a F(x,y)= z graph except you customize the graph rather than the equation. Then customizing the 3 axis of the graph allow to define it how it evolve and what it change.
+
+#### Example of common tools:
+- Amplitude envelope:
+  - Time as Length
+  - Amplitude as Height
+  
+- Filter:
+  - Frequency as Width
+  - Amplitude as Height
+  - (Time as Length for envelope)
+  
+- Phase modulation:
+  - Time as Length
+  - Phase as Height
+  
+- Tablewave-like:
+  - Time Modulo as Width
+  - Time as Length
+  - Amplitude/Phase as Height
+  
+- Padding "modulation"
+  - Time as Length
+  - Padding as Height
+  
+and they can be combined, for example an envelope + filter:
+![example of filter-envelloppe settup](https://github.com/RBLG/Grapher/blob/master/Doc/imgs/highpassfilter_and_envelloppe.PNG)  
+  
+### Discord server:
+
+Documentation is a bit lacking right now so dont hesitate asking directly if you got any question!
+(considering how much people use that project i should be able to answer)
+
+https://discord.gg/HqrgjEe3Tx
 
 ### How to install:
 
@@ -16,28 +52,16 @@ or:
 - download the release zip
 - use it by opening GrapherVST.dll with your daw
 
-### How to use:
-Grapher is composed of multiple modules. you can chain modules by using the Input setting
-
-Here's some modules:
-- 3D Editor:
-  the main module. it allow you to modulate any property (on the Height axis) of a wave based on 2 others (the Width axis and Length axis)
-  LH and WH Editors are variants with no Width or no Length for convenience
-
-### Example:
-
-- you can do both a filter and envelloppe (including filter envelloppes and sort of LFOs) with a 3D editor with:
-  - Frequency as Width
-  - Time as Length
-  - Amplitude as Height
-
-![example of filter-envelloppe settup](https://github.com/RBLG/Grapher/blob/master/Doc/imgs/highpassfilter_and_envelloppe.PNG)
-  
-- you can do phase modulation by using the phase axis as Height
-
-- you can make your synth sound full by using the padding scale as Height, time as Length and a rapidly changing pattern
-  
-### In Construction:
+### To do: 
+(not that i will do them but its what im considering)
 - main detune
-- release automation
+- in daw automation integration
+- expanding synthesis range
+- reordering modules
+- advanced 3D edit features
+- 3D UI better scaling
 - other features
+
+### Help needed:
+- release automation
+- linux compatibility (mono?)/port to Rust
