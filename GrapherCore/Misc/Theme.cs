@@ -22,6 +22,7 @@ namespace Grapher.Misc
         // ///////////////////////////
         public static Color Editor_3d_background /*     */=> FromRGB(0x002449);
         public static Color Editor_3d_gridlines /*      */=> FromRGB(0xf1f227);
+        public static Color Editor_3d_griddots /*       */=> FromRGB(0xf1f227);
         public static Color Editor_3d_gridlines_back /* */=> FromRGB(0xcea227);//abd225
         public static Color Editor_3d_gridlines_off /*  */=> FromRGB(0xff2975);
         public static Color Editor_3d_labels /*         */=> FromRGB(1);
