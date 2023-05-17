@@ -27,6 +27,7 @@ namespace Grapher.GuiElement
         public const float dotsize = 3;
         public const float halfdot = dotsize / 2f;
 
+        protected readonly OrthoCamera defaultcamera = new(); //HACK
         protected readonly OrthoCamera camera = new();
         protected readonly TableModule2 module;
         protected readonly TableFormater formater;
@@ -57,7 +58,8 @@ namespace Grapher.GuiElement
             //antialiasing on
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            bool isxcontinuous = true; //Module.Wscale.Continuous
+            //TODO
+            bool isxcontinuous = true; //Module.Wscale.Continuous 
             bool isycontinuous = true; //Module.Lscale.Continuous
 
             //axis coordinates
@@ -86,6 +88,7 @@ namespace Grapher.GuiElement
                 foreach (int ity2 in hrange) {
                     uint ity = (uint)Math.Max(0, ity2);
                     G2DPoint point = camera.ToScreenSpace(formater.Format(itx, ity));
+
                     if ((!isxcontinuous) && (!isycontinuous)) { //drawing points
                         e.Graphics.FillEllipse(dot, point.x - halfdot, point.y - halfdot, dotsize, dotsize);
                     }
@@ -102,6 +105,26 @@ namespace Grapher.GuiElement
                 }
             }
             //end of render
+        }
+
+        private G2DPoint ComputeRenderAreaSize() {
+            float xmin, ymin, xmax, ymax;
+            xmin = xmax = Width / 2;
+            ymin = ymax = Height / 2;
+
+            foreach (var x in new float[] { 0, module.Table.width_ }) {
+                foreach (var y in new float[] { 0, module.Table.height }) {
+                    foreach (var z in new float[] { 0, 1 }) {
+                        G2DPoint pt = defaultcamera.ToScreenSpace(formater.FormatAsAtZ(x, y, z));
+                        xmin = MathF.Min(xmin, pt.x);
+                        xmax = MathF.Max(xmax, pt.x);
+                        ymin = MathF.Min(ymin, pt.y);
+                        ymax = MathF.Max(ymax, pt.y);
+                    }
+                }
+            }
+
+            return new(xmax - xmin, ymax - ymin);
         }
 
         private MouseButtons? etype = null;
@@ -136,20 +159,35 @@ namespace Grapher.GuiElement
         private void MyOnMouseUp(object? sender, MouseEventArgs e) => etype = null;
 
 
-        private void MyOnMouseWheel(object? sender, MouseEventArgs e) {
-            //TODO
-            Invalidate();
-        }
+
 
         private void MyOnLoad(object? sender, EventArgs e) => MyOnResize(sender, e);
 
         private void MyOnResize(object? sender, EventArgs e) {
             camera.CanvasWidth = Width;
             camera.CanvasHeight = Height;
+            var size = ComputeRenderAreaSize();
+            if (size.x == 0 && size.y == 0) {
+                return;
+            }
+            ratio = MathF.Min(Width / size.x, Height / size.y);
+            camera.Zoom = ratio * zoom;
+            Invalidate();
         }
 
+        private float ratio = 1;
+        private float zoom = 1;
 
+        //windows constant
+        public static readonly float WHEEL_DELTA = 120;
 
+        private void MyOnMouseWheel(object? sender, MouseEventArgs e) {
+            float delta = e.Delta / WHEEL_DELTA;
+            float mod = 1 + 0.1f * delta;
+            zoom *= mod;
+            camera.Zoom = ratio * zoom;
+            Invalidate();
+        }
 
     }
 }

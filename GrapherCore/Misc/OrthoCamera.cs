@@ -20,10 +20,12 @@ namespace Grapher.Misc
         public float HeightRotation { get => rotation.X; set => rotation.X = Math.Clamp(value, Rotator3D.Angle90d, Rotator3D.Angle180d); }
         public float CanvasWidth { set { postoffset.x = value / 2; } }
         public float CanvasHeight { set { postoffset.y = value / 2; } }
+        public float Zoom { set { postscale.x = value; postscale.y = value; } }
 
         public OrthoCamera() {
             SideRotation = -Rotator3D.Angle135d + Rotator3D.Angle45d / 2;
             HeightRotation = Rotator3D.Angle90d + Rotator3D.Angle45d / 2;
+            Zoom = 1;
         }
 
         public G2DPoint ToScreenSpace(G3DPoint pt) {
