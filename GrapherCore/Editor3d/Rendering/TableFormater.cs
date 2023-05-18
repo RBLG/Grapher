@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Grapher.Misc
+namespace Grapher.Editor3d.Rendering
 {
     public class TableFormater
     {

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Grapher.Misc
+namespace Grapher.Editor3d.Processing
 {
     public class RawTable
     {
@@ -30,11 +30,9 @@ namespace Grapher.Misc
             return values[Index(wi, hi)];
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Set(uint wi, uint hi, double value) {
-            values[Index(wi, hi)] = value;
+            values[Index(wi, hi)] = Math.Clamp(value, 0d, 1d);
         }
-
 
         public RawTable CloneAndRIRows(uint hstart, int hlen) {
             return CloneAndRIRows(hstart, hlen, (wit, hit, table) => 0);
@@ -102,6 +100,22 @@ namespace Grapher.Misc
                 }
             }
             return ntable;
+        }
+
+        public void ForEach(Action<uint, uint> action) {
+            foreach (uint itx in Enumerable.Range(0, (int)width_)) {
+                foreach (uint ity in Enumerable.Range(0, (int)height)) {
+                    action(itx, ity);
+                }
+            }
+        }
+
+        public double[,] CopyToArray() {
+            double[,] narray = new double[width_, height];
+            ForEach((itx, ity) => {
+                narray[itx, ity] = Get(itx, ity);
+            });
+            return narray;
         }
 
     }

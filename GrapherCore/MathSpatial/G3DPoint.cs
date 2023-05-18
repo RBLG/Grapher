@@ -18,5 +18,12 @@ namespace Grapher.MathSpatial
             y = ny;
             z = nz;
         }
+
+        public float DistanceTo(G3DPoint pt) {
+            float dx = x - pt.x,
+                  dy = y - pt.y,
+                  dz = z - pt.z;
+            return MathF.Sqrt(dx * dx + dy * dy + dz * dz);
+        }
     }
 }

@@ -83,35 +83,47 @@ namespace Grapher.GuiElement
                 hrange = hrange.Reverse();
             }
 
-            foreach (int itx2 in wrange) {
-                uint itx = (uint)Math.Max(0, itx2);
-                foreach (int ity2 in hrange) {
-                    uint ity = (uint)Math.Max(0, ity2);
-                    G2DPoint point = camera.ToScreenSpace(formater.Format(itx, ity));
+            //convert the table to view coordinates
+            G3DPoint[,] points = new G3DPoint[table.width_, table.height];
+            foreach (uint itx in wrange) {
+                foreach (uint ity in hrange) {
+                    points[itx, ity] = camera.ToViewSpace(formater.Format(itx, ity));
+                }
+            }
 
+            //draw the grid
+            foreach (uint itx in wrange) {
+                foreach (uint ity in hrange) {
+                    G3DPoint point = points[itx, ity];
                     if ((!isxcontinuous) && (!isycontinuous)) { //drawing points
                         e.Graphics.FillEllipse(dot, point.x - halfdot, point.y - halfdot, dotsize, dotsize);
                     }
                     else {
                         if (ity != 0 && isxcontinuous) { //drawing width vertices
-                            G2DPoint last = camera.ToScreenSpace(formater.Format(itx, ity - 1));
+                            G3DPoint last = points[itx, ity - 1];
                             e.Graphics.DrawLine(net, point.x, point.y, last.x, last.y);
                         }
                         if (itx != 0 && isycontinuous) { //drawing length vertices
-                            G2DPoint last = camera.ToScreenSpace(formater.Format(itx - 1, ity));
+                            G3DPoint last = points[itx - 1, ity];
                             e.Graphics.DrawLine(net, point.x, point.y, last.x, last.y);
                         }
                     }
                 }
             }
             //end of render
+            this.reversetable = points;
+            //e.Graphics.FillEllipse(dot, lastx, lasty, dotsize, dotsize);
         }
 
+        private G3DPoint[,] reversetable = new G3DPoint[0, 0]; //HACK
+
+        //find the minimal rectangle that contain the rendering of the table
         private G2DPoint ComputeRenderAreaSize() {
             float xmin, ymin, xmax, ymax;
             xmin = xmax = Width / 2;
             ymin = ymax = Height / 2;
 
+            //calculate position of each corner both in max and min position
             foreach (var x in new float[] { 0, module.Table.width_ }) {
                 foreach (var y in new float[] { 0, module.Table.height }) {
                     foreach (var z in new float[] { 0, 1 }) {
@@ -127,39 +139,34 @@ namespace Grapher.GuiElement
             return new(xmax - xmin, ymax - ymin);
         }
 
-        private MouseButtons? etype = null;
+        private readonly List<MouseDragEvent> mdevents = new();
         private int lastx;
         private int lasty;
 
         private void MyOnMouseDown(object? sender, MouseEventArgs e) {
-            if (e.Button != MouseButtons.Right) {
-                return;
+            if (e.Button.HasFlag(MouseButtons.Middle)) {
+                mdevents.Add(new(MouseButtons.Middle, (This, pts, tb, mx, my) => {
+                    This.camera.SideRotation += mx / 200f;
+                    This.camera.HeightRotation += my / 200f;
+                    This.Invalidate();
+                }));
             }
-            etype = e.Button;
+            if (e.Button.HasFlag(MouseButtons.Left)) {
+                mdevents.Add(new BrushStrokeEvent(new TestBrush(50f), reversetable, module.Table, new(e.X, e.Y, 0)));
+            }
             lastx = e.X;
             lasty = e.Y;
         }
 
         private void MyOnMouseMove(object? sender, MouseEventArgs e) {
-            if (etype == null) {
-                return;
-            }
-            if (etype == MouseButtons.Right) {
-                camera.SideRotation += (e.X - lastx) / 200f;
-                camera.HeightRotation += (e.Y - lasty) / 200f;
-                Invalidate();
-            }
-            else if (etype == MouseButtons.Left) {
-
+            foreach (MouseDragEvent mdevent in mdevents) {
+                mdevent.Action(this, reversetable, module.Table, e.X - lastx, e.Y - lasty);
             }
             lastx = e.X;
             lasty = e.Y;
         }
 
-        private void MyOnMouseUp(object? sender, MouseEventArgs e) => etype = null;
-
-
-
+        private void MyOnMouseUp(object? sender, MouseEventArgs e) => mdevents.RemoveAll((ev) => e.Button.HasFlag(ev.Type));
 
         private void MyOnLoad(object? sender, EventArgs e) => MyOnResize(sender, e);
 

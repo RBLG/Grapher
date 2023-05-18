@@ -47,7 +47,7 @@ namespace Grapher.MathSpatial
         }
 
         public Rotator3D GetReverse() {
-            return new Rotator3D(-x, -y, -z); //TODO
+            return new Rotator3D(-x, -y, -z); //HACK ?
         }
 
 
