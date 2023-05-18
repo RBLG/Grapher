@@ -1,4 +1,5 @@
 ﻿using Grapher.Brushes;
+using Grapher.Editor3d.Processing;
 using Grapher.GuiElement;
 using Grapher.MathSpatial;
 using Grapher.Misc;

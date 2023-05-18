@@ -1,4 +1,7 @@
-﻿using Grapher.MathSpatial;
+﻿using Grapher.Editor3d.Processing;
+using Grapher.Editor3d.Rendering;
+using Grapher.Editor3d.UserInput;
+using Grapher.MathSpatial;
 using Grapher.Misc;
 using Grapher.Modules;
 using System;
@@ -152,7 +155,7 @@ namespace Grapher.GuiElement
                 }));
             }
             if (e.Button.HasFlag(MouseButtons.Left)) {
-                mdevents.Add(new BrushStrokeEvent(new TestBrush(50f), reversetable, module.Table, new(e.X, e.Y, 0)));
+                mdevents.Add(new BrushStrokeEvent(new RoundSharpBrush(50f), reversetable, module.Table, new(e.X, e.Y, 0)));
             }
             lastx = e.X;
             lasty = e.Y;
