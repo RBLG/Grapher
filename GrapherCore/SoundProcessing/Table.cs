@@ -20,6 +20,7 @@ namespace Grapher
         public static readonly int defwidth = 10;
         public static readonly int deflength = 30;
 
+        /*
         public readonly Point3D xaxis = new(0.7, 0.2, 0);
         public readonly Point3D yaxis = new(0, -1, 0);
         public readonly Point3D zaxis = new(0.5, -0.3, 0);
@@ -274,7 +275,7 @@ namespace Grapher
 
             return GetLinearInterpolatedValue(row1, row2, rmix, col1, col2, cmix);
         }
-
+        */
         /////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
@@ -295,7 +296,7 @@ namespace Grapher
             return (i1, i2, mix);
         }
 
-
+        /*
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double GetValueFromQuadIndex(int w1, int w2, double wmix, int l1, int l2, double lmix)
         {
@@ -334,6 +335,7 @@ namespace Grapher
                 }
             }
         }
+        */
 
     }
     //public enum InterpolationType { None, Linear }

@@ -76,12 +76,12 @@ namespace Grapher.GuiElement
 
         //nullable till i know better
         public Graph3DEditor? Editor { get; set; }
-        private TableModule Module { get => (Editor ?? throw new NullReferenceException("null Editor in use")).canvas3D1.module; }
+        private TableModule Module { get => (Editor ?? throw new NullReferenceException("null Editor in use")).module; }
 
         private IInputScale WidthAxis { get => Module.Wscale; set => Module.Wscale = value; }
         private IInputScale LengthAxis { get => Module.Lscale; set => Module.Lscale = value; }
         private IOutputScale HeightAxis { get => Module.Hscale; set => Module.Hscale = value; }
-        private IMode Mode { get => Module.Table.Mode; set => Module.Table.Mode = value; }
+        private IMode Mode { get => Module.Mode; set => Module.Mode = value; }
 
 
         private int oldwidth;

@@ -30,9 +30,10 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="GuiElement\Canvas3D.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Remove="GuiElement\Canvas3D.cs" />
+    <Compile Remove="Modules\HarmonicModule.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="GuiElement\Graph3DEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -66,5 +67,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GuiElement\Canvas3D.cs">
+      <SubType>Component</SubType>
+    </None>
+    <None Include="Modules\HarmonicModule.cs" />
   </ItemGroup>
 </Project>

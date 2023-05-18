@@ -10,6 +10,8 @@ namespace Grapher.Brushes
 {
     public interface IBrush
     {
+        public float Radius { get; set; }
+
         public float[,] Initiate(G3DPoint[,] points, RawTable table, G3DPoint source);
 
         public void Apply(G3DPoint[,] points, RawTable table, double[,] initial, float[,] strength, float ratio);

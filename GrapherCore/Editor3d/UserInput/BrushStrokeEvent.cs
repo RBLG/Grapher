@@ -1,6 +1,6 @@
 ﻿using Grapher.Brushes;
 using Grapher.Editor3d.Processing;
-using Grapher.GuiElement;
+using Grapher.GuiElement.TableModule2Guis;
 using Grapher.MathSpatial;
 using Grapher.Misc;
 using System;
@@ -43,7 +43,7 @@ namespace Grapher.Editor3d.UserInput
             editor.Invalidate();
         }
 
-        public G3DPoint? GetActualSource(G3DPoint[,] points, RawTable table, G3DPoint source) {
+        public static G3DPoint? GetActualSource(G3DPoint[,] points, RawTable table, G3DPoint source) {
             G3DPoint? actual = null;
             float mindist = float.MaxValue;
             table.ForEach((itx, ity) => {

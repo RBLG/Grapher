@@ -1,4 +1,5 @@
-﻿using Grapher.Editor3d.Processing;
+﻿using Grapher.Brushes;
+using Grapher.Editor3d.Processing;
 using Grapher.Editor3d.Rendering;
 using Grapher.Editor3d.UserInput;
 using Grapher.MathSpatial;
@@ -14,7 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Grapher.GuiElement
+namespace Grapher.GuiElement.TableModule2Guis
 {
     public class Neo3DEditor : Control
     {
@@ -24,7 +25,7 @@ namespace Grapher.GuiElement
         private readonly Pen green = new(Color.Green);
         private readonly Pen net = new(Theme.Editor_3d_gridlines);
         private readonly SolidBrush dot = new(Theme.Editor_3d_griddots);
-        private readonly Pen netoff = new(Theme.Editor_3d_gridlines_off);
+        //private readonly Pen netoff = new(Theme.Editor_3d_gridlines_off);
 
         // size of the grid point in pixel
         public const float dotsize = 3;
@@ -32,23 +33,25 @@ namespace Grapher.GuiElement
 
         protected readonly OrthoCamera defaultcamera = new(); //HACK
         protected readonly OrthoCamera camera = new();
-        protected readonly TableModule2 module;
+        protected readonly TableModule module;
         protected readonly TableFormater formater;
+        public Func<IBrush> brushProvider;
 
-        public Neo3DEditor() : this(new()) { }//trick to get visual studio to compile it
+        public Neo3DEditor() : this(new(), () => new RoundSharpBrush(100f)) { }//trick to get visual studio to compile it
 
-        public Neo3DEditor(TableModule2 nmodule) {
+        public Neo3DEditor(TableModule nmodule, Func<IBrush> nprov) {
             module = nmodule;
             formater = new(10, 10, 60, -30, () => module.Table);
+            brushProvider = nprov;
 
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
-            this.MouseDown += MyOnMouseDown;
-            this.MouseMove += MyOnMouseMove;
-            this.MouseUp += MyOnMouseUp;
-            this.MouseWheel += MyOnMouseWheel;
-            this.Resize += MyOnResize;
+            MouseDown += MyOnMouseDown;
+            MouseMove += MyOnMouseMove;
+            MouseUp += MyOnMouseUp;
+            MouseWheel += MyOnMouseWheel;
+            Resize += MyOnResize;
         }
 
         protected override void OnPaint(PaintEventArgs e) {
@@ -98,7 +101,7 @@ namespace Grapher.GuiElement
             foreach (uint itx in wrange) {
                 foreach (uint ity in hrange) {
                     G3DPoint point = points[itx, ity];
-                    if ((!isxcontinuous) && (!isycontinuous)) { //drawing points
+                    if (!isxcontinuous && !isycontinuous) { //drawing points
                         e.Graphics.FillEllipse(dot, point.x - halfdot, point.y - halfdot, dotsize, dotsize);
                     }
                     else {
@@ -114,7 +117,7 @@ namespace Grapher.GuiElement
                 }
             }
             //end of render
-            this.reversetable = points;
+            reversetable = points;
             //e.Graphics.FillEllipse(dot, lastx, lasty, dotsize, dotsize);
         }
 
@@ -155,7 +158,7 @@ namespace Grapher.GuiElement
                 }));
             }
             if (e.Button.HasFlag(MouseButtons.Left)) {
-                mdevents.Add(new BrushStrokeEvent(new RoundSharpBrush(50f), reversetable, module.Table, new(e.X, e.Y, 0)));
+                mdevents.Add(new BrushStrokeEvent(brushProvider(), reversetable, module.Table, new(e.X, e.Y, 0)));
             }
             lastx = e.X;
             lasty = e.Y;

@@ -1,4 +1,7 @@
-﻿using Grapher.GuiElement;
+﻿using Grapher.Brushes;
+using Grapher.Editor3d.Processing;
+using Grapher.GuiElement;
+using Grapher.GuiElement.TableModule2Guis;
 using Grapher.Modules;
 using Grapher.Scale;
 using System;
@@ -15,20 +18,21 @@ namespace Grapher
 {
     public partial class Graph3DEditor : UserControl
     {
-        public Canvas3D canvas3D1;
+        public TableModule module;
+        public Neo3DEditor canvas3D1; //HACK public to be available to other controls
+        private IBrush brush = new RoundSharpBrush(100f);
 
         private readonly Boolean inInit = true;
 
         //not to be used, only to trick the visual framework into building it
         public Graph3DEditor() : this(new()) { }
 
-        public Graph3DEditor(TableModule nmodule)
-        {
-            //putting it here because graphical editor doesnt work if i put it in the designer
-            //module = nmodule;
-            canvas3D1 = new Grapher.Canvas3D(nmodule)
-            {
-                BrushSize = 0D,
+
+        public Graph3DEditor(TableModule nmodule) {
+            module = nmodule;
+
+
+            canvas3D1 = new Neo3DEditor(nmodule, () => this.brush) {
                 Location = new System.Drawing.Point(254, 21),
                 Size = new System.Drawing.Size(618, 451),
                 Name = "canvas3D1",
@@ -40,66 +44,64 @@ namespace Grapher
             //after init so it is in the background
             Controls.Add(canvas3D1);
 
-            numWidth.Value = canvas3D1.module.Table.Width;
-            numLength.Value = canvas3D1.module.Table.Length;
+            numWidth.Value = module.Table.width_;
+            numLength.Value = module.Table.height;
             InputComboBox.ValueMember = "Factory";
             InputComboBox.DisplayMember = "Name";
             InputComboBox.Items.AddRange(AvailableModules.modules.ToArray());
-            InputComboBox.SelectedIndex = AvailableModules.GetIndex(canvas3D1.module.Input.GetType());
+            InputComboBox.SelectedIndex = AvailableModules.GetIndex(module.Input.GetType());
 
             scalesSettingsControl1.ActualConstructor(this);
             // ////
             inInit = false;
         }
 
-        private void NumWidth_ValueChanged(object sender, EventArgs e)
-        {
+        private void NumWidth_ValueChanged(object sender, EventArgs e) {
             if (inInit) { return; }
-            canvas3D1.module.Table.Width = (int)Math.Max(1, numWidth.Value);
-            numWidth.Value = canvas3D1.module.Table.Width;
-            canvas3D1.Custom_Resize(sender, e);
+            RawTable table = module.Table;
+            int nwidth = Math.Max(1, (int)numWidth.Value);
+            long diff = nwidth - table.width_;
+            long start = table.width_ + Math.Min(0, diff);
+            module.Table = table.CloneAndRIColumns((uint)start, (int)diff);
+
+            numWidth.Value = table.width_;
             canvas3D1.Invalidate();
         }
 
-        private void NumLength_ValueChanged(object sender, EventArgs e)
-        {
+        private void NumLength_ValueChanged(object sender, EventArgs e) {
             if (inInit) { return; }
-            canvas3D1.module.Table.Length = (int)Math.Max(1, numLength.Value);
-            numLength.Value = canvas3D1.module.Table.Length;
-            canvas3D1.Custom_Resize(sender, e);
+            RawTable table = module.Table;
+            int nlength = Math.Max(1, (int)numLength.Value);
+            long diff = nlength - table.height;
+            long start= table.height + Math.Min(0, diff);
+            module.Table = table.CloneAndRIColumns((uint)start, (int)diff);
+
+            numLength.Value = table.height;
             canvas3D1.Invalidate();
         }
 
-        private void BrushSizeX_Scroll(object sender, EventArgs e)
-        { canvas3D1.BrushSize = brushSize.Value / 1000d; }
+        private void BrushSizeX_Scroll(object sender, EventArgs e) { brush.Radius = brushSize.Value / 1000f; }
 
 
         private ModuleForm? inputform = null;
 
-        private void EditInputButton_Click(object sender, EventArgs e)
-        {
-            var control = canvas3D1.Input.GetControl();
-            if (control == null)
-            { return; }
-            if (inputform == null || inputform.IsDisposed)
-            {
-                inputform = new(control, canvas3D1.Input.Name);
+        private void EditInputButton_Click(object sender, EventArgs e) {
+            var control = module.Input.GetControl();
+            if (control == null) { return; }
+            if (inputform == null || inputform.IsDisposed) {
+                inputform = new(control, module.Input.Name);
                 inputform.Show();
             }
-            else
-            { inputform.Dispose(); }
+            else { inputform.Dispose(); }
 
         }
 
-        private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (inInit) { return; }
             var item = AvailableModules.modules.ElementAt(InputComboBox.SelectedIndex);
-            if (item == null)
-            { return; }
-            if (inputform != null && !inputform.IsDisposed)
-            { inputform.Dispose(); }
-            canvas3D1.Input = item.Factory();
+            if (item == null) { return; }
+            if (inputform != null && !inputform.IsDisposed) { inputform.Dispose(); }
+            module.Input = item.Factory();
         }
 
 

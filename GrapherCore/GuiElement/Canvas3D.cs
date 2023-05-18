@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace Grapher
 {
+    [Obsolete("replaced by neo3deditor")]
     /// <summary>
     /// a Gui element that draw and allow interaction with the table/grid (whatever it should be called)
     /// </summary>
