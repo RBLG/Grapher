@@ -1,4 +1,5 @@
 ﻿using Grapher.GuiElement.ScaleSettings;
+using Grapher.Modules;
 using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
@@ -33,11 +34,11 @@ namespace Grapher.Scale
         public double UnscaleFrom(double scaled, double size)
         { return UnscaleFrom01(scaled / size); }
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, uint size)
         { return ScaleTo(wave.Frequency, size); }
 
-        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
-        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
+        public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size)
+        { return TableModule.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {

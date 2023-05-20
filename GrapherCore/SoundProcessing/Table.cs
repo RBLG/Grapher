@@ -275,7 +275,7 @@ namespace Grapher
 
             return GetLinearInterpolatedValue(row1, row2, rmix, col1, col2, cmix);
         }
-        */
+        
         /////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Grapher
             return (i1, i2, mix);
         }
 
-        /*
+        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double GetValueFromQuadIndex(int w1, int w2, double wmix, int l1, int l2, double lmix)
         {

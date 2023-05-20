@@ -1,4 +1,5 @@
 ﻿using Grapher.GuiElement.ScaleSettings;
+using Grapher.Modules;
 using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
@@ -43,11 +44,11 @@ namespace Grapher.Scale
         private static double ToMei(double lfreq) /*            */ => 2595 * Math.Log10(1 + lfreq / 700);
         private static double FromMei(double lfreq) /*          */ => (Math.Pow(10, lfreq / 2595) + 1) / 700;
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, uint size)
         { return ScaleTo01(wave.Frequency) * size; }
 
-        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
-        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
+        public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size)
+        { return TableModule.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {

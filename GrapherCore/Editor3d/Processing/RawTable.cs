@@ -23,6 +23,7 @@ namespace Grapher.Editor3d.Processing
             height = nheight;
             hrange = new URange(0, height);
             values = new double[Length];
+            Array.Fill(values, 0.5d);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -123,8 +124,6 @@ namespace Grapher.Editor3d.Processing
             }
             return ntable;
         }
-
-
 
         public void ForEach(Action<uint, uint> action) {
             foreach (uint itx in wrange) {

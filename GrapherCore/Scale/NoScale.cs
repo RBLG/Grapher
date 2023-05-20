@@ -26,9 +26,9 @@ namespace Grapher.Scale
             return new();
         }
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, int size) => 0;
+        public double PickValueTo(Wave wave, Spectrum spectrum, uint size) => 0;
 
-        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
+        public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size)
         { return (0, 0, 0); }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, IMode mode, double tval)

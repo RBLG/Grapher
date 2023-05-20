@@ -49,7 +49,7 @@ namespace Grapher.Scale
 
         public double Scale(double notscaled) => (int)(notscaled / Modulo);
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, uint size)
         {
             double rtn = spectrum.Time;
             if (IsPhased) //clip time to the last end of phase cycle
@@ -69,10 +69,10 @@ namespace Grapher.Scale
             return rtn;
         }
 
-        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
+        public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size)
         {
-            int val1 = (int)(spectrum.Time / Modulo);
-            int val2 = val1 + 1;
+            uint val1 = (uint)(spectrum.Time / Modulo);
+            uint val2 = val1 + 1;
             double mix = spectrum.Time / Modulo - val1;
 
             val1 = ComputeIndex(spectrum, size, val1);
@@ -82,7 +82,7 @@ namespace Grapher.Scale
         }
 
 
-        public int ComputeIndex(Spectrum spectrum, int size, double rtn)
+        public uint ComputeIndex(Spectrum spectrum, uint size, double rtn)
         {
             if (IsLooping)
             { rtn %= size; }
@@ -92,7 +92,7 @@ namespace Grapher.Scale
 
                 rtn = (Math.Sin(rtn * seed * 13.531) + 1) * (size * 100_000 - 1) % size;
             }
-            return (int)rtn;
+            return (uint)rtn;
         }
     }
 }

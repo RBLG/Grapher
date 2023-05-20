@@ -1,4 +1,5 @@
 ﻿using Grapher.GuiElement.ScaleSettings;
+using Grapher.Modules;
 using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
@@ -32,13 +33,13 @@ namespace Grapher.Scale
         public bool Continuous => true;
         public bool IsLooping => false;
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, uint size)
         {
             return wave.Padding * size;
         }
 
-        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
-        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
+        public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size)
+        { return TableModule.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
         {

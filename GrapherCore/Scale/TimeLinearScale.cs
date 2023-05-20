@@ -33,7 +33,7 @@ namespace Grapher.Scale
         public bool IsLooping { get; set; } = true;
 
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, uint size)
         {
             double rtn = spectrum.Time;
             if (IsLooping)
@@ -59,16 +59,14 @@ namespace Grapher.Scale
             return rtn * size;
         }
 
-        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
-        {
-
+        public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size) {
             double rtn = spectrum.Time;
             if (IsLooping)
             {
                 rtn /= Duration;
                 rtn -= (int)rtn;//%= 1;//another faster modulo
                 rtn *= size;
-                return Table.PrepareInterpolation(rtn, size, IsLooping);
+                return TableModule.PrepareInterpolation(rtn, size, IsLooping);
             }
             else
             {
@@ -80,7 +78,7 @@ namespace Grapher.Scale
                     rtn = Math.Min(rtn, Hold);
                     rtn /= Duration;
                     rtn *= size;
-                    return Table.PrepareInterpolation(rtn, size, IsLooping);
+                    return TableModule.PrepareInterpolation(rtn, size, IsLooping);
                 }
                 else
                 {
@@ -91,8 +89,8 @@ namespace Grapher.Scale
                         if (spectrum.Time < realease)
                         {
                             double time1 = spectrum.Time * size / Duration;
-                            int index1 = (int)time1;
-                            int index2 = (int)((Hold + spectrum.TimeOff) * size / Duration);
+                            uint index1 = (uint)time1;
+                            uint index2 = (uint)((Hold + spectrum.TimeOff) * size / Duration);
                             double mix = time1 - index1;
 
                             return (index1, index2, mix);
@@ -104,7 +102,7 @@ namespace Grapher.Scale
                     rtn = Math.Min(rtn, Duration - 1); //-1 because weird stuff happen at duration value, will check later
                     rtn /= Duration;
                     rtn *= size;
-                    return Table.PrepareInterpolation(rtn, size, IsLooping);
+                    return TableModule.PrepareInterpolation(rtn, size, IsLooping);
                 }
 
             }

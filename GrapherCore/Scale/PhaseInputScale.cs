@@ -1,4 +1,5 @@
 ﻿using Grapher.GuiElement.ScaleSettings;
+using Grapher.Modules;
 using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace Grapher.Scale
         public double Multiplier { get; set; } = 1;// 1/Mult; for speed
         public double Detune { get; set; } = 0;
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
+        public double PickValueTo(Wave wave, Spectrum spectrum, uint size)
         {
             if (IsAbsolute)
             {
@@ -48,8 +49,8 @@ namespace Grapher.Scale
             { return wave.Phase; }
         }
 
-        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
-        { return Table.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
+        public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size)
+        { return TableModule.PrepareInterpolation(PickValueTo(wave, spectrum, size), size, IsLooping); }
 
         private double GetAbsPhase(Wave wave, Spectrum spectrum)
         {

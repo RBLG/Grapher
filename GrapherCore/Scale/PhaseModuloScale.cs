@@ -24,8 +24,7 @@ namespace Grapher.Scale
 
         public double Detune { get; set; } = 0;
 
-        public List<Graduation> GetMilestones()
-        {
+        public List<Graduation> GetMilestones() {
             throw new NotImplementedException();
         }
 
@@ -34,15 +33,12 @@ namespace Grapher.Scale
 
         public double Scale(double notscaled) => (int)(notscaled / CycleCount);
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, int size)
-        {
+        public double PickValueTo(Wave wave, Spectrum spectrum, uint size) {
             double rtn;
             rtn = PhaseInputScale.GetAbsPhase(wave, spectrum, Detune, 1);
             rtn = (int)(rtn / CycleCount);
-            if (IsLooping)
-            { rtn %= size; }
-            if (IsRandom)
-            {
+            if (IsLooping) { rtn %= size; }
+            if (IsRandom) {
                 double seed = (Seed == 0) ? spectrum.NoteSeed : Seed;
 
                 rtn = (Math.Sin(rtn * seed * 13.531) + 1) * (size * 100_000 - 1) % size;
@@ -50,31 +46,24 @@ namespace Grapher.Scale
             return rtn;
         }
 
-        public (int, int, double) PickValueTo2(Wave wave, Spectrum spectrum, int size)
-        {
+        public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size) {
             double phase = PhaseInputScale.GetAbsPhase(wave, spectrum, Detune, 1);
-            int val1 = (int)(phase / CycleCount);
-            int val2 = val1 + 1;
+            uint val1 = (uint)(phase / CycleCount);
+            uint val2 = val1 + 1;
             double mix = phase / CycleCount - val1;
 
             val1 = ComputeIndex(spectrum, size, val1);
             val2 = ComputeIndex(spectrum, size, val2);
-
             return (val1, val2, mix);
         }
 
-        public int ComputeIndex(Spectrum spectrum, int size, double rtn)
-        {
-            if (IsLooping)
-            { rtn %= size; }
-            if (IsRandom)
-            {
-
-                double seed = (Seed == 0) ? spectrum.NoteSeed : Seed;
-
+        public uint ComputeIndex(Spectrum spectrum, uint size, double rtn) {
+            if (IsLooping) { rtn %= size; }
+            if (IsRandom) {
+                double seed = (Seed == 0) ? spectrum.NoteSeed : Seed; //TODO document
                 rtn = (Math.Sin(rtn * seed * 13.531) + 1) * (size * 100_000 - 1) % size;
             }
-            return (int)rtn;
+            return (uint)rtn;
         }
 
 
