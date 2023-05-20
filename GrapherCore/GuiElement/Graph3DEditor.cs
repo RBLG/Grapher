@@ -22,7 +22,7 @@ namespace Grapher
         public Neo3DEditor canvas3D1; //HACK public to be available to other controls
         private IBrush brush = new RoundSharpBrush(100f);
 
-        private readonly Boolean inInit = true;
+        private Boolean inInit = true;
 
         //not to be used, only to trick the visual framework into building it
         public Graph3DEditor() : this(new()) { }
@@ -62,9 +62,12 @@ namespace Grapher
             int nwidth = Math.Max(1, (int)numWidth.Value);
             long diff = nwidth - table.width_;
             long start = table.width_ + Math.Min(0, diff);
-            module.Table = table.CloneAndRIColumns((uint)start, (int)diff);
+            table = table.CloneAndRIColumns((uint)start, (int)diff);
 
-            numWidth.Value = table.width_;
+            if (numWidth.Value != table.width_) {
+                numWidth.Value = table.width_;
+            }
+            module.Table = table;
             canvas3D1.Invalidate();
         }
 
@@ -74,9 +77,12 @@ namespace Grapher
             int nlength = Math.Max(1, (int)numLength.Value);
             long diff = nlength - table.height;
             long start= table.height + Math.Min(0, diff);
-            module.Table = table.CloneAndRIColumns((uint)start, (int)diff);
+            table = table.CloneAndRIRows((uint)start, (int)diff);
 
-            numLength.Value = table.height;
+            if (numLength.Value != table.height) {
+                numLength.Value = table.height;
+            }
+            module.Table = table;
             canvas3D1.Invalidate();
         }
 

@@ -18,7 +18,7 @@ namespace Grapher.GuiElement
     {
 
         // to settup controls values in the constructor without triggering events
-        private Boolean inInit = true; // readonly is unecessary but its supress a msg
+        private bool inInit = true;
 
         public ScalesSettingsControl()
         {

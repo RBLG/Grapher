@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Grapher.Misc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,12 +12,16 @@ namespace Grapher.Editor3d.Processing
     {
         private readonly double[] values;
         public readonly uint width_; //_ for pretty code formatting
+        private readonly URange wrange;
         public readonly uint height;
+        private readonly URange hrange;
         private uint Length { get => width_ * height; }
 
         public RawTable(uint nwidth, uint nheight) {
             width_ = nwidth;
+            wrange = new URange(0, width_);
             height = nheight;
+            hrange = new URange(0, height);
             values = new double[Length];
         }
 
@@ -32,6 +37,11 @@ namespace Grapher.Editor3d.Processing
 
         public void Set(uint wi, uint hi, double value) {
             values[Index(wi, hi)] = Math.Clamp(value, 0d, 1d);
+        }
+
+        public double this[uint wi, uint hi] {
+            get => Get(wi, hi);
+            set => Set(wi, hi, value);
         }
 
         public RawTable CloneAndRIRows(uint hstart, int hlen) {
@@ -52,22 +62,28 @@ namespace Grapher.Editor3d.Processing
 
             //height index (minus hstart) after:
             uint nhoffset = (uint)Math.Max(0, hlen); // insertion, in the new table
-            uint ohoffset = (uint)Math.Max(0, -hlen); // deletion, in the old table
+            uint offset = (uint)Math.Abs(hlen);
 
-            RawTable ntable = new(width_, (uint)(height + hlen));
+            uint hend = hstart + nhoffset;
+            uint nheight = (uint)(height + hlen);
+            RawTable ntable = new(width_, nheight);
 
-            for (uint wit = 0; wit < width_; wit++) { //wit -> w it -> width iterator
+            var hcopy1range = URange.New(0, hstart);
+            var hblankrange = URange.New(hstart, hend);
+            var hcopy2range = URange.New(hend, nheight);
+
+            foreach (uint wit in wrange) {
                 //copy the values before the insertion
-                for (uint hit = 0; hit < hstart; hit++) {
-                    ntable.values[Index(wit, hit)] = values[Index(wit, hit)];
+                foreach (uint hit in hcopy1range) {
+                    ntable[wit, hit] = this[wit, hit];
                 }
                 //fill the new rows if there is
-                for (uint hit2 = hstart; hit2 < nhoffset; hit2++) {
-                    ntable.values[Index(wit, hit2)] = filler(wit, hit2, this);
+                foreach (uint hit2 in hblankrange) {
+                    ntable[wit, hit2] = filler(wit, hit2, this);
                 }
                 //copy the values before the insertion, ignoring the removed rows, if there is
-                for (uint hit3 = hstart; hit3 < height; hit3++) {
-                    ntable.values[Index(wit, hit3 + nhoffset)] = values[Index(wit, hit3 + ohoffset)];
+                foreach (uint hit3 in hcopy2range) {
+                    ntable[wit, hit3] = this[wit, hit3 - offset];
                 }
             }
             return ntable;
@@ -81,30 +97,38 @@ namespace Grapher.Editor3d.Processing
             wstart = Math.Min(wstart, width_);
             wlen = Math.Max(wlen, -(int)(width_ - wstart + 1));
             uint nwoffset = (uint)Math.Max(0, wlen);
-            uint owoffset = (uint)Math.Max(0, -wlen);
+            uint offset = (uint)Math.Abs(wlen);
 
-            RawTable ntable = new((uint)(width_ + wlen), height);
+            uint wend = wstart + nwoffset;
+            uint nwidth = (uint)(width_ + wlen);
+            RawTable ntable = new(nwidth, height);
 
-            for (uint hit = 0; hit < height; hit++) {
+            var wcopy1range = URange.New(0, wstart);
+            var wblankrange = URange.New(wstart, wend);
+            var wcopy2range = URange.New(wend, nwidth);
+
+            foreach (uint hit in hrange) {
                 //copy the values before the insertion
-                for (uint wit = 0; wit < wstart; wit++) {
-                    ntable.values[Index(wit, hit)] = values[Index(wit, hit)];
+                foreach (uint wit in wcopy1range) {
+                    ntable[wit, hit] = this[wit, hit];
                 }
                 //fill the new rows if there is
-                for (uint wit2 = wstart; wit2 < nwoffset; wit2++) {
-                    ntable.values[Index(wit2, hit)] = filler(wit2, hit, this);
+                foreach (uint wit2 in wblankrange) {
+                    ntable[wit2, hit] = filler(wit2, hit, this);
                 }
                 //copy the values before the insertion, ignoring the removed rows, if there is
-                for (uint wit3 = wstart; wit3 < width_; wit3++) {
-                    ntable.values[Index(wit3 + nwoffset, hit)] = values[Index(wit3 + owoffset, hit)];
+                foreach (uint wit3 in wcopy2range) {
+                    ntable[wit3, hit] = this[wit3 - offset, hit];
                 }
             }
             return ntable;
         }
 
+
+
         public void ForEach(Action<uint, uint> action) {
-            foreach (uint itx in Enumerable.Range(0, (int)width_)) {
-                foreach (uint ity in Enumerable.Range(0, (int)height)) {
+            foreach (uint itx in wrange) {
+                foreach (uint ity in hrange) {
                     action(itx, ity);
                 }
             }

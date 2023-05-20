@@ -34,29 +34,27 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.WidthLabel = new System.Windows.Forms.Label();
-            this.LengthLabel = new System.Windows.Forms.Label();
             this.numWidth = new System.Windows.Forms.NumericUpDown();
             this.numLength = new System.Windows.Forms.NumericUpDown();
             this.EditInputButton = new System.Windows.Forms.Button();
-            this.InputLabel = new System.Windows.Forms.Label();
             this.ToolTabs = new System.Windows.Forms.TabControl();
-            this.Tab1Brush = new System.Windows.Forms.TabPage();
             this.Tab2Scales = new System.Windows.Forms.TabPage();
             this.scalesSettingsControl1 = new Grapher.GuiElement.ScalesSettingsControl();
+            this.Tab1Brush = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.brushSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).BeginInit();
             this.ToolTabs.SuspendLayout();
-            this.Tab1Brush.SuspendLayout();
             this.Tab2Scales.SuspendLayout();
+            this.Tab1Brush.SuspendLayout();
             this.SuspendLayout();
             // 
             // InputComboBox
             // 
             this.InputComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.InputComboBox.FormattingEnabled = true;
-            this.InputComboBox.Location = new System.Drawing.Point(258, 23);
+            this.InputComboBox.Location = new System.Drawing.Point(4, 3);
             this.InputComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.InputComboBox.Name = "InputComboBox";
             this.InputComboBox.Size = new System.Drawing.Size(87, 23);
@@ -115,35 +113,11 @@
             this.checkBox3.TabIndex = 10;
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
-            // WidthLabel
-            // 
-            this.WidthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.WidthLabel.AutoSize = true;
-            this.WidthLabel.BackColor = System.Drawing.Color.Transparent;
-            this.WidthLabel.Location = new System.Drawing.Point(742, 3);
-            this.WidthLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.WidthLabel.Name = "WidthLabel";
-            this.WidthLabel.Size = new System.Drawing.Size(37, 15);
-            this.WidthLabel.TabIndex = 13;
-            this.WidthLabel.Text = "width";
-            // 
-            // LengthLabel
-            // 
-            this.LengthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.LengthLabel.AutoSize = true;
-            this.LengthLabel.BackColor = System.Drawing.Color.Transparent;
-            this.LengthLabel.Location = new System.Drawing.Point(807, 3);
-            this.LengthLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.LengthLabel.Name = "LengthLabel";
-            this.LengthLabel.Size = new System.Drawing.Size(41, 15);
-            this.LengthLabel.TabIndex = 14;
-            this.LengthLabel.Text = "length";
-            // 
             // numWidth
             // 
             this.numWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.numWidth.BackColor = System.Drawing.SystemColors.Control;
-            this.numWidth.Location = new System.Drawing.Point(746, 24);
+            this.numWidth.Location = new System.Drawing.Point(750, 6);
             this.numWidth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.numWidth.Name = "numWidth";
             this.numWidth.Size = new System.Drawing.Size(58, 23);
@@ -159,7 +133,7 @@
             // 
             this.numLength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.numLength.BackColor = System.Drawing.SystemColors.Control;
-            this.numLength.Location = new System.Drawing.Point(811, 24);
+            this.numLength.Location = new System.Drawing.Point(812, 6);
             this.numLength.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.numLength.Maximum = new decimal(new int[] {
             10000,
@@ -182,36 +156,48 @@
             this.EditInputButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("EditInputButton.BackgroundImage")));
             this.EditInputButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.EditInputButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.EditInputButton.Location = new System.Drawing.Point(352, 23);
+            this.EditInputButton.Location = new System.Drawing.Point(94, 2);
             this.EditInputButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.EditInputButton.Name = "EditInputButton";
-            this.EditInputButton.Size = new System.Drawing.Size(26, 24);
+            this.EditInputButton.Size = new System.Drawing.Size(25, 25);
             this.EditInputButton.TabIndex = 22;
             this.EditInputButton.UseVisualStyleBackColor = false;
             this.EditInputButton.Click += new System.EventHandler(this.EditInputButton_Click);
-            // 
-            // InputLabel
-            // 
-            this.InputLabel.AutoSize = true;
-            this.InputLabel.Location = new System.Drawing.Point(258, 3);
-            this.InputLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.InputLabel.Name = "InputLabel";
-            this.InputLabel.Size = new System.Drawing.Size(35, 15);
-            this.InputLabel.TabIndex = 23;
-            this.InputLabel.Text = "input";
             // 
             // ToolTabs
             // 
             this.ToolTabs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.ToolTabs.Controls.Add(this.Tab1Brush);
             this.ToolTabs.Controls.Add(this.Tab2Scales);
-            this.ToolTabs.Location = new System.Drawing.Point(4, 3);
+            this.ToolTabs.Controls.Add(this.Tab1Brush);
+            this.ToolTabs.Controls.Add(this.tabPage1);
+            this.ToolTabs.Location = new System.Drawing.Point(4, 29);
             this.ToolTabs.Margin = new System.Windows.Forms.Padding(0);
             this.ToolTabs.Name = "ToolTabs";
             this.ToolTabs.SelectedIndex = 0;
-            this.ToolTabs.Size = new System.Drawing.Size(249, 469);
+            this.ToolTabs.Size = new System.Drawing.Size(249, 443);
             this.ToolTabs.TabIndex = 0;
+            // 
+            // Tab2Scales
+            // 
+            this.Tab2Scales.BackColor = System.Drawing.SystemColors.Control;
+            this.Tab2Scales.Controls.Add(this.scalesSettingsControl1);
+            this.Tab2Scales.Location = new System.Drawing.Point(4, 24);
+            this.Tab2Scales.Margin = new System.Windows.Forms.Padding(0);
+            this.Tab2Scales.Name = "Tab2Scales";
+            this.Tab2Scales.Size = new System.Drawing.Size(241, 415);
+            this.Tab2Scales.TabIndex = 1;
+            this.Tab2Scales.Text = "Axis";
+            // 
+            // scalesSettingsControl1
+            // 
+            this.scalesSettingsControl1.BackColor = System.Drawing.Color.Transparent;
+            this.scalesSettingsControl1.Editor = null;
+            this.scalesSettingsControl1.Location = new System.Drawing.Point(0, 0);
+            this.scalesSettingsControl1.MaximumSize = new System.Drawing.Size(241, 380);
+            this.scalesSettingsControl1.Name = "scalesSettingsControl1";
+            this.scalesSettingsControl1.Size = new System.Drawing.Size(241, 380);
+            this.scalesSettingsControl1.TabIndex = 0;
             // 
             // Tab1Brush
             // 
@@ -227,27 +213,15 @@
             this.Tab1Brush.TabIndex = 0;
             this.Tab1Brush.Text = "Brush";
             // 
-            // Tab2Scales
+            // tabPage1
             // 
-            this.Tab2Scales.BackColor = System.Drawing.SystemColors.Control;
-            this.Tab2Scales.Controls.Add(this.scalesSettingsControl1);
-            this.Tab2Scales.Location = new System.Drawing.Point(4, 24);
-            this.Tab2Scales.Margin = new System.Windows.Forms.Padding(0);
-            this.Tab2Scales.Name = "Tab2Scales";
-            this.Tab2Scales.Size = new System.Drawing.Size(241, 441);
-            this.Tab2Scales.TabIndex = 1;
-            this.Tab2Scales.Text = "Axis";
-            // 
-            // scalesSettingsControl1
-            // 
-            this.scalesSettingsControl1.BackColor = System.Drawing.Color.Transparent;
-            this.scalesSettingsControl1.Editor = null;
-            this.scalesSettingsControl1.Location = new System.Drawing.Point(0, 0);
-            this.scalesSettingsControl1.MaximumSize = new System.Drawing.Size(241, 380);
-            this.scalesSettingsControl1.MinimumSize = new System.Drawing.Size(241, 380);
-            this.scalesSettingsControl1.Name = "scalesSettingsControl1";
-            this.scalesSettingsControl1.Size = new System.Drawing.Size(241, 380);
-            this.scalesSettingsControl1.TabIndex = 0;
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(241, 441);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Editor";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // Graph3DEditor
             // 
@@ -258,9 +232,6 @@
             this.Controls.Add(this.EditInputButton);
             this.Controls.Add(this.numLength);
             this.Controls.Add(this.numWidth);
-            this.Controls.Add(this.InputLabel);
-            this.Controls.Add(this.LengthLabel);
-            this.Controls.Add(this.WidthLabel);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Graph3DEditor";
             this.Size = new System.Drawing.Size(875, 475);
@@ -268,10 +239,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).EndInit();
             this.ToolTabs.ResumeLayout(false);
-            this.Tab1Brush.ResumeLayout(false);
             this.Tab2Scales.ResumeLayout(false);
+            this.Tab1Brush.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -284,12 +254,10 @@
         private System.Windows.Forms.NumericUpDown numWidth;
         public System.Windows.Forms.NumericUpDown numLength;
         public System.Windows.Forms.Button EditInputButton;
-        public System.Windows.Forms.Label WidthLabel;
-        public System.Windows.Forms.Label LengthLabel;
-        public System.Windows.Forms.Label InputLabel;
         private System.Windows.Forms.TabPage Tab1Brush;
         private System.Windows.Forms.TabPage Tab2Scales;
         private GuiElement.ScalesSettingsControl scalesSettingsControl1;
         public System.Windows.Forms.TabControl ToolTabs;
+        private System.Windows.Forms.TabPage tabPage1;
     }
 }
