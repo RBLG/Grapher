@@ -64,9 +64,8 @@ namespace Grapher.GuiElement.TableModule2Guis
             //antialiasing on
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            //TODO
-            bool isxcontinuous = true; //Module.Wscale.Continuous 
-            bool isycontinuous = true; //Module.Lscale.Continuous
+            bool isxcontinuous = module.Wscale.Continuous;
+            bool isycontinuous = module.Lscale.Continuous;
 
             //axis coordinates
             G2DPoint ori_ = camera.ToScreenSpace(formater.FormatAsAtZ(-1.2f, -1.2f, -0.3f));
@@ -105,12 +104,12 @@ namespace Grapher.GuiElement.TableModule2Guis
                         e.Graphics.FillEllipse(dot, point.x - halfdot, point.y - halfdot, dotsize, dotsize);
                     }
                     else {
-                        if (ity != 0 && isxcontinuous) { //drawing width vertices
-                            G3DPoint last = points[itx, ity - 1];
+                        if (itx != 0 && isxcontinuous) { //drawing length vertices
+                            G3DPoint last = points[itx - 1, ity];
                             e.Graphics.DrawLine(net, point.x, point.y, last.x, last.y);
                         }
-                        if (itx != 0 && isycontinuous) { //drawing length vertices
-                            G3DPoint last = points[itx - 1, ity];
+                        if (ity != 0 && isycontinuous) { //drawing width vertices
+                            G3DPoint last = points[itx, ity - 1];
                             e.Graphics.DrawLine(net, point.x, point.y, last.x, last.y);
                         }
                     }

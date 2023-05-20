@@ -31,10 +31,9 @@ namespace Grapher
         public Graph3DEditor(TableModule nmodule) {
             module = nmodule;
 
-
             canvas3D1 = new Neo3DEditor(nmodule, () => this.brush) {
-                Location = new System.Drawing.Point(254, 21),
-                Size = new System.Drawing.Size(618, 451),
+                Location = new System.Drawing.Point(254, 3),
+                Size = new System.Drawing.Size(618, 469),
                 Name = "canvas3D1",
                 TabIndex = 25,
                 Text = "canvas3D1",
@@ -52,6 +51,7 @@ namespace Grapher
             InputComboBox.SelectedIndex = AvailableModules.GetIndex(module.Input.GetType());
 
             scalesSettingsControl1.ActualConstructor(this);
+            sliderBrushRadius.Value = (int)brush.Radius;
             // ////
             inInit = false;
         }
@@ -62,7 +62,9 @@ namespace Grapher
             int nwidth = Math.Max(1, (int)numWidth.Value);
             long diff = nwidth - table.width_;
             long start = table.width_ + Math.Min(0, diff);
-            table = table.CloneAndRIColumns((uint)start, (int)diff);
+            table = table.CloneAndRIColumns((uint)start, (int)diff, (itx, ity, table) => {
+                return table[itx - 1, ity];
+            });
 
             if (numWidth.Value != table.width_) {
                 numWidth.Value = table.width_;
@@ -76,8 +78,10 @@ namespace Grapher
             RawTable table = module.Table;
             int nlength = Math.Max(1, (int)numLength.Value);
             long diff = nlength - table.height;
-            long start= table.height + Math.Min(0, diff);
-            table = table.CloneAndRIRows((uint)start, (int)diff);
+            long start = table.height + Math.Min(0, diff);
+            table = table.CloneAndRIRows((uint)start, (int)diff, (itx, ity, table) => {
+                return table[itx, ity - 1];
+            });
 
             if (numLength.Value != table.height) {
                 numLength.Value = table.height;
@@ -86,7 +90,7 @@ namespace Grapher
             canvas3D1.Invalidate();
         }
 
-        private void BrushSizeX_Scroll(object sender, EventArgs e) { brush.Radius = brushSize.Value / 1000f; }
+        private void BrushSizeX_Scroll(object sender, EventArgs e) { brush.Radius = sliderBrushRadius.Value; }
 
 
         private ModuleForm? inputform = null;
@@ -109,7 +113,5 @@ namespace Grapher
             if (inputform != null && !inputform.IsDisposed) { inputform.Dispose(); }
             module.Input = item.Factory();
         }
-
-
     }
 }

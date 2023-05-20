@@ -42,7 +42,7 @@ namespace Grapher.Modules
         /// </summary>
         public virtual UserControl? GetControl() => new Graph3DEditor(this);
 
-        public String Name { get; set; } = "Editor " + count++;
+        public string Name { get; set; } = "Editor " + count++;
         private static int count = 0;
 
         public virtual void SetInput(IModule input) { Input = input; }
@@ -50,7 +50,7 @@ namespace Grapher.Modules
 
         ////// PREVIOUSLY IN TABLE ///////////
 
-        public void Apply2(Spectrum.Wave wave, Spectrum spectrum) {
+        public void Apply2(Wave wave, Spectrum spectrum) {
             uint w1, w2, l1, l2;
             double wmix, lmix;
             if (Table.width_ == 1) { wmix = w1 = w2 = 0; }
