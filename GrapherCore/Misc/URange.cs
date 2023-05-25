@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Grapher.Misc
 {
+    /// <summary>
+    /// similar to SRange but compatible with uint
+    /// </summary>
     public class URange : IEnumerable<uint>
     {
         private readonly uint start;
@@ -15,11 +18,10 @@ namespace Grapher.Misc
         public URange(uint nstart, uint nend) {
             start = nstart;
             end = nend;
-
         }
 
         public IEnumerable<int> AsInt() {
-            return Enumerable.Range((int)start, (int)end - (int)start);
+            return SRange.New((int)start, (int)end);
         }
 
         public static URange New(uint start, uint end) => new(start, end);

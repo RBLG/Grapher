@@ -59,7 +59,7 @@ namespace Grapher.Scale
 
         public static double GetAbsPhase(Wave wave, Spectrum spectrum, double detune, double multiplier)
         {
-            return Math.Max(1, wave.Frequency + detune) * spectrum.Time / 1000 * multiplier + wave.Phase;
+            return Math.Max(1, wave.Frequency + detune) * spectrum.SourceTime / 1000 * multiplier + wave.Phase;
         }
     }
 }

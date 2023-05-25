@@ -30,13 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.NumUdHarmonic = new System.Windows.Forms.NumericUpDown();
-            this.NumUdAmplitude = new System.Windows.Forms.NumericUpDown();
             this.LabelHarmonic = new System.Windows.Forms.Label();
             this.LabelAmplitude = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.ampTrackBar = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.NumUdHarmonic)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumUdAmplitude)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ampTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // NumUdHarmonic
@@ -56,26 +56,13 @@
             this.NumUdHarmonic.Name = "NumUdHarmonic";
             this.NumUdHarmonic.Size = new System.Drawing.Size(58, 23);
             this.NumUdHarmonic.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.NumUdHarmonic, "n° of the harmonic");
             this.NumUdHarmonic.Value = new decimal(new int[] {
             2,
             0,
             0,
             0});
             this.NumUdHarmonic.ValueChanged += new System.EventHandler(this.NumUdHarmonic_ValueChanged);
-            // 
-            // NumUdAmplitude
-            // 
-            this.NumUdAmplitude.DecimalPlaces = 2;
-            this.NumUdAmplitude.Location = new System.Drawing.Point(116, 3);
-            this.NumUdAmplitude.Maximum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.NumUdAmplitude.Name = "NumUdAmplitude";
-            this.NumUdAmplitude.Size = new System.Drawing.Size(58, 23);
-            this.NumUdAmplitude.TabIndex = 2;
-            this.NumUdAmplitude.ValueChanged += new System.EventHandler(this.NumUdAmplitude_ValueChanged);
             // 
             // LabelHarmonic
             // 
@@ -98,7 +85,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(177, 3);
+            this.button1.Location = new System.Drawing.Point(280, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(24, 23);
             this.button1.TabIndex = 5;
@@ -106,20 +93,37 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
+            // ampTrackBar
+            // 
+            this.ampTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ampTrackBar.AutoSize = false;
+            this.ampTrackBar.Location = new System.Drawing.Point(116, 3);
+            this.ampTrackBar.Maximum = 2000;
+            this.ampTrackBar.Minimum = 1;
+            this.ampTrackBar.Name = "ampTrackBar";
+            this.ampTrackBar.Size = new System.Drawing.Size(163, 23);
+            this.ampTrackBar.TabIndex = 6;
+            this.ampTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.toolTip1.SetToolTip(this.ampTrackBar, "multiplier ");
+            this.ampTrackBar.Value = 1000;
+            this.ampTrackBar.Scroll += new System.EventHandler(this.AmpTrackBar_Scroll);
+            // 
             // SettuperListSubComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ampTrackBar);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.LabelAmplitude);
             this.Controls.Add(this.LabelHarmonic);
-            this.Controls.Add(this.NumUdAmplitude);
             this.Controls.Add(this.NumUdHarmonic);
             this.MinimumSize = new System.Drawing.Size(204, 30);
             this.Name = "SettuperListSubComponent";
-            this.Size = new System.Drawing.Size(204, 30);
+            this.Size = new System.Drawing.Size(307, 30);
             ((System.ComponentModel.ISupportInitialize)(this.NumUdHarmonic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumUdAmplitude)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ampTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,10 +132,10 @@
         #endregion
 
         private System.Windows.Forms.NumericUpDown NumUdHarmonic;
-        private System.Windows.Forms.NumericUpDown NumUdAmplitude;
         private System.Windows.Forms.Label LabelHarmonic;
         private System.Windows.Forms.Label LabelAmplitude;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TrackBar ampTrackBar;
     }
 }

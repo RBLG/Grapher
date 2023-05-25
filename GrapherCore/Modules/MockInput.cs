@@ -14,29 +14,23 @@ namespace Grapher.Modules
         private readonly Spectrum main = new();
         private readonly Spectrum buffer = new();
 
-        public MockInput()
-        {
-            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
-            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
-            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
-            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
-            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
-            buffer.Waves.Add(new(Spectrum.WaveType.Sinus, 0, 0));
+        public MockInput() {
+            buffer.Waves.Add(new());
+            buffer.Waves.Add(new());
+            buffer.Waves.Add(new());
+            buffer.Waves.Add(new());
+            buffer.Waves.Add(new());
+            buffer.Waves.Add(new());
         }
 
-        public UserControl? GetControl()
-        { return null; }
+        public UserControl? GetControl() { return null; }
 
         public string Name { get; set; } = "Mock Input";
 
-        public Spectrum GetSpectrum(double time, double timeoff, double bpitch, double seed)
-        {
-            buffer.Time = time;
-            buffer.TimeOff = timeoff;
-            buffer.BasePitch = bpitch;
-            buffer.NoteSeed = seed;
-            for (int it = 0; it < main.Waves.Count; it++)
-            {
+        public Spectrum GetSpectrum(double time, double timeoff, double bpitch, double seed) {
+
+            buffer.Reset(time, timeoff, bpitch, seed);
+            for (int it = 0; it < main.Waves.Count; it++) {
                 Wave bw = buffer.Waves[it];
                 bw.Frequency = bpitch * (it * 2 + 1);//mw.Frequency;
                 bw.Amplitude = 0.3 / Math.Pow(3, it);//mw.Amplitude;
@@ -46,8 +40,7 @@ namespace Grapher.Modules
 
         public IModule? Input { get; }
 
-        public void SetInput(IModule input)
-        { return; }
+        public void SetInput(IModule input) { return; }
 
     }
 }

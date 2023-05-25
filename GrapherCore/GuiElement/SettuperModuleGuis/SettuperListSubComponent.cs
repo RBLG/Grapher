@@ -19,28 +19,24 @@ namespace Grapher.GuiElement.SettuperModuleGui
 
         public SettuperListSubComponent() : this(new(), (s) => { }) { }
 
-        public SettuperListSubComponent(SettupedHarmonic nharmo, Action<SettuperListSubComponent> ndel)
-        {
+        public SettuperListSubComponent(SettupedHarmonic nharmo, Action<SettuperListSubComponent> ndel) {
             harmo = nharmo;
             deleter = ndel;
             InitializeComponent();
-            NumUdHarmonic.Value = harmo.Multiplier;
-            NumUdAmplitude.Value = (decimal)harmo.Amplitude;
+            NumUdHarmonic.Value = (decimal)harmo.FrequencyMultiplier;
+            ampTrackBar.Value = (int)(harmo.AmplitudeMultiplier * 1000);
         }
 
-        private void NumUdAmplitude_ValueChanged(object sender, EventArgs e)
-        {
-            harmo.Amplitude = (double)NumUdAmplitude.Value;
-        }
-
-        private void DeleteButton_Click(object sender, EventArgs e)
-        {
+        private void DeleteButton_Click(object sender, EventArgs e) {
             deleter(this);
         }
 
-        private void NumUdHarmonic_ValueChanged(object sender, EventArgs e)
-        {
-            harmo.Multiplier = (int)NumUdHarmonic.Value;
+        private void NumUdHarmonic_ValueChanged(object sender, EventArgs e) {
+            harmo.FrequencyMultiplier = (double)NumUdHarmonic.Value;
+        }
+
+        private void AmpTrackBar_Scroll(object sender, EventArgs e) {
+            harmo.AmplitudeMultiplier = ampTrackBar.Value / 1000d;
         }
     }
 }

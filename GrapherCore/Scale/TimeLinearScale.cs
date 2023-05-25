@@ -35,7 +35,7 @@ namespace Grapher.Scale
 
         public double PickValueTo(Wave wave, Spectrum spectrum, uint size)
         {
-            double rtn = spectrum.Time;
+            double rtn = spectrum.SourceTime;
             if (IsLooping)
             {
                 rtn /= Duration;
@@ -51,7 +51,7 @@ namespace Grapher.Scale
                 else
                 {
                     //if release event happenned before time reached the hold, use time instead of timeoff
-                    rtn = Math.Min(spectrum.Time, Hold + spectrum.TimeOff);
+                    rtn = Math.Min(spectrum.SourceTime, Hold + spectrum.TimeOff);
                     rtn = Math.Min(rtn, Duration - 1); //-1 because weird stuff happen at duration value, will check later
                 }
                 rtn /= Duration;
@@ -60,7 +60,7 @@ namespace Grapher.Scale
         }
 
         public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size) {
-            double rtn = spectrum.Time;
+            double rtn = spectrum.SourceTime;
             if (IsLooping)
             {
                 rtn /= Duration;
@@ -82,13 +82,13 @@ namespace Grapher.Scale
                 }
                 else
                 {
-                    double release = spectrum.Time - spectrum.TimeOff;//remove calculations by having release time in wave?
+                    double release = spectrum.SourceTime - spectrum.TimeOff;//remove calculations by having release time in wave?
                     if (release < Hold)
                     {
                         double realease = release - release % (Duration / size);
-                        if (spectrum.Time < realease)
+                        if (spectrum.SourceTime < realease)
                         {
-                            double time1 = spectrum.Time * size / Duration;
+                            double time1 = spectrum.SourceTime * size / Duration;
                             uint index1 = (uint)time1;
                             uint index2 = (uint)((Hold + spectrum.TimeOff) * size / Duration);
                             double mix = time1 - index1;

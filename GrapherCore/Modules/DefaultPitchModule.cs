@@ -14,32 +14,21 @@ namespace Grapher.Modules
     {
         private readonly Spectrum spec = new();
 
-        public DefaultPitchModule()
-        {
-            spec.Waves.Add(new Wave(WaveType.Sinus, 0, 0));
+        public DefaultPitchModule() {
+            spec.Waves.Add(new());
         }
 
-        public UserControl? GetControl()
-        { return null; }
+        public UserControl? GetControl() { return null; }
 
-        //no pitch editor yet but who knows
-        public string Name { get; set; } = "Pitch Module" + count++;
-        private static int count = 0;
+        public string Name { get; set; } = "Pitch Module";
 
-        public Spectrum GetSpectrum(double time, double timeoff, double bpitch, double seed)
-        {
-            //spec.SourceTime = time;
-            //spec.TimeOff = timeoff;
-            //spec.BasePitch = bpitch;
-            //spec.NoteSeed = seed;
+        public Spectrum GetSpectrum(double time, double timeoff, double bpitch, double seed) {
             spec.Reset(time, timeoff, bpitch, seed);
-            spec.Waves[0].Frequency = bpitch;
-            spec.Waves[0].Amplitude = 0.2;
+            spec.Waves[0].Reset(bpitch, 0.2, 0, 0.5);
             return spec;
         }
 
         public IModule? Input { get; }
-        public void SetInput(IModule input)
-        { return; }
+        public void SetInput(IModule input) { return; }
     }
 }

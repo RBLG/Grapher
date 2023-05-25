@@ -12,6 +12,6 @@ namespace Grapher.Scale.Related
         /// <summary>
         /// pick the value, scale it to 01, process it with mode then unscale it from 01 and set it back
         /// </summary>
-        void ProcessValue(Spectrum.Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval);
+        void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval);
     }
 }

@@ -51,7 +51,7 @@ namespace Grapher.Scale
 
         public double PickValueTo(Wave wave, Spectrum spectrum, uint size)
         {
-            double rtn = spectrum.Time;
+            double rtn = spectrum.SourceTime;
             if (IsPhased) //clip time to the last end of phase cycle
             {
                 rtn = (int)(wave.Frequency * rtn / 1000 + wave.Phase);
@@ -71,9 +71,9 @@ namespace Grapher.Scale
 
         public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size)
         {
-            uint val1 = (uint)(spectrum.Time / Modulo);
+            uint val1 = (uint)(spectrum.SourceTime / Modulo);
             uint val2 = val1 + 1;
-            double mix = spectrum.Time / Modulo - val1;
+            double mix = spectrum.SourceTime / Modulo - val1;
 
             val1 = ComputeIndex(spectrum, size, val1);
             val2 = ComputeIndex(spectrum, size, val2);

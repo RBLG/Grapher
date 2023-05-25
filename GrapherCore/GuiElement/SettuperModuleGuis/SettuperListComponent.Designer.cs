@@ -31,14 +31,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.ButtonAddHarmonic = new System.Windows.Forms.Button();
             this.MainSettingGroupBox = new System.Windows.Forms.GroupBox();
+            this.ampTrackBar = new System.Windows.Forms.TrackBar();
             this.DeleteButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.FrequencyLabel = new System.Windows.Forms.Label();
-            this.NumUdAmplitude = new System.Windows.Forms.NumericUpDown();
             this.NumUdFrequency = new System.Windows.Forms.NumericUpDown();
             this.HarmonicsFlPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.MainSettingGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumUdAmplitude)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ampTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumUdFrequency)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,24 +69,40 @@
             // 
             this.MainSettingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.MainSettingGroupBox.Controls.Add(this.ampTrackBar);
             this.MainSettingGroupBox.Controls.Add(this.DeleteButton);
             this.MainSettingGroupBox.Controls.Add(this.label3);
             this.MainSettingGroupBox.Controls.Add(this.FrequencyLabel);
-            this.MainSettingGroupBox.Controls.Add(this.NumUdAmplitude);
             this.MainSettingGroupBox.Controls.Add(this.NumUdFrequency);
             this.MainSettingGroupBox.Location = new System.Drawing.Point(5, 3);
             this.MainSettingGroupBox.Name = "MainSettingGroupBox";
-            this.MainSettingGroupBox.Size = new System.Drawing.Size(326, 53);
+            this.MainSettingGroupBox.Size = new System.Drawing.Size(325, 53);
             this.MainSettingGroupBox.TabIndex = 5;
             this.MainSettingGroupBox.TabStop = false;
             this.MainSettingGroupBox.Text = "Main wave:";
             // 
+            // ampTrackBar
+            // 
+            this.ampTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ampTrackBar.AutoSize = false;
+            this.ampTrackBar.Location = new System.Drawing.Point(170, 17);
+            this.ampTrackBar.Maximum = 1000;
+            this.ampTrackBar.Minimum = 1;
+            this.ampTrackBar.Name = "ampTrackBar";
+            this.ampTrackBar.Size = new System.Drawing.Size(119, 23);
+            this.ampTrackBar.TabIndex = 10;
+            this.ampTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.ampTrackBar.Value = 500;
+            this.ampTrackBar.Scroll += new System.EventHandler(this.ampTrackBar_Scroll);
+            // 
             // DeleteButton
             // 
             this.DeleteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DeleteButton.Location = new System.Drawing.Point(296, 17);
+            this.DeleteButton.Location = new System.Drawing.Point(295, 17);
             this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(24, 23);
+            this.DeleteButton.Size = new System.Drawing.Size(23, 23);
             this.DeleteButton.TabIndex = 9;
             this.DeleteButton.Text = "X";
             this.DeleteButton.UseVisualStyleBackColor = true;
@@ -95,38 +111,24 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(160, 19);
+            this.label3.Location = new System.Drawing.Point(128, 19);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 15);
+            this.label3.Size = new System.Drawing.Size(36, 15);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Amplitude:";
+            this.label3.Text = "Amp:";
             // 
             // FrequencyLabel
             // 
             this.FrequencyLabel.AutoSize = true;
             this.FrequencyLabel.Location = new System.Drawing.Point(6, 19);
             this.FrequencyLabel.Name = "FrequencyLabel";
-            this.FrequencyLabel.Size = new System.Drawing.Size(65, 15);
+            this.FrequencyLabel.Size = new System.Drawing.Size(33, 15);
             this.FrequencyLabel.TabIndex = 7;
-            this.FrequencyLabel.Text = "Frequency:";
-            // 
-            // NumUdAmplitude
-            // 
-            this.NumUdAmplitude.DecimalPlaces = 2;
-            this.NumUdAmplitude.Location = new System.Drawing.Point(232, 17);
-            this.NumUdAmplitude.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.NumUdAmplitude.Name = "NumUdAmplitude";
-            this.NumUdAmplitude.Size = new System.Drawing.Size(62, 23);
-            this.NumUdAmplitude.TabIndex = 6;
-            this.NumUdAmplitude.ValueChanged += new System.EventHandler(this.NumUdAmplitude_ValueChanged);
+            this.FrequencyLabel.Text = "Freq:";
             // 
             // NumUdFrequency
             // 
-            this.NumUdFrequency.Location = new System.Drawing.Point(77, 17);
+            this.NumUdFrequency.Location = new System.Drawing.Point(45, 17);
             this.NumUdFrequency.Maximum = new decimal(new int[] {
             20000,
             0,
@@ -147,9 +149,9 @@
             this.HarmonicsFlPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.HarmonicsFlPanel.Location = new System.Drawing.Point(5, 77);
             this.HarmonicsFlPanel.MaximumSize = new System.Drawing.Size(24200, 160);
-            this.HarmonicsFlPanel.MinimumSize = new System.Drawing.Size(240, 10);
+            this.HarmonicsFlPanel.MinimumSize = new System.Drawing.Size(325, 65);
             this.HarmonicsFlPanel.Name = "HarmonicsFlPanel";
-            this.HarmonicsFlPanel.Size = new System.Drawing.Size(240, 10);
+            this.HarmonicsFlPanel.Size = new System.Drawing.Size(325, 65);
             this.HarmonicsFlPanel.TabIndex = 6;
             this.HarmonicsFlPanel.WrapContents = false;
             // 
@@ -165,10 +167,10 @@
             this.Controls.Add(this.label2);
             this.MinimumSize = new System.Drawing.Size(334, 80);
             this.Name = "SettuperListComponent";
-            this.Size = new System.Drawing.Size(334, 92);
+            this.Size = new System.Drawing.Size(336, 148);
             this.MainSettingGroupBox.ResumeLayout(false);
             this.MainSettingGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumUdAmplitude)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ampTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumUdFrequency)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -181,9 +183,9 @@
         private System.Windows.Forms.GroupBox MainSettingGroupBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label FrequencyLabel;
-        private System.Windows.Forms.NumericUpDown NumUdAmplitude;
         private System.Windows.Forms.NumericUpDown NumUdFrequency;
         private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.FlowLayoutPanel HarmonicsFlPanel;
+        private System.Windows.Forms.TrackBar ampTrackBar;
     }
 }

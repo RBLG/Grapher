@@ -50,19 +50,19 @@ namespace Grapher.Scale
             { wave.Phase = mode.Process(wave.Phase, tval); }
         }
 
-        public static double GetAbsPhase(Spectrum.Wave wave, Spectrum spectrum)
+        public static double GetAbsPhase(Wave wave, Spectrum spectrum)
         {
             return wave.Phase + GetGlobalPhase(wave, spectrum);
         }
 
-        public static double GetRevert(Spectrum.Wave wave, Spectrum spectrum, double val)
+        public static double GetRevert(Wave wave, Spectrum spectrum, double val)
         {
             return val - GetGlobalPhase(wave, spectrum);
         }
 
-        public static double GetGlobalPhase(Spectrum.Wave wave, Spectrum spectrum)
+        public static double GetGlobalPhase(Wave wave, Spectrum spectrum)
         {
-            return spectrum.Time / 1000 * wave.Frequency;
+            return spectrum.SourceTime / 1000 * wave.Frequency;
         }
     }
 }
