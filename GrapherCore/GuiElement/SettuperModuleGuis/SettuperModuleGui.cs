@@ -39,7 +39,7 @@ namespace Grapher.GuiElement.SettuperModuleGuis
 
         private void AddWaveButton_Click(object sender, EventArgs e)
         {
-            SettupedMainWave nwave = new();
+            SettupedMainWave nwave = new(0,0.1);
             module.AddWave(nwave);
             AddWaveGui(nwave);
         }

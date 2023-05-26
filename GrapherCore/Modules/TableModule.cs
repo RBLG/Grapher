@@ -61,7 +61,7 @@ namespace Grapher.Modules
             if (table.height == 1) { lmix = l1 = l2 = 0; }
             else { (l1, l2, lmix) = Lscale.PickValueTo2(wave, spectrum, table.height); }
 
-            if (double.IsNaN(lmix)|| double.IsNaN(lmix)) {
+            if (double.IsNaN(lmix) || double.IsNaN(lmix)) {
                 Console.WriteLine("aaaaaaaaaaaaaaaah");
             }
 
@@ -107,6 +107,8 @@ namespace Grapher.Modules
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static (uint, uint, double) PrepareInterpolation(double val, uint size, bool islooping) {
             //i1 and i2 are the two index to interpolate between, mix is where between both the value is
+            double dsize = size;
+            val = ((val % dsize) + dsize) % dsize; //modulo that always return a positive value
             uint i1 = (uint)val; //previous index by truncating val
             uint i2 = (val == i1) ? i1 : i1 + 1; //faster (int)Math.Ceiling(index2); //next by +1
             if (i2 >= size) {
