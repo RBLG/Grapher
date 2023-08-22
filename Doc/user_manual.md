@@ -9,29 +9,39 @@ allow to choose for the root module.
 you can edit it by clicking the pencil icon next to it.
 the detune slider, well, detune (to be implemented).
 
-#####Table Module/3D Editor
+#####Table Module
 the core module of the synthesizer.
 Input chose what Module will provide sound to be processed by the module.
 Same than the main screen you can edit it by clicking the pencil button.
 
-the brush section allow the following actions:
+the table module impact the sound waves by applying an operation defined by the selected mode (for example, an addition or a multiplication)
+on a value of the wave defined by the selected height axis (for example, phase or amplitude)
+, which is chosen by looking in the table of values at the position of the current values of the selected width and length axis.
+
+for example, i have selected time and frequency as width and length, and time is currently at 21ms and frequency for the wave is 400Hz, with a duration of 1000ms
+for the time axis, it will then look at \[21/1000,400/20000\]. (20000 being the maximum value on the frequency axis)
+
+it is important to note that additionnal frequencies from the table modules' operations wont get processed as new frequencies by subsequent table modules
+ because of how it work internally but its fine most time and might be improved in the future (i got ideas :) )
+
+the brush section allow to:
 - change the brush size (the slider)
 - change the brush type (to be implemented).
-the grid is what impact your sound:
-- it process the sound values based on current values based on the width and length units selected.
-- by default those are frequency (in Hz) for the width and time (in ms) for the length.
-- it process the sound by changing some properties of the sound defined by the 3rd axis, height, and applying a mathematical operation on it
-- by default it change the amplitude property by multiplying it by between 0% and 200%
 
-Axis settings allow to customize the Width, Length, Height axis/scale and how the value is impacted.
+the axis section allow to:
+- define the width and length input axis
+- define the height output axis
+- define the operation applied to the ouput
+
+the editor section allow to:
+- change visuals on table (to be implemented)
 
 #####Pitch
 the by default module. it has no interface and just prove a simple sinus wave at the note frequency
 
-#####Harmo Editor
-a variant of the 3D editor that allow you to add harmonics. 
-(for now it is pretty basic and additionnal harmonics do have an additive cpu cost. still usable)
+#####Set Module
 
+basic module that allow defining a set of waves and their harmonics (to be processed by following table modules)
 
 ###Scales/Axis
 the customizable axis found in the axis settings of the 3D editor
@@ -50,28 +60,24 @@ to have successing pattern side by side.
 
 #####Linear Frequency
 a simple frequency axis/scale. it has the effect of the high notes taking most place on the grid.
-it is important to note that since frequency is calculated since the beginning of the note, frequency modulation is more and more intense
-as time pass. (it still does reset every notes)
-it is important to note that because of how stuff work internally, additionnal frequencies added by modulation are not handled exactly by frequencies
-scales as they have very limited perception of the waves shapes
 
 #####Exponantial Frequency
 an axis/scale where the frequency distribution is rebalanced to be closer to human perception
 
 #####Mei Frequency
 an axis/scale using the Mei scale which give a distribution the closest to human perception.
-computation might be a bit heavy, so use with care
+computation might be a bit heavier (maybe?), so use with care
 
 #####Linear Amplitude
-the amplitude axis. note that this value is only related to software output, i have no clue whats the unit too.
-it is probably exponantial compared to decibels?
+the amplitude axis. note that this value is only related to software output, i have no clue whats the unit too, probably not decibels?
 
 #####Padding
 decide in which channel the output will be mostly played. it is completely linear with the minimum being completely on one side
-while the maximum being completely on the other side
+while the maximum being completely on the other side. its padding, please handle with care, it WILL hurt to listen if too strong
+(padding modulation is a bad idea, i can tell you that)
 
 #####Phase
-mostly an output scale. allow to modulate the phase of the wave. it is important to note that grid values arent cumulative so a spike will
+mostly an output scale. allow to modulate the phase of the wave. it is important to note that grid values arent cumulative so when adding phase, a spike will
 first forward then modulate backward. (cumulative values should come in the future)
 
 #####TODO
@@ -86,9 +92,15 @@ these are operations applied to the value given by the height scale.
 multiply the value by between 0% and 200%
 the intensity option attenuate or increase that value compared to 100%
 
+#####Add
+add the value
+
+#####Set
+replace the existing value by the value from the table
+
 #####TODO
--add (add to the existing value)
--set (replace the value)
+-min
+-max
 
 
 
