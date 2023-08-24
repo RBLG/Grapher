@@ -45,6 +45,9 @@
     <Compile Update="GuiElement\MainSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="GuiElement\ScaleSettings\ModeMaxGui.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="GuiElement\ScaleSettings\PhaseInputGui.cs">
       <SubType>UserControl</SubType>
     </Compile>

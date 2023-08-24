@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grapher.Modes
 {
+    //list of all modes to be available in the user interface (targeted at table module's mode)
     public static class AvailableModes
     {
         private static readonly List<AvailableMode> list = new()
@@ -13,18 +14,18 @@ namespace Grapher.Modes
            new AvailableMode("Multiply",()=>new MultiplyMode(),typeof(MultiplyMode)),
            new AvailableMode("Add",()=>new AddMode(),typeof(AddMode)),
            new AvailableMode("Set",()=>new SetMode(),typeof(SetMode)),
-           new AvailableMode("Noisify",()=>new NoisifyMode(),typeof(NoisifyMode))
+           //new AvailableMode("Ceiling",()=>new MaxMode(),typeof(MaxMode))
         };
         public static readonly IReadOnlyCollection<AvailableMode> modes = list;
 
 
         public class AvailableMode
         {
-            public String Name { get; private set; }
+            public string Name { get; private set; }
             public Func<IMode> Factory { get; private set; }
             public Type CType { get; private set; }
 
-            public AvailableMode(String nname, Func<IMode> nfactory, Type cType)
+            public AvailableMode(string nname, Func<IMode> nfactory, Type cType)
             {
                 Name = nname;
                 Factory = nfactory;

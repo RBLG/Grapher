@@ -11,7 +11,7 @@ namespace Grapher.Modes
     {
         public double Intensity { get; set; } = 1;
 
-        public double Center { get; set; } = 0.5; //change the point where the 0 singularity happen
+        public double Center { get; set; } = 0.5; //change the point where the "0 singularity" happen
 
         public Control GetControl()
         {
