@@ -1,6 +1,6 @@
 ﻿namespace Grapher.GuiElement.ScaleSettings
 {
-    partial class FrequencyLinearGui
+    partial class FrequencyInputGui
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -28,20 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            UnitComboBox = new System.Windows.Forms.ComboBox();
+            SuspendLayout();
             // 
-            // LinearTimeScaleGui
+            // UnitComboBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.MaximumSize = new System.Drawing.Size(235, 58);
-            this.MinimumSize = new System.Drawing.Size(235, 58);
-            this.Name = "LinearTimeScaleGui";
-            this.Size = new System.Drawing.Size(235, 58);
-            this.ResumeLayout(false);
-
+            UnitComboBox.FormattingEnabled = true;
+            UnitComboBox.Location = new System.Drawing.Point(3, 3);
+            UnitComboBox.Name = "UnitComboBox";
+            UnitComboBox.Size = new System.Drawing.Size(121, 23);
+            UnitComboBox.TabIndex = 0;
+            // 
+            // FrequencyLinearGui
+            // 
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(UnitComboBox);
+            MaximumSize = new System.Drawing.Size(235, 58);
+            MinimumSize = new System.Drawing.Size(235, 58);
+            Name = "FrequencyLinearGui";
+            Size = new System.Drawing.Size(235, 58);
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private System.Windows.Forms.ComboBox UnitComboBox;
     }
 }

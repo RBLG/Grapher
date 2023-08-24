@@ -23,7 +23,7 @@ namespace Grapher.Modules
 
         public RawTable Table { get; set; } = new(10, 20);//HACK un-hardcode size
 
-        public IInputScale Wscale { get; set; } = new FrequencyExponantialScale();
+        public IInputScale Wscale { get; set; } = new FrequencyInputScale();
         public IInputScale Lscale { get; set; } = new TimeLinearScale();
         public IOutputScale Hscale { get; set; } = new AmplitudeLinearScale();
         public IMode Mode { get; set; } = new SetMode();

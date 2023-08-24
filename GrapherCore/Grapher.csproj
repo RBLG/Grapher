@@ -45,16 +45,10 @@
     <Compile Update="GuiElement\MainSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="GuiElement\ScaleSettings\FrequencyExponentialGui.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="GuiElement\ScaleSettings\FrequencyMeiGui.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Update="GuiElement\ScaleSettings\PhaseInputGui.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="GuiElement\ScaleSettings\FrequencyLinearGui.cs">
+    <Compile Update="GuiElement\ScaleSettings\FrequencyInputGui.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Properties\Settings.Designer.cs">

@@ -14,15 +14,8 @@ namespace Grapher.Scale
     {
         private static readonly List<AvailableOutputScale> list = new()
         {
-           new AvailableOutputScale("--Frequency:----",/**/()=>null,/*                           */null,/*                              */false,ScaleType.None),
-           new AvailableOutputScale(" Exponantial (F)",/**/()=>new FrequencyExponantialScale(),/**/typeof(FrequencyExponantialScale),/* */true, ScaleType.Frequency),
-           new AvailableOutputScale(" Linear (F)",/*     */()=>new FrequencyLinearScale(),/*     */typeof(FrequencyLinearScale),/*      */true, ScaleType.Frequency),
-           new AvailableOutputScale(" Mei (F)",/*        */()=>new FrequencyMeiScale(),/*        */typeof(FrequencyMeiScale),/*         */true, ScaleType.Frequency),
-           new AvailableOutputScale(" Harmonics (F)",/*  */()=>new HarmonicScale(),/*            */typeof(HarmonicScale),/*             */true, ScaleType.Frequency),
-           new AvailableOutputScale("--Amplitude:----",/**/()=>null,/*                           */null,/*                              */false,ScaleType.None),
-           new AvailableOutputScale(" Linear (A)",/*     */()=>new AmplitudeLinearScale(),/*     */typeof(AmplitudeLinearScale),/*      */true, ScaleType.Amplitude),
-           //new AvailableOutputScale(" Decibel (A)",/*  */()=>new DecibelAmplitudeScale(),/*    */typeof(DecibelAmplitudeScale),/*     */true, ScaleType.Amplitude)
-           new AvailableOutputScale("--Others:-------",/**/()=>null,/*                           */null,/*                              */false,ScaleType.None),
+           new AvailableOutputScale(" Harmonics",/*      */()=>new HarmonicScale(),/*            */typeof(HarmonicScale),/*             */true, ScaleType.Frequency),
+           new AvailableOutputScale(" Amplitude",/*      */()=>new AmplitudeLinearScale(),/*     */typeof(AmplitudeLinearScale),/*      */true, ScaleType.Amplitude),
            new AvailableOutputScale(" Phase",/*          */()=>new PhaseOutputScale(),/*         */typeof(PhaseOutputScale),/*          */true, ScaleType.Phase),
            new AvailableOutputScale(" Padding",/*        */()=>new PaddingScale(),/*             */typeof(PaddingScale),/*              */true, ScaleType.Padding),
         };
@@ -37,8 +30,7 @@ namespace Grapher.Scale
             public ScaleType SType { get; private set; }//TODO rework to use interface ineritance to need even less code
 
             //factory take either null or a module already existing to build around
-            public AvailableOutputScale(string nname, Func<IOutputScale?> nfactory, Type? ntype, bool nselectable, ScaleType nstype)
-            {
+            public AvailableOutputScale(string nname, Func<IOutputScale?> nfactory, Type? ntype, bool nselectable, ScaleType nstype) {
                 Name = nname;
                 Factory = nfactory;
                 Selectable = nselectable;
@@ -52,20 +44,16 @@ namespace Grapher.Scale
             Time, Frequency, Amplitude, Padding, Phase, None
         }
 
-        public static int GetIndex(Type type)
-        {
+        public static int GetIndex(Type type) {
             int it = 0;
-            foreach (AvailableOutputScale scale in list)
-            {
-                if (scale.CType == type)
-                { return it; }
+            foreach (AvailableOutputScale scale in list) {
+                if (scale.CType == type) { return it; }
                 it++;
             }
             return -1;
         }
 
-        public static AvailableOutputScale Get(int index)
-        {
+        public static AvailableOutputScale Get(int index) {
             return scales.ElementAt(index);
         }
 
