@@ -11,10 +11,10 @@ namespace Grapher.Modes
     {
         private static readonly List<AvailableMode> list = new()
         {
-           new AvailableMode("Multiply",()=>new MultiplyMode(),typeof(MultiplyMode)),
-           new AvailableMode("Add",()=>new AddMode(),typeof(AddMode)),
-           new AvailableMode("Set",()=>new SetMode(),typeof(SetMode)),
-           //new AvailableMode("Ceiling",()=>new MaxMode(),typeof(MaxMode))
+           new AvailableMode("Multiply",/*  */ ()=>new MultiplyMode(),typeof(MultiplyMode)),
+           new AvailableMode("Add",/*       */ ()=>new AddMode(),typeof(AddMode)),
+           new AvailableMode("Set",/*       */ ()=>new SetMode(),typeof(SetMode)),
+           new AvailableMode("Ceiling",/*   */ ()=>new MaxMode(),typeof(MaxMode))
         };
         public static readonly IReadOnlyCollection<AvailableMode> modes = list;
 

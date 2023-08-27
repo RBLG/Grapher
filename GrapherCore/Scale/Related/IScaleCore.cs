@@ -16,30 +16,19 @@ namespace Grapher.Scale.Related
         /// return the list of visual marks on the table axis
         /// </summary>
         /// <returns></returns>
-        List<Graduation> GetMilestones();
+        List<Graduation> GetMilestones(); //TODO is it usefull in output scales?
 
         /// <summary>
         /// Axis label for the GUI
         /// </summary>
         string Label { get; }
 
-        /// <summary>
-        /// return if the scale accept values inbetween.<br/>
-        /// TODO will control interpolation and generation
-        /// </summary>
-        bool Continuous { get; }
 
         /// <summary>
         /// return the Gui element that allow to manipulate the scale. 
         /// this element will be visible in the axis settings
         /// </summary>
         Control GetControl();
-
-        /// <summary>
-        /// define if past the last index it interpolate with the first or stay on the last index <br/>
-        /// (basically if it hold or loop)
-        /// </summary>
-        bool IsLooping { get; }
 
     }
 }

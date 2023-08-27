@@ -3,6 +3,7 @@ using Grapher.Scale.Related;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,8 +18,7 @@ namespace Grapher.Scale
 
         public string Label => "Phase";
 
-        public List<Graduation> GetMilestones()
-        {
+        public List<Graduation> GetMilestones() {
             return new()
             {
                 new Graduation("0%", 0),
@@ -29,40 +29,34 @@ namespace Grapher.Scale
 
         public Control GetControl() => new PhaseOutputGui(this);
 
-        public bool Continuous => true;
-        public bool IsLooping => true;
-
         public bool IsAbsolute { get; set; } = true;
         public double Offset { get; set; } = 0.25;
 
-        public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval)
-        {
-            if (IsAbsolute)
-            {
-                //double val = GetAbsPhase(wave, spectrum);
-                //double postval = mode.Process(val, tval);
-                //wave.Phase += postval - val + Offset / 100;
+        public void ProcessValue(Wave wave, Spectrum spectrum, double size, Modes.IMode mode, double tval) {
+            if (IsAbsolute) {
 
-                //TODO improve by removing the need to recalculate globalphase 2 time
-                wave.Phase = GetRevert(wave, spectrum, mode.Process(GetAbsPhase(wave, spectrum), tval)) + Offset;
+                double glob = GetGlobalPhase(wave, spectrum);
+                double absphase = GetAbsPhase(wave, glob);
+                double nval = mode.Process(absphase, tval);
+                wave.Phase = GetRevert(nval, glob) + Offset;
+            } else {
+                wave.Phase = mode.Process(wave.Phase, tval);
             }
-            else
-            { wave.Phase = mode.Process(wave.Phase, tval); }
         }
 
-        public static double GetAbsPhase(Wave wave, Spectrum spectrum)
-        {
-            return wave.Phase + GetGlobalPhase(wave, spectrum);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double GetAbsPhase(Wave wave, double globphase) {
+            return wave.Phase + globphase;
         }
 
-        public static double GetRevert(Wave wave, Spectrum spectrum, double val)
-        {
-            return val - GetGlobalPhase(wave, spectrum);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double GetRevert(double val, double globphase) {
+            return val - globphase;
         }
 
-        public static double GetGlobalPhase(Wave wave, Spectrum spectrum)
-        {
-            return spectrum.SourceTime / 1000 * wave.Frequency;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double GetGlobalPhase(Wave wave, Spectrum spectrum) {
+            return spectrum.SourceTime * 0.001d * wave.Frequency;
         }
     }
 }

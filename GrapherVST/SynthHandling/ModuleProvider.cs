@@ -18,8 +18,7 @@ namespace GrapherVST.SynthHandling
         public class MyMidiEvent
         {
             private static int count = 0;
-            public MyMidiEvent(int nnote)
-            {
+            public MyMidiEvent(int nnote) {
                 note = nnote;
                 count++;
                 seed = count;
@@ -56,25 +55,21 @@ namespace GrapherVST.SynthHandling
 
         public bool IsPlaying { get { return events.Count != 0; } private set { } }
 
-        public void PlayAudio(VstAudioBuffer[] outChannels)
-        {
-            for (int i = events.Count - 1; i >= 0; i--)
-            {
+        public void PlayAudio(VstAudioBuffer[] outChannels) {
+            for (int i = events.Count - 1; i >= 0; i--) {
                 var evnt = events[i];
-                if (!double.IsNaN(evnt.timeoff) && evnt.timeoff > TimeOffDelay)
-                {
+                if (!double.IsNaN(evnt.timeoff) && evnt.timeoff > TimeOffDelay) {
                     events.RemoveAt(i);
                     continue;
                 }
                 double pitch = midi.Unscale(evnt.note);
-                for (int n = 0; n < outChannels[0].SampleCount; n++)
-                {
+                for (int n = 0; n < outChannels[0].SampleCount; n++) {
                     Spectrum spec = root.GetSpectrum(evnt.time, evnt.timeoff, pitch, evnt.seed);
                     double sum = 0;
                     double sum2 = 0;
-                    foreach (Wave w in spec.Waves)
-                    {
-                        double val = w.Amplitude * Math.Sin(2 * Math.PI * (w.Frequency * evnt.time / 1000 + w.Phase));
+                    foreach (Wave w in spec.Waves) {
+                        double val = ValueOutputScale.GetValue(w, spec);
+                        //double val = w.Amplitude * Math.Sin(2 * Math.PI * (w.Frequency * evnt.time / 1000 + w.Phase));
                         sum += val * w.Padding;
                         sum2 += val * (1 - w.Padding);
                         w.Phase = 0.5;//dirty reset
@@ -92,17 +87,13 @@ namespace GrapherVST.SynthHandling
 
         }
 
-        public void ProcessNoteOffEvent(byte v)
-        {
-            foreach (MyMidiEvent e in events)
-            {
-                if (e.note == v)
-                { e.timeoff = 0; }
+        public void ProcessNoteOffEvent(byte v) {
+            foreach (MyMidiEvent e in events) {
+                if (e.note == v) { e.timeoff = 0; }
             }
         }
 
-        public void ProcessNoteOnEvent(byte v)
-        {
+        public void ProcessNoteOnEvent(byte v) {
             events.Add(new(v));
         }
     }
