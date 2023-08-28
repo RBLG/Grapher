@@ -61,10 +61,11 @@ namespace Grapher.Modules
             if (table.height == 1) { lmix = l1 = l2 = 0; }
             else { (l1, l2, lmix) = Lscale.PickValueTo2(wave, spectrum, table.height); }
 
+            /* TODO ???
             if (double.IsNaN(lmix) || double.IsNaN(lmix)) {
                 Console.WriteLine("aaaaaaaaaaaaaaaah");
             }
-
+            */
             double tval = GetValueFromQuadIndex(w1, w2, wmix, l1, l2, lmix, table);
             if (!double.IsNaN(tval)) { Hscale.ProcessValue(wave, spectrum, table.height, Mode, tval); }
         }

@@ -31,7 +31,7 @@ namespace Grapher.GuiElement.TableModule2Guis
         public const float dotsize = 3;
         public const float halfdot = dotsize / 2f;
 
-        protected readonly OrthoCamera defaultcamera = new(); //HACK
+        protected readonly OrthoCamera defaultcamera = new(); //HACK used to set the actual cam to the default position
         protected readonly OrthoCamera camera = new();
         protected readonly TableModule module;
         protected readonly TableFormater formater;
