@@ -15,35 +15,34 @@ namespace Grapher.GuiElement.ScaleSettings
     {
         private readonly TimeModuloScale scale;
 
-        public TimeModuloGui(TimeModuloScale nscale)
-        {
+        public TimeModuloGui(TimeModuloScale nscale) {
             InitializeComponent();
             scale = nscale;
             CheckBoxIsLooping.Checked = scale.IsLooping;
             CheckBoxIsRandom.Checked = scale.IsRandom;
             NumUdChunkSize.Value = (decimal)scale.Modulo;
             NumUdSeed.Value = (decimal)scale.Seed;
+            CheckBoxIsPhasing.Checked = scale.IsPhasing;
         }
 
-        private void CheckBoxIsRandom_CheckedChanged(object sender, EventArgs e)
-        {
+        private void CheckBoxIsRandom_CheckedChanged(object sender, EventArgs e) {
             scale.IsRandom = CheckBoxIsRandom.Checked;
         }
 
-        private void CheckBoxIsLooping_CheckedChanged(object sender, EventArgs e)
-        {
+        private void CheckBoxIsLooping_CheckedChanged(object sender, EventArgs e) {
             scale.IsLooping = CheckBoxIsLooping.Checked;
         }
 
-        private void NumUdChunkSize_ValueChanged(object sender, EventArgs e)
-        {
+        private void NumUdChunkSize_ValueChanged(object sender, EventArgs e) {
             scale.Modulo = (double)NumUdChunkSize.Value;
         }
 
-        private void NumUdSeed_ValueChanged(object sender, EventArgs e)
-        {
+        private void NumUdSeed_ValueChanged(object sender, EventArgs e) {
             scale.Seed = (double)NumUdSeed.Value;
         }
 
+        private void CheckBoxIsPhasing_CheckedChanged(object sender, EventArgs e) {
+            scale.IsPhasing = CheckBoxIsPhasing.Checked;
+        }
     }
 }

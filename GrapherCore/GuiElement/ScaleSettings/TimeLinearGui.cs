@@ -15,34 +15,32 @@ namespace Grapher.GuiElement.ScaleSettings
     {
         private readonly TimeLinearScale scale;
 
-        public TimeLinearGui(TimeLinearScale nscale)
-        {
+        public TimeLinearGui(TimeLinearScale nscale) {
             InitializeComponent();
             scale = nscale;
             this.NumUdLength.Value = (decimal)scale.Duration;
             this.ComboBoxMode.SelectedIndex = scale.IsLooping ? 0 : 1;
             this.NumUdHold.Value = (decimal)scale.Hold;
+            checkBox1.Checked = scale.IsPhasing;
         }
 
 
 
-        private void LoopLength_ValueChanged(object sender, EventArgs e)
-        {
+        private void LoopLength_ValueChanged(object sender, EventArgs e) {
             scale.Duration = (double)NumUdLength.Value;
         }
 
-        private void ComboBoxMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void ComboBoxMode_SelectedIndexChanged(object sender, EventArgs e) {
             scale.IsLooping = ComboBoxMode.SelectedIndex == 0;
-            if (ComboBoxMode.SelectedIndex == 0)
-            { NumUdHold.Enabled = false; }
-            else
-            { NumUdHold.Enabled = true; }
+            if (ComboBoxMode.SelectedIndex == 0) { NumUdHold.Enabled = false; } else { NumUdHold.Enabled = true; }
         }
 
-        private void NumUdHold_ValueChanged(object sender, EventArgs e)
-        {
+        private void NumUdHold_ValueChanged(object sender, EventArgs e) {
             scale.Hold = (double)NumUdHold.Value;
+        }
+
+        private void OnPhaseCheckBox_CheckedChanged(object sender, EventArgs e) {
+            scale.IsPhasing = checkBox1.Checked;
         }
     }
 }

@@ -29,51 +29,39 @@ namespace Grapher.Scale
 
         public bool IsRandom { get; set; } = true;// if false, chunk will follow in order from the lowest Width value to the highest
 
-        public bool IsPhased { get; set; } = false;//if true, it will wait that phase is 0 to swap
+        public bool IsPhasing { get; set; } = false;//if true, it will wait that phase is 0 to swap
 
         public string Label => "t(%)";
 
         public bool Continuous => false;
 
 
-        public List<Graduation> GetMilestones()
-        {
-            return new()
-            {
+        public List<Graduation> GetMilestones() {
+            return new() {
 
             };
         }
 
         public Control GetControl() => new TimeModuloGui(this);
 
+        public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size) {
+            double duration = Modulo;
 
-        public double Scale(double notscaled) => (int)(notscaled / Modulo);
+            // duplicate of the regular time scale for handling IsPhasing /////
+            if (IsPhasing) {
 
-        public double PickValueTo(Wave wave, Spectrum spectrum, uint size)
-        {
-            double rtn = spectrum.SourceTime;
-            if (IsPhased) //clip time to the last end of phase cycle
-            {
-                rtn = (int)(wave.Frequency * rtn / 1000 + wave.Phase);
-                rtn = (rtn - wave.Phase) / wave.Frequency * 1000;
+                double count = duration * 0.001d * wave.Frequency;
+                double intcount = (int)count;
+                if (count != intcount) {
+                    intcount += 1;
+                }
+                duration = intcount / wave.Frequency * 1000;
             }
-            rtn = Scale(rtn);//get the number of the current chunk
-            if (IsLooping)
-            { rtn %= size; }
-            if (IsRandom)// randomizing through modulo, shader noise style
-            {
-                double seed = (Seed == 0) ? spectrum.NoteSeed : Seed;
-
-                rtn = (Math.Sin(rtn * seed * 13.531) + 1) * (size * 100_000 - 1) % size;
-            }
-            return rtn;
-        }
-
-        public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size)
-        {
-            uint val1 = (uint)(spectrum.SourceTime / Modulo);
+            ///////////////
+            double tratio = spectrum.SourceTime / duration;
+            uint val1 = (uint)tratio;
             uint val2 = val1 + 1;
-            double mix = spectrum.SourceTime / Modulo - val1;
+            double mix = tratio - val1;
 
             val1 = ComputeIndex(spectrum, size, val1);
             val2 = ComputeIndex(spectrum, size, val2);
@@ -82,10 +70,8 @@ namespace Grapher.Scale
         }
 
 
-        public uint ComputeIndex(Spectrum spectrum, uint size, double rtn)
-        {
-            if (IsLooping)
-            { rtn %= size; }
+        public uint ComputeIndex(Spectrum spectrum, uint size, double rtn) {
+            if (IsLooping) { rtn %= size; }
             if (IsRandom)// randomizing through modulo, shader noise style
             {
                 double seed = (Seed == 0) ? spectrum.NoteSeed : Seed;
