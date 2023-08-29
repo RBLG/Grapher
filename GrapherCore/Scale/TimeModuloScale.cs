@@ -13,23 +13,18 @@ using static Grapher.Spectrum;
 namespace Grapher.Scale
 {
     /// <summary>
-    /// "trick" to turn a 123456123456123456 table on time into<br/>
-    /// 123456<br/>
-    /// 123456<br/>
-    /// 123456<br/>
-    /// for easy repeating patterns
+    /// modulo/chunk axis allow for transition between two coordinates over a duration (random if random is selected, otherwise in order)
     /// </summary>
     public class TimeModuloScale : IInputScale
-    //not ITimeScale so it can be used with other time scale & havent impl how multiple time scale interact for TableModule time scale
     {
         public double Seed { get; set; } = 13; //customizable number to change the randomness of the random pattern
         public double Modulo { get; set; } = 50; //the size of a chunk (in ms)
 
-        public bool IsLooping { get; set; } = false;//if true, the sequence of chunks will loop every table.Width*Modulo ms
+        public bool IsLooping { get; set; } = false;//if true, the sequence of chunks will loop back to the first value after Modulo*size ms
 
-        public bool IsRandom { get; set; } = true;// if false, chunk will follow in order from the lowest Width value to the highest
+        public bool IsRandom { get; set; } = true;// if false, chunk will follow in order from the lowest value to the highest
 
-        public bool IsPhasing { get; set; } = false;//if true, it will wait that phase is 0 to swap
+        public bool IsPhasing { get; set; } = false;//if true, duration is adjusted to the nearest multiple of the phase, to be in sync
 
         public string Label => "t(%)";
 
@@ -70,15 +65,19 @@ namespace Grapher.Scale
         }
 
 
-        public uint ComputeIndex(Spectrum spectrum, uint size, double rtn) {
-            if (IsLooping) { rtn %= size; }
+        /// <summary>
+        /// applies looping and randomness to the index if enabled
+        /// </summary>
+        public uint ComputeIndex(Spectrum spectrum, uint size, double index) {
+            if (IsLooping) { index %= size; }
             if (IsRandom)// randomizing through modulo, shader noise style
             {
                 double seed = (Seed == 0) ? spectrum.NoteSeed : Seed;
 
-                rtn = (Math.Sin(rtn * seed * 13.531) + 1) * (size * 100_000 - 1) % size;
+                //get a pseudorandom value from the index
+                index = (Math.Sin(index * seed * 13.531) + 1) * (size * 100_000 - 1) % size;
             }
-            return (uint)rtn;
+            return (uint)index;
         }
     }
 }

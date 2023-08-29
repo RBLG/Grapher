@@ -11,7 +11,7 @@ using static Grapher.Spectrum;
 
 namespace Grapher.Scale
 {
-    internal class AmplitudeLinearScale : IInputScale, IOutputScale
+    public class AmplitudeLinearScale : IInputScale, IOutputScale
     {
         //public double Max => 1;
         //public double Min => 0;

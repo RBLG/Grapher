@@ -12,7 +12,8 @@ using static Grapher.Spectrum;
 namespace Grapher.Scale
 {
     /// <summary>
-    /// default time scale in milliseconds
+    /// default time scale in milliseconds (TODO change it to seconds, for speed)<br/>
+    /// poorly handle envelloppes through the hold option, otherwise it loop
     /// </summary>
     public class TimeLinearScale : IInputScale, ITimeScale
     {
@@ -33,33 +34,6 @@ namespace Grapher.Scale
 
         public bool IsPhasing { get; set; } = false; // is duration adjusted to be in sync with the wave phase cycle
 
-        /**
-        public double PickValueTo(Wave wave, Spectrum spectrum, uint size)
-        {
-            double rtn = spectrum.SourceTime;
-            if (IsLooping)
-            {
-                rtn /= Duration;
-                rtn -= (int)rtn;//%= 1;//another faster modulo
-            }
-            else
-            {
-                //need a better way to handle when release happen before time reached hold
-                // -> get closest pre hold index after release, reach it then interpolate on the next
-
-                if (double.IsNaN(spectrum.TimeOff))
-                { rtn = Math.Min(rtn, Hold); }
-                else
-                {
-                    //if release event happenned before time reached the hold, use time instead of timeoff
-                    rtn = Math.Min(spectrum.SourceTime, Hold + spectrum.TimeOff);
-                    rtn = Math.Min(rtn, Duration - 1); //-1 because weird stuff happen at duration value, will check later
-                }
-                rtn /= Duration;
-            }
-            return rtn * size;
-        }*/
-
         public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size) {
             double rtn = spectrum.SourceTime;
             double duration = Duration;
@@ -72,7 +46,7 @@ namespace Grapher.Scale
                 if (count - intcount != 0) { // if not matching, add 1 (so it does a ceiling operation not floor)
                     intcount += 1;
                 }
-                duration = intcount / wave.Frequency * 1000;
+                duration = intcount / wave.Frequency * 1000; // get the duration for an integer amount of cycles
             }
 
             if (IsLooping) {

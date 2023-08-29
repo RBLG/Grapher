@@ -10,7 +10,7 @@ namespace Grapher.Scale.Related
 {
 
     /// <summary>
-    /// visual marks on the side of the axis 
+    /// visual marks on the side of the axis, to be implemented
     /// </summary>
     public class Graduation
     {
