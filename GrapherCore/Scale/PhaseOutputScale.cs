@@ -38,15 +38,15 @@ namespace Grapher.Scale
                 double glob = GetGlobalPhase(wave, spectrum);
                 double absphase = GetAbsPhase(wave, glob);
                 double nval = mode.Process(absphase, tval);
-                wave.Phase = GetRevert(nval, glob) + Offset;
+                wave.PhaseOffset = GetRevert(nval, glob) + Offset;
             } else {
-                wave.Phase = mode.Process(wave.Phase, tval);
+                wave.PhaseOffset = mode.Process(wave.PhaseOffset, tval);
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double GetAbsPhase(Wave wave, double globphase) {
-            return wave.Phase + globphase;
+            return wave.PhaseOffset + globphase;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

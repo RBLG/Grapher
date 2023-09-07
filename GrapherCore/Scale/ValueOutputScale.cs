@@ -26,16 +26,16 @@ namespace Grapher.Scale
         public void ProcessValue(Wave wave, Spectrum spectrum, double size, IMode mode, double tval) {
             double val = GetPreValue(wave, spectrum);
             double nval = mode.Process(val, tval);
-            wave.Amplitude *= nval / val; //HACK should use a separate value than amplitude
+            wave.ValueFix *= nval / val; //HACK define how new correcter should be applied on existing one
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double GetPreValue(Wave w, Spectrum spec) {
-            return Math.Sin(TwoPi * (w.Frequency * spec.SourceTime * 0.001d + w.Phase));
+            return w.ValueFix * Math.Sin(TwoPi * (w.Frequency * spec.SourceTime * 0.001d + w.PhaseOffset));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double GetValue(Wave w, Spectrum spec) {
-            return w.Amplitude * Math.Sin(TwoPi * (w.Frequency * spec.SourceTime * 0.001d + w.Phase));
+            return w.Amplitude * GetPreValue(w, spec);
         }
     }
 }

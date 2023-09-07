@@ -24,7 +24,7 @@ namespace Grapher.Modules
 
         public Spectrum GetSpectrum(double time, double timeoff, double bpitch, double seed) {
             spec.Reset(time, timeoff, bpitch, seed);
-            spec.Waves[0].Reset(bpitch, 0.2, 0, 0.5);
+            spec.Waves[0].Reset(bpitch, 0.2, 0, 0.5,time);
             return spec;
         }
 

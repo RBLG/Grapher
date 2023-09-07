@@ -46,7 +46,7 @@ namespace Grapher.Scale
                 return val * size;
             }
             else
-            { return wave.Phase; }
+            { return wave.PhaseOffset; }
         }
 
         public (uint, uint, double) PickValueTo2(Wave wave, Spectrum spectrum, uint size)
@@ -59,7 +59,7 @@ namespace Grapher.Scale
 
         public static double GetAbsPhase(Wave wave, Spectrum spectrum, double detune, double multiplier)
         {
-            return Math.Max(1, wave.Frequency + detune) * spectrum.SourceTime / 1000 * multiplier + wave.Phase;
+            return Math.Max(1, wave.Frequency + detune) * spectrum.SourceTime / 1000 * multiplier + wave.PhaseOffset;
         }
     }
 }

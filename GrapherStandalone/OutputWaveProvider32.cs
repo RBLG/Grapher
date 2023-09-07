@@ -29,7 +29,7 @@ namespace Grapher
                 foreach (Wave w in spec.Waves) {
                     float val = (float)ValueOutputScale.GetValue(w, spec);
                     sum += val;
-                    w.Phase = 0.5;//dirty reset
+                    w.PhaseOffset = 0.5;//dirty reset
                     //w.Padding = 0.5; //useless since there's no padding in the standalone version so far
                 }
                 buffer[n + offset] = sum;

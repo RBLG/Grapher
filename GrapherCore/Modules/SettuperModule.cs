@@ -114,7 +114,7 @@ namespace Grapher.Modules
         public void ApplyTo(Wave wave, double freq, double amp, double phase, double pad, double time) {
             wave.Frequency = Frequency(freq);
             wave.Amplitude = Amplitude(amp);
-            wave.Phase = Phase(phase);
+            wave.PhaseOffset = Phase(phase);
             wave.Padding = Padding(pad);
             wave.Time = Time(time);
         }

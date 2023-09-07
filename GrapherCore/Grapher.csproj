@@ -36,7 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="GuiElement\Canvas3D.cs" />
-    <Compile Remove="Modules\HarmonicModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="GuiElement\Graph3DEditor.cs">
@@ -79,7 +78,6 @@
     <None Include="GuiElement\Canvas3D.cs">
       <SubType>Component</SubType>
     </None>
-    <None Include="Modules\HarmonicModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\Settings.settings">

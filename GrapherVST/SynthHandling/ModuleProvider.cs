@@ -72,7 +72,7 @@ namespace GrapherVST.SynthHandling
                         //double val = w.Amplitude * Math.Sin(2 * Math.PI * (w.Frequency * evnt.time / 1000 + w.Phase));
                         sum += val * w.Padding;
                         sum2 += val * (1 - w.Padding);
-                        w.Phase = 0.5;//dirty reset
+                        w.PhaseOffset = 0.5;//dirty reset
                         w.Padding = 0.5;
                     }
                     outChannels[0][n] += (float)sum;
