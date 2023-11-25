@@ -10,8 +10,6 @@ Grapher is an experimental synthesizer centered around the "table" editor. it is
 by nature, it is very "all in one" as usual effects are present (the one i was aware of at least) but the modular architecture allow for more explorations around it
 
 #### Example of common effects:
-- Effect name: (width axis,length axis/height axis)
-
 - Envelloppe: (Time/Amplitude)
   
 - High/Low Pass filter: (Frequency/Time)
