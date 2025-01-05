@@ -19,10 +19,6 @@ by nature, it is very "all in one" as usual effects are present (the one i was a
 and they can be combined, for example an envelope + filter:
 ![example of filter-envelloppe settup](https://github.com/RBLG/Grapher/blob/master/Doc/imgs/highpassfilter_and_envelloppe.PNG)  
 
-### Discord server:
-
-Documentation is to be done, so dont hesitate asking directly on [discord](https://discord.gg/HqrgjEe3Tx) if you need anything!
-
 
 ### How to install:
 
